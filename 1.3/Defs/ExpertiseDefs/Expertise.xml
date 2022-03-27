@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Precision</defName>
+    <label>Precision</label>
+    <description>An expert in precision weapons like sniper rifles, the pawn gains bonuses to accuracy.</description>
+    <skill>Shooting</skill>
+    <statOffsets>
+      <ShootingAccuracyPawn>0.05</ShootingAccuracyPawn>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>CloseQuarters</defName>
+    <label>Close-Quarters</label>
+    <skill>Shooting</skill>
+    <description>An expert in CQC weapons like shotguns and pistols, the pawn gains bonuses to aim time.</description>
+    <statOffsets>
+      <AimingDelayFactor>-0.05</AimingDelayFactor>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Gunner</defName>
+    <label>Gunner</label>
+    <skill>Shooting</skill>
+    <description>An expert in high-output weapons like assault rifles and miniguns, the pawn gains bonuses to cooldown time.</description>
+    <statOffsets>
+      <VEF_VerbCooldownFactor>-0.05</VEF_VerbCooldownFactor>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Sharp</defName>
+    <label>Sharp</label>
+    <skill>Melee</skill>
+    <description>An expert in sharp weapons, the pawn gains bonuses to armor piercing.</description>
+    <statOffsets>
+      <VSE_ArmorPenetrationFactor>0.05</VSE_ArmorPenetrationFactor>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Blunt</defName>
+    <label>Blunt</label>
+    <skill>Melee</skill>
+    <description>An expert in blunt weapons, the pawn bonuses to melee cooldown time.</description>
+    <statOffsets>
+      <VSE_MeleeCooldownFactor>-0.05</VSE_MeleeCooldownFactor>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Tamer</defName>
+    <label>Tamer</label>
+    <skill>Animals</skill>
+    <description>An expert in taming animals, the pawn gains bonuses to tame chance and attack on tame failure chance.</description>
+    <statOffsets>
+      <TameAnimalChance>0.05</TameAnimalChance>
+      <VSE_AttackOnFailChanceFactor>-0.05</VSE_AttackOnFailChanceFactor>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Rancher</defName>
+    <label>Rancher</label>
+    <skill>Animals</skill>
+    <description>An expert in ranching, the pawn gains bonuses to animal gather yield and animal gather speed.</description>
+    <statOffsets>
+      <AnimalGatherYield>0.05</AnimalGatherYield>
+      <AnimalGatherSpeed>0.05</AnimalGatherSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Hunter</defName>
+    <label>Hunter</label>
+    <skill>Animals</skill>
+    <description>Requires >10 Shooting. An expert in hunting, the pawn gains bonuses to hunting stealth.</description>
+    <statOffsets>
+      <HuntingStealth>0.05</HuntingStealth>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Trainer</defName>
+    <label>Trainer</label>
+    <skill>Animals</skill>
+    <description>An expert in training animals, the pawn gains bonuses to training success chance.</description>
+    <statOffsets>
+      <TrainAnimalChance>0.05</TrainAnimalChance>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>QualityExpert</defName>
+    <label>Quality Expert</label>
+    <skill>Artistic</skill>
+    <description>An expert in creating great works of art, the pawn gains increased produced art quality.</description>
+    <statOffsets>
+      <VSE_ArtQuality>0.05</VSE_ArtQuality>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>QuantityExpert</defName>
+    <label>Quantity Expert</label>
+    <skill>Artistic</skill>
+    <description>An expert in creating a lot of art, the pawn gains bonuses to art creation speed.</description>
+    <statOffsets>
+      <VSE_ArtSpeed>0.05</VSE_ArtSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Roofer</defName>
+    <label>Roofer</label>
+    <skill>Construction</skill>
+    <description>A roof expert, the pawn gains bonuses to roof construction and deconstruction speed.</description>
+    <statOffsets>
+      <VSE_RoofSpeed>0.05</VSE_RoofSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Repairman</defName>
+    <label>Repairman</label>
+    <skill>Construction</skill>
+    <description>An expert at repairing, the pawn gains bonuses to repair success chance and repair speed.</description>
+    <statOffsets>
+      <FixBrokenDownBuildingSuccessChance>0.05</FixBrokenDownBuildingSuccessChance>
+      <VSE_RepairSpeed>0.05</VSE_RepairSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Architect</defName>
+    <label>Architect</label>
+    <skill>Construction</skill>
+    <description>An expert at creating complex and beautiful buildings, the pawn gains bonuses to the quality of constructed things and to construction success chance.</description>
+    <statOffsets>
+      <ConstructSuccessChance>0.05</ConstructSuccessChance>
+      <VSE_ConstructQuality>0.05</VSE_ConstructQuality>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Foreman</defName>
+    <label>Foreman</label>
+    <skill>Construction</skill>
+    <description>An expert at constructing massive amounts of buildings, the pawn gains bonuses to construction speed.</description>
+    <statOffsets>
+      <ConstructionSpeed>0.05</ConstructionSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Butcher</defName>
+    <label>Butcher</label>
+    <skill>Cooking</skill>
+    <description>An expert at butchering dead animals, the pawn gains bonuses to butchery speed and butchery yield.</description>
+    <statOffsets>
+      <ButcheryFleshSpeed>0.05</ButcheryFleshSpeed>
+      <ButcheryFleshEfficiency>0.05</ButcheryFleshEfficiency>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>DrugChef</defName>
+    <label>Drug Chef</label>
+    <skill>Cooking</skill>
+    <description>An expert at creating drugs, the pawn gains bonuses to drug creation speed.</description>
+    <statOffsets>
+      <DrugCookingSpeed>0.05</DrugCookingSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>TopChef</defName>
+    <label>Top Chef</label>
+    <skill>Cooking</skill>
+    <description>An expert at creating amazing works of culinary art, the pawn's food poison chance is reduced.</description>
+    <statOffsets>
+      <FoodPoisonChance>-0.05</FoodPoisonChance>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>IndustrialChef</defName>
+    <label>Industrial Chef</label>
+    <skill>Cooking</skill>
+    <description>An expert at creating massive amounts of food, the pawn gains bonuses to cooking speed.</description>
+    <statOffsets>
+      <CookSpeed>0.05</CookSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>MechanoidExpert</defName>
+    <label>Mechanoid Expert</label>
+    <skill>Crafting</skill>
+    <description>An expert in all things mechanoids, the pawn gains bonuses to mechanoid shredding speed and efficiency.</description>
+    <statOffsets>
+      <ButcheryMechanoidSpeed>0.05</ButcheryMechanoidSpeed>
+      <ButcheryMechanoidEfficiency>0.05</ButcheryMechanoidEfficiency>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Tailor</defName>
+    <label>Tailor</label>
+    <skill>Crafting</skill>
+    <description>An expert at creating clothes, the pawn gains bonuses to tailoring speed and the quality of crafted clothing.</description>
+    <statOffsets>
+      <VSE_TailoringSpeed>0.05</VSE_TailoringSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Weaponsmith</defName>
+    <label>Weaponsmith</label>
+    <skill>Crafting</skill>
+    <description>An expert at creating weapons, the pawn gains bonuses to crafting speed and the quality of weapons.</description>
+    <statOffsets>
+      <VSE_WeaponCreationSpeed>0.05</VSE_WeaponCreationSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>IndustrialProcessExpert</defName>
+    <label>Industrial Process Expert</label>
+    <skill>Crafting</skill>
+    <description>An expert at creating intermediary ingredients, the pawn gains bonuses to crafting speed of components and can craft them at a slightly lowered cost.</description>
+    <statOffsets>
+      <VSE_ComponentCraftingSpeed>0.05</VSE_ComponentCraftingSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Surgeon</defName>
+    <label>Surgeon</label>
+    <skill>Medicine</skill>
+    <description>An expert at surgeries, the pawn gains bonuses to surgery success chance and medical operation speed.</description>
+    <statOffsets>
+      <SurgerySuccessChanceFactor>0.05</SurgerySuccessChanceFactor>
+      <MedicalSurgerySuccessChance>0.05</MedicalSurgerySuccessChance>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>BattlefieldMedic</defName>
+    <label>Battlefield Medic</label>
+    <skill>Medicine</skill>
+    <description>An expert at rapid treatment, the pawn gains bonuses to medical tend speed.</description>
+    <statOffsets>
+      <MedicalTendSpeed>0.05</MedicalTendSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>InfectiousDiseaseExpert</defName>
+    <label>Infectious Disease Expert</label>
+    <skill>Medicine</skill>
+    <description>A disease expert, the pawn gains a bonus to medical tend quality of illnesses.</description>
+    <statOffsets>
+      <MedicalTendQuality>0.05</MedicalTendQuality>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Driller</defName>
+    <label>Driller</label>
+    <skill>Mining</skill>
+    <description>Specializing in using a deep drill, increases deep drilling speed.</description>
+    <statOffsets>
+      <DeepDrillingSpeed>0.05</DeepDrillingSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>OreExpert</defName>
+    <label>Ore Expert</label>
+    <skill>Mining</skill>
+    <description>Specializing in digging up ores, increases mining yield.</description>
+    <statOffsets>
+      <MiningYield>0.05</MiningYield>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Tunneller</defName>
+    <label>Tunneller</label>
+    <skill>Mining</skill>
+    <description>An expert at digging massive tunnels and caverns, the pawn gains bonuses to mining speed.</description>
+    <statOffsets>
+      <MiningSpeed>0.05</MiningSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Geologist</defName>
+    <label>Geologist</label>
+    <skill>Mining</skill>
+    <description>An expert in rocks, the pawn gains a bonus to the chance of getting rock chunks.</description>
+    <statOffsets>
+      <VSE_RockChunkChance>0.05</VSE_RockChunkChance>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Pharmacologist</defName>
+    <label>Pharmacologist</label>
+    <skill>Intellectual</skill>
+    <description>An expert at creating complex drugs, the pawn gains bonuses to drug synthesis speed</description>
+    <statOffsets>
+      <DrugSynthesisSpeed>0.05</DrugSynthesisSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef MayRequire="ludeon.rimworld.ideology">
+    <defName>Hacker</defName>
+    <label>Hacker</label>
+    <skill>Intellectual</skill>
+    <description>An expert hacker, the pawn gains bonuses to hacking speed.</description>
+    <statOffsets>
+      <HackingSpeed>0.05</HackingSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Researcher</defName>
+    <label>Researcher</label>
+    <skill>Intellectual</skill>
+    <description>An expert researcher, the pawn gains bonuses to research speed.</description>
+    <statOffsets>
+      <ResearchSpeed>0.05</ResearchSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Forager</defName>
+    <label>Forager</label>
+    <skill>Plants</skill>
+    <description>An expert at living off the land, the pawn gains bonuses to foraging amount.</description>
+    <statOffsets>
+      <ForagedNutritionPerDay>0.05</ForagedNutritionPerDay>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef MayRequire="ludeon.rimworld.ideology">
+    <defName>Treespeaker</defName>
+    <label>Treespeaker</label>
+    <skill>Plants</skill>
+    <description>Requires Ideology. Requires natural backstory and Tree Connection meme. An expert at communicating psychically with Gauranlen trees, the pawn gains bonuses to pruning speed.</description>
+    <statOffsets>
+      <PruningSpeed>0.05</PruningSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>HarvesterCareful</defName>
+    <label>Careful Harvester</label>
+    <skill>Plants</skill>
+    <description>An expert at ensuring no parts of the plant are wasted on harvesting, the pawn gains bonuses to harvest yield.</description>
+    <statOffsets>
+      <PlantHarvestYield>0.05</PlantHarvestYield>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>GreenThumb</defName>
+    <label>Green Thumb</label>
+    <skill>Plants</skill>
+    <description>An expert at quickly sowing and harvesting large amounts, the pawn gains bonuses to harvest speed.</description>
+    <statOffsets>
+      <PlantWorkSpeed>0.05</PlantWorkSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Warden</defName>
+    <label>Warden</label>
+    <skill>Social</skill>
+    <description>An expert at handling prisoners and slaves, the pawn gains bonuses to recruitment rate, arrest success chance, and slave supression power.</description>
+    <statOffsets>
+      <ArrestSuccessChance>0.05</ArrestSuccessChance>
+      <SuppressionPower MayRequire="ludeon.rimworld.ideology">0.05</SuppressionPower>
+      <VSE_RecruitRate>0.05</VSE_RecruitRate>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Negotiator</defName>
+    <label>Negotiator</label>
+    <skill>Social</skill>
+    <description>An expert at handling negotiations, the pawn gains bonuses to trade price improvement and peace talk success chance.</description>
+    <statOffsets>
+      <TradePriceImprovement>0.05</TradePriceImprovement>
+      <VSE_PeaceTalksChance>0.05</VSE_PeaceTalksChance>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef MayRequire="ludeon.rimworld.ideology">
+    <defName>Proselytizer</defName>
+    <label>Proselytizer</label>
+    <skill>Social</skill>
+    <description>Requires Ideology. An expert at converting others to their own ways of thought, the pawn gains bonuses to conversion power.</description>
+    <statOffsets>
+      <ConversionPower>0.05</ConversionPower>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+</Defs>

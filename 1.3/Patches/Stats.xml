@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Patch>
+    <Operation Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[@Name="SculptureBase"]/recipeMaker/workSpeedStat</xpath>
+        <value><workSpeedStat>VSE_ArtSpeed</workSpeedStat></value>
+    </Operation>
+    <Operation Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[@Name="ApparelMakeableBase"]/recipeMaker/workSpeedStat</xpath>
+        <value><workSpeedStat>VSE_TailoringSpeed</workSpeedStat></value>
+    </Operation>
+    <Operation Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[@Name="BaseMakeableGun"]/recipeMaker/workSpeedStat</xpath>
+        <value><workSpeedStat>VSE_WeaponCreationSpeed</workSpeedStat></value>
+    </Operation>
+    <Operation Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[@Name="BaseMeleeWeapon"]/recipeMaker/workSpeedStat</xpath>
+        <value><workSpeedStat>VSE_WeaponCreationSpeed</workSpeedStat></value>
+    </Operation>
+    <Operation Class="PatchOperationReplace">
+        <xpath>/Defs/RecipeDef[defName="Make_ComponentIndustrial"]/workSpeedStat</xpath>
+        <value><workSpeedStat>VSE_ComponentCraftingSpeed</workSpeedStat></value>
+    </Operation>
+    <Operation Class="PatchOperationReplace">
+        <xpath>/Defs/RecipeDef[defName="Make_ComponentSpacer"]/workSpeedStat</xpath>
+        <value><workSpeedStat>VSE_ComponentCraftingSpeed</workSpeedStat></value>
+    </Operation>
+</Patch>
