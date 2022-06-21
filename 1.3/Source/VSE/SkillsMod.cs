@@ -3,6 +3,8 @@ using HarmonyLib;
 using RimWorld;
 using Verse;
 using VSE.Expertise;
+using VSE.Passions;
+using VSE.Stats;
 
 namespace VSE
 {
@@ -13,8 +15,9 @@ namespace VSE
         public SkillsMod(ModContentPack content) : base(content)
         {
             var harm = new Harmony("vanillaexpanded.skills");
-            HarmonyPatches.Do(harm);
-            Stats.HarmonyPatches.Do(harm);
+            ExpertisePatches.Do(harm);
+            StatPatches.Do(harm);
+            PassionPatches.Do(harm);
             LongEventHandler.ExecuteWhenFinished(delegate
             {
                 expertiseForSkill = new Dictionary<SkillDef, List<ExpertiseDef>>();

@@ -10,16 +10,17 @@ using Verse;
 
 namespace VSE.Expertise
 {
-    public static class HarmonyPatches
+    public static class ExpertisePatches
     {
         public static void Do(Harmony harm)
         {
-            var myType = typeof(HarmonyPatches);
+            var myType = typeof(ExpertisePatches);
             harm.Patch(AccessTools.Method(typeof(StatWorker), nameof(StatWorker.GetValueUnfinalized)),
                 transpiler: new HarmonyMethod(myType, nameof(StatTranspiler)));
             harm.Patch(AccessTools.Method(typeof(StatWorker), nameof(StatWorker.GetExplanationUnfinalized)),
                 transpiler: new HarmonyMethod(myType, nameof(StatExplainTranspiler)));
-            harm.Patch(AccessTools.Constructor(typeof(Pawn_SkillTracker)), postfix: new HarmonyMethod(typeof(ExpertiseTrackers), nameof(ExpertiseTrackers.CreateExpertise)));
+            harm.Patch(AccessTools.Constructor(typeof(Pawn_SkillTracker)),
+                postfix: new HarmonyMethod(typeof(ExpertiseTrackers), nameof(ExpertiseTrackers.CreateExpertise)));
             harm.Patch(AccessTools.Method(typeof(Pawn_SkillTracker), nameof(Pawn_SkillTracker.ExposeData)),
                 postfix: new HarmonyMethod(typeof(ExpertiseTrackers), nameof(ExpertiseTrackers.SaveExpertise)));
             harm.Patch(AccessTools.Method(typeof(SkillRecord), nameof(SkillRecord.Learn)), postfix: new HarmonyMethod(myType, nameof(PostLearn)));
@@ -42,7 +43,8 @@ namespace VSE.Expertise
         public static void DoCharacterCardExtras(ITab_Pawn_Character __instance)
         {
             if (Current.ProgramState == ProgramState.Playing && ExpertiseUIUtility.ShowExpertise)
-                Find.WindowStack.ImmediateWindow(8931795, new Rect(new Vector2(__instance.TabRect.width, __instance.TabRect.y), ExpertiseUIUtility.ExpertisePanelSize),
+                Find.WindowStack.ImmediateWindow(8931795,
+                    new Rect(new Vector2(__instance.TabRect.width, __instance.TabRect.y), ExpertiseUIUtility.ExpertisePanelSize),
                     WindowLayer.GameUI,
                     () =>
                     {

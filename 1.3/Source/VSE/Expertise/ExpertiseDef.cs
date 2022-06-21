@@ -23,19 +23,19 @@ namespace VSE.Expertise
 
             if (skillRecord.passion == Passion.None)
             {
-                reason = "No passion";
+                reason = "VSE.NoPassion".Translate();
                 return false;
             }
 
             if (skillRecord.Level < 15)
             {
-                reason = "Insufficient skill";
+                reason = "VSE.SkillTooLow".Translate();
                 return false;
             }
 
             if (pawn.Expertise().AllExpertise.Count() >= MaxExpertise)
             {
-                reason = "At max expertise";
+                reason = "VSE.MaxExpertise".Translate();
                 return false;
             }
 
@@ -46,7 +46,10 @@ namespace VSE.Expertise
         public string FullDescription(int level = 0) =>
             statOffsets.Aggregate(
                 statFactors.Aggregate(description,
-                    (current, factor) => current + $"\n{factor.stat.LabelCap}: {factor.stat.Worker.ValueToString(factor.value * (level + 1), false, ToStringNumberSense.Factor)}"),
-                (current, offset) => current + $"\n{offset.stat.LabelCap}: {offset.stat.Worker.ValueToString(offset.value * (level + 1), false, ToStringNumberSense.Offset)}");
+                    (current, factor) =>
+                        current +
+                        $"\n{factor.stat.LabelCap}: {factor.stat.Worker.ValueToString(factor.value * (level + 1), false, ToStringNumberSense.Factor)}"),
+                (current, offset) =>
+                    current + $"\n{offset.stat.LabelCap}: {offset.stat.Worker.ValueToString(offset.value * (level + 1), false, ToStringNumberSense.Offset)}");
     }
 }

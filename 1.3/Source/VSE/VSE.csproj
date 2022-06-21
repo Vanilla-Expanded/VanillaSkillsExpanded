@@ -53,15 +53,19 @@
     <Publicize Include="Assembly-CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Expertise\Alert_ExpertiseAvailable.cs" />
     <Compile Include="Expertise\ExpertiseDef.cs" />
     <Compile Include="Expertise\ExpertiseRecord.cs" />
     <Compile Include="Expertise\ExpertiseTracker.cs" />
     <Compile Include="Expertise\ExpertiseTrackers.cs" />
     <Compile Include="Expertise\ExpertiseUIUtility.cs" />
-    <Compile Include="Expertise\HarmonyPatches.cs" />
+    <Compile Include="Expertise\ExpertisePatches.cs" />
+    <Compile Include="Passions\PassionDef.cs" />
+    <Compile Include="Passions\PassionManager.cs" />
+    <Compile Include="Passions\PassionPatches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkillsMod.cs" />
-    <Compile Include="Stats\HarmonyPatches.cs" />
+    <Compile Include="Stats\StatPatches.cs" />
     <Compile Include="Stats\MoreStatDefOf.cs" />
     <Compile Include="Stats\QualityUtility.cs" />
   </ItemGroup>

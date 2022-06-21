@@ -10,24 +10,29 @@ using Verse.AI;
 
 namespace VSE.Stats
 {
-    public static class HarmonyPatches
+    public static class StatPatches
     {
         public static void Do(Harmony harm)
         {
-            var myType = typeof(HarmonyPatches);
-            foreach (var methodInfo in typeof(VerbProperties).GetMethods(AccessTools.all).Where(mi => mi.Name == "AdjustedArmorPenetration" && mi.GetParameters().Length > 2))
+            var myType = typeof(StatPatches);
+            foreach (var methodInfo in typeof(VerbProperties).GetMethods(AccessTools.all)
+                .Where(mi => mi.Name == "AdjustedArmorPenetration" && mi.GetParameters().Length > 2))
                 harm.Patch(methodInfo, postfix: new HarmonyMethod(myType, nameof(AdjustArmorPenetration)));
-            foreach (var methodInfo in typeof(VerbProperties).GetMethods(AccessTools.all).Where(mi => mi.Name == "AdjustedCooldown" && mi.GetParameters().Length > 2))
+            foreach (var methodInfo in typeof(VerbProperties).GetMethods(AccessTools.all)
+                .Where(mi => mi.Name == "AdjustedCooldown" && mi.GetParameters().Length > 2))
                 harm.Patch(methodInfo, postfix: new HarmonyMethod(myType, nameof(AdjustMeleeCooldown)));
             harm.Patch(AccessTools.Method(typeof(Pawn_MindState), nameof(Pawn_MindState.CheckStartMentalStateBecauseRecruitAttempted)),
                 transpiler: new HarmonyMethod(myType, nameof(AttackOnTameFailTranspiler)));
-            harm.Patch(AccessTools.Method(typeof(GenRecipe), nameof(GenRecipe.PostProcessProduct)), transpiler: new HarmonyMethod(myType, nameof(CraftingQualityTranspiler)));
+            harm.Patch(AccessTools.Method(typeof(GenRecipe), nameof(GenRecipe.PostProcessProduct)),
+                transpiler: new HarmonyMethod(myType, nameof(CraftingQualityTranspiler)));
             harm.Patch(AccessTools.Method(AccessTools.Inner(typeof(JobDriver_AffectRoof), "<>c__DisplayClass12_0"), "<MakeNewToils>b__1"),
                 transpiler: new HarmonyMethod(myType, nameof(RoofStatTranspiler)));
             harm.Patch(AccessTools.Method(AccessTools.Inner(typeof(JobDriver_Repair), "<>c__DisplayClass4_0"), "<MakeNewToils>b__1"),
                 transpiler: new HarmonyMethod(myType, nameof(RepairStatTranspiler)));
-            harm.Patch(AccessTools.Method(typeof(Frame), nameof(Frame.CompleteConstruction)), transpiler: new HarmonyMethod(myType, nameof(ConstructionQualityTranspiler)));
-            harm.Patch(AccessTools.Method(typeof(Mineable), nameof(Mineable.TrySpawnYield)), transpiler: new HarmonyMethod(myType, nameof(RockChunkChanceTranspiler)));
+            harm.Patch(AccessTools.Method(typeof(Frame), nameof(Frame.CompleteConstruction)),
+                transpiler: new HarmonyMethod(myType, nameof(ConstructionQualityTranspiler)));
+            harm.Patch(AccessTools.Method(typeof(Mineable), nameof(Mineable.TrySpawnYield)),
+                transpiler: new HarmonyMethod(myType, nameof(RockChunkChanceTranspiler)));
             harm.Patch(AccessTools.Method(typeof(InteractionWorker_RecruitAttempt), nameof(InteractionWorker_RecruitAttempt.Interacted)),
                 transpiler: new HarmonyMethod(myType, nameof(RecruitStatTranspiler)));
             harm.Patch(AccessTools.Method(typeof(PeaceTalks), nameof(PeaceTalks.GetBadOutcomeWeightFactor), new[] {typeof(Pawn), typeof(Caravan)}),
@@ -63,7 +68,8 @@ namespace VSE.Stats
 
         public static IEnumerable<CodeInstruction> CraftingQualityTranspiler(IEnumerable<CodeInstruction> instructions)
         {
-            var info = AccessTools.Method(typeof(RimWorld.QualityUtility), nameof(RimWorld.QualityUtility.GenerateQualityCreatedByPawn), new[] {typeof(Pawn), typeof(SkillDef)});
+            var info = AccessTools.Method(typeof(RimWorld.QualityUtility), nameof(RimWorld.QualityUtility.GenerateQualityCreatedByPawn),
+                new[] {typeof(Pawn), typeof(SkillDef)});
             foreach (var instruction in instructions)
                 if (instruction.Calls(info))
                 {
@@ -75,7 +81,8 @@ namespace VSE.Stats
 
         public static IEnumerable<CodeInstruction> ConstructionQualityTranspiler(IEnumerable<CodeInstruction> instructions)
         {
-            var info = AccessTools.Method(typeof(RimWorld.QualityUtility), nameof(RimWorld.QualityUtility.GenerateQualityCreatedByPawn), new[] {typeof(Pawn), typeof(SkillDef)});
+            var info = AccessTools.Method(typeof(RimWorld.QualityUtility), nameof(RimWorld.QualityUtility.GenerateQualityCreatedByPawn),
+                new[] {typeof(Pawn), typeof(SkillDef)});
             foreach (var instruction in instructions)
                 if (instruction.Calls(info))
                 {
@@ -105,7 +112,7 @@ namespace VSE.Stats
                 yield return instruction;
                 if (instruction.LoadsField(info))
                 {
-                    yield return new CodeInstruction(OpCodes.Ldarg_1);
+                    yield return new CodeInstruction(OpCodes.Ldarg_0);
                     yield return CodeInstruction.LoadField(typeof(MoreStatDefOf), nameof(MoreStatDefOf.VSE_RockChunkChance));
                     yield return new CodeInstruction(OpCodes.Ldc_I4_1);
                     yield return CodeInstruction.Call(typeof(StatExtension), nameof(StatExtension.GetStatValue));

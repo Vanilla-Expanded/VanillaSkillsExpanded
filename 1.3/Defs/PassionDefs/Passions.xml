@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+    <VSE.Passions.PassionDef>
+        <defName>None</defName>
+        <label>none</label>
+        <description>no passion</description>
+        <learnRateFactor>0.35</learnRateFactor>
+        <isBad>true</isBad>
+        <commonality>0</commonality> <!-- Assigned automatically -->
+        <inspirationCommonality>1</inspirationCommonality>
+        <iconPath>Things/Mote/Transparent</iconPath>
+    </VSE.Passions.PassionDef>
+    <VSE.Passions.PassionDef>
+        <defName>Minor</defName>
+        <label>interested</label>
+        <description>minor passion</description>
+        <learnRateFactor>1</learnRateFactor>
+        <commonality>1.5</commonality>
+        <inspirationCommonality>2.5</inspirationCommonality>
+        <iconPath>UI/Icons/PassionMinor</iconPath>
+    </VSE.Passions.PassionDef>
+    <VSE.Passions.PassionDef>
+        <defName>Major</defName>
+        <label>burning</label>
+        <description>major passion</description>
+        <learnRateFactor>1.5</learnRateFactor>
+        <inspirationCommonality>5</inspirationCommonality>
+        <iconPath>UI/Icons/PassionMajor</iconPath>
+    </VSE.Passions.PassionDef>
+    <VSE.Passions.PassionDef>
+        <defName>VSE_Apathy</defName>
+        <label>apathy</label>
+        <description>no interest in this skill</description>
+        <learnRateFactor>0.25</learnRateFactor>
+        <forgetRateFactor>1.25</forgetRateFactor>
+        <isBad>true</isBad>
+        <commonality>0.5</commonality> <!-- Assigned automatically -->
+        <inspirationCommonality>0.1</inspirationCommonality>
+        <iconPath>UI/Icons/PassionMinor</iconPath>
+    </VSE.Passions.PassionDef>
+    <VSE.Passions.PassionDef>
+        <defName>VSE_Natural</defName>
+        <label>natural</label>
+        <description>Naturally good at this skill. However, this means they won’t keep up their practice.</description>
+        <learnRateFactor>2</learnRateFactor>
+        <forgetRateFactor>3</forgetRateFactor>
+        <commonality>0.5</commonality>
+        <inspirationCommonality>7.5</inspirationCommonality>
+        <iconPath>UI/Icons/PassionMinor</iconPath>
+    </VSE.Passions.PassionDef>
+    <VSE.Passions.PassionDef>
+        <defName>VSE_Critical</defName>
+        <label>critical</label>
+        <description>This skill is extremely important in some way, most likely due to events in their past.</description>
+        <learnRateFactor>3</learnRateFactor>
+        <learnRateFactorOther>0.25</learnRateFactorOther>
+        <forgetRateFactor>0</forgetRateFactor>
+        <commonality>0.25</commonality>
+        <inspirationCommonality>10</inspirationCommonality>
+        <iconPath>UI/Icons/PassionMajor</iconPath>
+    </VSE.Passions.PassionDef>
+</Defs>

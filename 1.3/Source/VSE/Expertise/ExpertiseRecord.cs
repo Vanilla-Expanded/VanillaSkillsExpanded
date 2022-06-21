@@ -48,7 +48,7 @@ namespace VSE
             get
             {
                 if (level < 0 || level > 20) return "Unknown".Translate();
-                return $"Skill{level}".Translate();
+                return $"VSE.Expertise{level}".Translate();
             }
         }
 

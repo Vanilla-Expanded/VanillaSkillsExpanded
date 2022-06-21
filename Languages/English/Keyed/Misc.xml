@@ -1,0 +1,32 @@
+<LanguageData>
+    <VSE.Expertise0>Interested in it</VSE.Expertise0>
+    <VSE.Expertise1>Hobbyist</VSE.Expertise1>
+    <VSE.Expertise2>Aspiring Apprentice</VSE.Expertise2>
+    <VSE.Expertise3>Apprentice</VSE.Expertise3>
+    <VSE.Expertise4>Excellent Apprentice</VSE.Expertise4>
+    <VSE.Expertise5>Weak Professional</VSE.Expertise5>
+    <VSE.Expertise6>Professional</VSE.Expertise6>
+    <VSE.Expertise7>Employable Professional</VSE.Expertise7>
+    <VSE.Expertise8>Solid Professional</VSE.Expertise8>
+    <VSE.Expertise9>Skilled Professional</VSE.Expertise9>
+    <VSE.Expertise10>Very Skilled Professional</VSE.Expertise10>
+    <VSE.Expertise11>Almost Expert</VSE.Expertise11>
+    <VSE.Expertise12>Self-Proclaimed Expert</VSE.Expertise12>
+    <VSE.Expertise13>Expert</VSE.Expertise13>
+    <VSE.Expertise14>Strong Expert</VSE.Expertise14>
+    <VSE.Expertise15>Very Strong Expert</VSE.Expertise15>
+    <VSE.Expertise16>Colony-Known Expert</VSE.Expertise16>
+    <VSE.Expertise17>Region-Known Expert</VSE.Expertise17>
+    <VSE.Expertise18>Region-Leading Expert</VSE.Expertise18>
+    <VSE.Expertise19>Planet-Known Expert</VSE.Expertise19>
+    <VSE.Expertise20>Legendary Expert</VSE.Expertise20>
+    <VSE.ExpertiseAvailable>Colonist can gain expertise</VSE.ExpertiseAvailable>
+    <VSE.ExpertiseAvailableMultiple>Colonists can gain expertise</VSE.ExpertiseAvailableMultiple>
+    <VSE.SelectExpertise>Select expertise</VSE.SelectExpertise>
+    <VSE.ExpertiseDesc>Selecting an expertise will unlock a new skill that your pawn will level up, granting them powerful, but very specific bonuses.\nYou can only select {0} expertise, and only in skills your pawns is passionate about.</VSE.ExpertiseDesc>
+    <VSE.ExpertiseAvailableDesc>Your colonist has reached high enough level in a skill they are passionate about that they can gain expertise.\n\nConsider picking an expertise for them to gain new bonuses to the work type they are good at.\n\nColonists that can get expertise:\n\n</VSE.ExpertiseAvailableDesc>
+    <VSE.LearnsForgets>   - Learns {0}\n   - Forgets {1}</VSE.LearnsForgets>
+    <VSE.NoPassion>No passion</VSE.NoPassion>
+    <VSE.SkillTooLow>Insufficient skill</VSE.SkillTooLow>
+    <VSE.MaxExpertise>At max expertise</VSE.MaxExpertise>
+</LanguageData>

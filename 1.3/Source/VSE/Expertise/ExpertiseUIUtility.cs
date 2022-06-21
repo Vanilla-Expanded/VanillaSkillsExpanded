@@ -12,7 +12,9 @@ namespace VSE
     {
         public static bool ShowExpertise;
 
-        private static readonly Texture2D ExpertiseBarFillTex = SolidColorMaterials.NewSolidColorTexture(new Color(72f / 255f, 69f / 255f, 55f / 255f, 0.1f));
+        private static readonly Texture2D ExpertiseBarFillTex =
+            SolidColorMaterials.NewSolidColorTexture(new Color(144f / 255f, 138f / 255f, 110f / 255f, 0.2f));
+
         private static readonly Texture2D OpenExpertiseIcon = ContentFinder<Texture2D>.Get("UI/Icon_OpenExpertisePanel");
         private static readonly Texture2D ExpertisePassion = ContentFinder<Texture2D>.Get("UI/Passion_Expertise");
 
@@ -60,6 +62,9 @@ namespace VSE
         {
             if (Widgets.CloseButtonFor(inRect)) ShowExpertise = false;
 
+            var anchor = Text.Anchor;
+            var font = Text.Font;
+
             inRect.yMin += 20f;
             inRect.xMax -= 5f;
             var textRect = inRect.TakeBottomPart(54f).ContractedBy(7f);
@@ -82,12 +87,11 @@ namespace VSE
                 Text.Anchor = TextAnchor.MiddleLeft;
                 Text.Font = GameFont.Small;
                 Widgets.Label(rect.TakeLeftPart(rect.width * 0.2f).ContractedBy(5f), expertise.LabelCap);
-                Text.Anchor = TextAnchor.UpperLeft;
                 Widgets.Label(rect.TakeLeftPart(rect.width * 0.75f), expertise.description.Colorize(ColoredText.SubtleGrayColor));
                 var buttonRect = new Rect(rect.x, rect.y + rect.height / 2f - 15f, rect.width, 30f).ContractedBy(5f);
                 if (expertise.CanApplyOn(pawn, out var reason))
                 {
-                    if (Widgets.ButtonText(buttonRect, "Select expertise"))
+                    if (Widgets.ButtonText(buttonRect, "VSE.SelectExpertise".Translate()))
                         expertiseTracker.AddExpertise(expertise);
                 }
                 else
@@ -104,9 +108,10 @@ namespace VSE
             Widgets.EndScrollView();
 
             Text.Font = GameFont.Tiny;
-            Widgets.Label(textRect,
-                $"Selecting an expertise will unlock a new skill that your pawn will level up, granting them powerful, but very specific bonuses.\nYou can only select {ExpertiseDef.MaxExpertise} expertise, and only in skills your pawns is passionate about."
-                    .Colorize(ColoredText.SubtleGrayColor));
+            Widgets.Label(textRect, "VSE.ExpertiseDesc".Translate(ExpertiseDef.MaxExpertise).Colorize(ColoredText.SubtleGrayColor));
+
+            Text.Font = font;
+            Text.Anchor = anchor;
         }
 
         public static void DrawSkillsAndExpertiseOf(Pawn pawn, Vector2 offset, SkillUI.SkillDrawMode mode)
@@ -165,7 +170,8 @@ namespace VSE
             GUI.EndGroup();
             if (Mouse.IsOver(holdingRect))
             {
-                var text = $"Level {expertise.Level}: {expertise.LevelDescriptor}\n\n" + expertise.def.FullDescription(expertise.Level);
+                var text = $"{"Level".Translate().CapitalizeFirst()} {expertise.Level}: {expertise.LevelDescriptor}\n\n" +
+                           expertise.def.FullDescription(expertise.Level);
                 if (tooltipPrefix != "") text = tooltipPrefix + "\n\n" + text;
 
                 TooltipHandler.TipRegion(holdingRect, new TipSignal(text, expertise.def.GetHashCode() * 397945));
