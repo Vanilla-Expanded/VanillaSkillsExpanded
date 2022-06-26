@@ -17,7 +17,7 @@
         <learnRateFactor>1</learnRateFactor>
         <commonality>1.5</commonality>
         <inspirationCommonality>2.5</inspirationCommonality>
-        <iconPath>UI/Icons/PassionMinor</iconPath>
+        <iconPath>Passions/PassionMinor</iconPath>
     </VSE.Passions.PassionDef>
     <VSE.Passions.PassionDef>
         <defName>Major</defName>
@@ -25,7 +25,7 @@
         <description>major passion</description>
         <learnRateFactor>1.5</learnRateFactor>
         <inspirationCommonality>5</inspirationCommonality>
-        <iconPath>UI/Icons/PassionMajor</iconPath>
+        <iconPath>Passions/PassionMajor</iconPath>
     </VSE.Passions.PassionDef>
     <VSE.Passions.PassionDef>
         <defName>VSE_Apathy</defName>
@@ -36,7 +36,7 @@
         <isBad>true</isBad>
         <commonality>0.5</commonality> <!-- Assigned automatically -->
         <inspirationCommonality>0.1</inspirationCommonality>
-        <iconPath>UI/Icons/PassionMinor</iconPath>
+        <iconPath>Passions/PassionApathy</iconPath>
     </VSE.Passions.PassionDef>
     <VSE.Passions.PassionDef>
         <defName>VSE_Natural</defName>
@@ -46,7 +46,7 @@
         <forgetRateFactor>3</forgetRateFactor>
         <commonality>0.5</commonality>
         <inspirationCommonality>7.5</inspirationCommonality>
-        <iconPath>UI/Icons/PassionMinor</iconPath>
+        <iconPath>Passions/PassionNatural</iconPath>
     </VSE.Passions.PassionDef>
     <VSE.Passions.PassionDef>
         <defName>VSE_Critical</defName>
@@ -57,6 +57,6 @@
         <forgetRateFactor>0</forgetRateFactor>
         <commonality>0.25</commonality>
         <inspirationCommonality>10</inspirationCommonality>
-        <iconPath>UI/Icons/PassionMajor</iconPath>
+        <iconPath>Passions/PassionCritical</iconPath>
     </VSE.Passions.PassionDef>
 </Defs>
