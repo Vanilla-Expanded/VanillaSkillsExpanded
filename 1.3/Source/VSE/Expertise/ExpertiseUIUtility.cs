@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -170,12 +171,27 @@ namespace VSE
             GUI.EndGroup();
             if (Mouse.IsOver(holdingRect))
             {
-                var text = $"{"Level".Translate().CapitalizeFirst()} {expertise.Level}: {expertise.LevelDescriptor}\n\n" +
-                           expertise.def.FullDescription(expertise.Level);
+                var text = GetExpertiseDescription(expertise);
                 if (tooltipPrefix != "") text = tooltipPrefix + "\n\n" + text;
 
                 TooltipHandler.TipRegion(holdingRect, new TipSignal(text, expertise.def.GetHashCode() * 397945));
             }
+        }
+
+        private static string GetExpertiseDescription(ExpertiseRecord er)
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(string.Concat("Level".Translate().CapitalizeFirst() + " ", er.Level, ": ", er.LevelDescriptor));
+            if (Current.ProgramState == ProgramState.Playing)
+            {
+                string text = er.Level == 20 ? "Experience".Translate() : "ProgressToNextLevel".Translate();
+                stringBuilder.AppendLine(string.Concat(text, ": ", er.XpSinceLastLevel.ToString("F0"), " / ", er.XpRequiredForLevelUp));
+            }
+
+            stringBuilder.AppendLine();
+            stringBuilder.AppendLine();
+            stringBuilder.Append(er.def.FullDescription(er.Level));
+            return stringBuilder.ToString();
         }
     }
 }

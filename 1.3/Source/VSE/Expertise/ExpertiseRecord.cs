@@ -10,7 +10,6 @@ namespace VSE
     {
         public ExpertiseDef def;
         private int level;
-        private float xpSinceLastLevel;
 
         public ExpertiseRecord()
         {
@@ -34,7 +33,9 @@ namespace VSE
             }
         }
 
-        public float XpProgressPercent => xpSinceLastLevel / XpRequiredForLevelUp;
+        public float XpProgressPercent => XpSinceLastLevel / XpRequiredForLevelUp;
+
+        public float XpSinceLastLevel { get; private set; }
 
         public float XpRequiredForLevelUp => SkillRecord.XpRequiredToLevelUpFrom(level);
 
@@ -80,23 +81,23 @@ namespace VSE
 
         public void Learn(float xp)
         {
-            xpSinceLastLevel += xp;
-            while (xpSinceLastLevel >= XpRequiredForLevelUp)
+            XpSinceLastLevel += xp;
+            while (XpSinceLastLevel >= XpRequiredForLevelUp)
             {
-                xpSinceLastLevel -= XpRequiredForLevelUp;
+                XpSinceLastLevel -= XpRequiredForLevelUp;
                 level++;
                 if (level >= 20)
                 {
                     level = 20;
-                    xpSinceLastLevel = Mathf.Clamp(xpSinceLastLevel, 0f, XpRequiredForLevelUp - 1f);
-                    while (xpSinceLastLevel <= -1000f)
+                    XpSinceLastLevel = Mathf.Clamp(XpSinceLastLevel, 0f, XpRequiredForLevelUp - 1f);
+                    while (XpSinceLastLevel <= -1000f)
                     {
                         level--;
-                        xpSinceLastLevel += XpRequiredForLevelUp;
+                        XpSinceLastLevel += XpRequiredForLevelUp;
                         if (level <= 0)
                         {
                             level = 0;
-                            xpSinceLastLevel = 0f;
+                            XpSinceLastLevel = 0f;
                             break;
                         }
                     }
