@@ -6,9 +6,13 @@
     <li>1.3</li>
   </supportedVersions>
   <packageId>vanillaexpanded.skills</packageId>
-  <description>
-Improves skills.
-  </description>
+  <description>Vanilla Skills Expanded is a new mod that expands on the vanilla skills system by introducing expertise to the extremely broad skill categories that vanilla has. Only 1 expertise per pawn can be gained. Expertise can only be gained in skills with both a passion and more than 15 levels. In addition, other mods can add more to account for their own additions of tasks.
+
+Expertise will allow your pawns to truly excel in specific skills that fit their abilities and backstories. From planet-known roofers and architects to professional chefs and master duelists, this mod aims to add much more character to all the pawns.
+
+Expertise is a permanent choice, so be careful what you pick!
+
+This mod also introduces three new passion types - critical passion, natural passion and apathy!</description>
   <loadAfter>
     <li>Ludeon.RimWorld</li>
   </loadAfter>
