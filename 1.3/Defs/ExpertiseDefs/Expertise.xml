@@ -102,12 +102,12 @@
     </statOffsets>
   </VSE.Expertise.ExpertiseDef>
   <VSE.Expertise.ExpertiseDef>
-    <defName>Roofer</defName>
-    <label>Roofing</label>
+    <defName>Flooring</defName>
+    <label>Flooring</label>
     <skill>Construction</skill>
-    <description>An expertise in constructing and deconstructing roofs.</description>
+    <description>An expertise in constructing floors.</description>
     <statOffsets>
-      <VSE_RoofSpeed>0.05</VSE_RoofSpeed>
+      <VSE_FloorSpeed>0.05</VSE_FloorSpeed>
     </statOffsets>
   </VSE.Expertise.ExpertiseDef>
   <VSE.Expertise.ExpertiseDef>

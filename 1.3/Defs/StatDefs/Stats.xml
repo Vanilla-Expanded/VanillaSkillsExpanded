@@ -69,6 +69,19 @@
         </statFactors>
     </StatDef>
     <StatDef>
+        <defName>VSE_FloorSpeed</defName>
+        <label>floor work speed</label>
+        <description>How fast this pawn can work on floors.</description>
+        <category>PawnWork</category>
+        <defaultBaseValue>1</defaultBaseValue>
+        <minValue>0</minValue>
+        <toStringStyle>PercentOne</toStringStyle>
+        <toStringStyleUnfinalized>PercentOne</toStringStyleUnfinalized>
+        <statFactors>
+          <li>ConstructionSpeed</li>
+        </statFactors>
+    </StatDef>
+    <StatDef>
         <defName>VSE_RepairSpeed</defName>
         <label>repair speed</label>
         <description>How fast this pawn can do repairs.</description>

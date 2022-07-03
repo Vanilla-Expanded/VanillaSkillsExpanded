@@ -19,6 +19,7 @@ namespace VSE
         public void ExposeData()
         {
             Scribe_Collections.Look(ref expertise, "expertise", LookMode.Deep, Pawn);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && expertise == null) expertise = new List<ExpertiseRecord>();
         }
 
         public void AddExpertise(ExpertiseDef expertiseDef)

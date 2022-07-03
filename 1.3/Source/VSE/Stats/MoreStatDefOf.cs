@@ -15,6 +15,7 @@ namespace VSE.Stats
         public static StatDef VSE_RockChunkChance;
         public static StatDef VSE_RecruitRate;
         public static StatDef VSE_PeaceTalksChance;
+        public static StatDef VSE_FloorSpeed;
 
         static MoreStatDefOf()
         {

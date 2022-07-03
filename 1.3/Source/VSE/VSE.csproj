@@ -68,6 +68,7 @@
     <Compile Include="Stats\StatPatches.cs" />
     <Compile Include="Stats\MoreStatDefOf.cs" />
     <Compile Include="Stats\QualityUtility.cs" />
+    <Compile Include="Stats\StatUtility.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

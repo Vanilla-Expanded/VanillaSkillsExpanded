@@ -9,15 +9,14 @@ namespace VSE
         private static readonly Dictionary<Pawn_SkillTracker, ExpertiseTracker> trackers = new();
 
         public static ExpertiseTracker Expertise(this Pawn_SkillTracker tracker) =>
-            trackers.TryGetValue(tracker, out var expertise) ? expertise : Create(tracker);
+            trackers.TryGetValue(tracker, out var expertise) && expertise != null ? expertise : Create(tracker);
 
-        public static ExpertiseTracker Expertise(this Pawn pawn) =>
-            trackers.TryGetValue(pawn.skills, out var tracker) ? tracker : Create(pawn.skills);
+        public static ExpertiseTracker Expertise(this Pawn pawn) => pawn?.skills?.Expertise();
 
         public static ExpertiseTracker Create(Pawn_SkillTracker tracker)
         {
             var expertise = new ExpertiseTracker(tracker);
-            trackers.Add(tracker, expertise);
+            trackers.SetOrAdd(tracker, expertise);
             return expertise;
         }
 

@@ -27,6 +27,10 @@ namespace VSE.Stats
                 transpiler: new HarmonyMethod(myType, nameof(CraftingQualityTranspiler)));
             harm.Patch(AccessTools.Method(AccessTools.Inner(typeof(JobDriver_AffectRoof), "<>c__DisplayClass12_0"), "<MakeNewToils>b__1"),
                 transpiler: new HarmonyMethod(myType, nameof(RoofStatTranspiler)));
+            harm.Patch(AccessTools.PropertyGetter(typeof(JobDriver_RemoveFloor), nameof(JobDriver_RemoveFloor.SpeedStat)),
+                transpiler: new HarmonyMethod(myType, nameof(FloorStatTranspiler)));
+            harm.Patch(AccessTools.Method(AccessTools.Inner(typeof(JobDriver_ConstructFinishFrame), "<>c__DisplayClass4_0"), "<MakeNewToils>b__1"),
+                transpiler: new HarmonyMethod(myType, nameof(FloorStatOptionTranspiler)));
             harm.Patch(AccessTools.Method(AccessTools.Inner(typeof(JobDriver_Repair), "<>c__DisplayClass4_0"), "<MakeNewToils>b__1"),
                 transpiler: new HarmonyMethod(myType, nameof(RepairStatTranspiler)));
             harm.Patch(AccessTools.Method(typeof(Frame), nameof(Frame.CompleteConstruction)),
@@ -95,6 +99,9 @@ namespace VSE.Stats
         public static IEnumerable<CodeInstruction> RoofStatTranspiler(IEnumerable<CodeInstruction> instructions) =>
             instructions.StatReplacer(nameof(StatDefOf.ConstructionSpeed), nameof(MoreStatDefOf.VSE_RoofSpeed));
 
+        public static IEnumerable<CodeInstruction> FloorStatTranspiler(IEnumerable<CodeInstruction> instructions) =>
+            instructions.StatReplacer(nameof(StatDefOf.ConstructionSpeed), nameof(MoreStatDefOf.VSE_FloorSpeed));
+
         public static IEnumerable<CodeInstruction> RepairStatTranspiler(IEnumerable<CodeInstruction> instructions) =>
             instructions.StatReplacer(nameof(StatDefOf.ConstructionSpeed), nameof(MoreStatDefOf.VSE_RepairSpeed));
 
@@ -119,6 +126,18 @@ namespace VSE.Stats
                     yield return new CodeInstruction(OpCodes.Mul);
                 }
             }
+        }
+
+        public static IEnumerable<CodeInstruction> FloorStatOptionTranspiler(IEnumerable<CodeInstruction> instructions)
+        {
+            var statInfo = "ConstructionSpeed".StatInfo();
+            foreach (var instruction in instructions)
+                if (instruction.operand is FieldInfo info && info == statInfo)
+                {
+                    yield return new CodeInstruction(OpCodes.Ldloc_1);
+                    yield return CodeInstruction.Call(typeof(StatUtility), nameof(StatUtility.ConstructionStatForFrame));
+                }
+                else yield return instruction;
         }
 
         private static IEnumerable<CodeInstruction> StatReplacer(this IEnumerable<CodeInstruction> instructions, string oldStat, string newStat)
