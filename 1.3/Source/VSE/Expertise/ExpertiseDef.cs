@@ -2,6 +2,7 @@
 using System.Linq;
 using RimWorld;
 using Verse;
+using VSE.Passions;
 
 namespace VSE.Expertise
 {
@@ -21,7 +22,7 @@ namespace VSE.Expertise
                 return false;
             }
 
-            if (skillRecord.passion == Passion.None)
+            if (PassionManager.PassionToDef(skillRecord.passion).isBad)
             {
                 reason = "VSE.NoPassion".Translate();
                 return false;

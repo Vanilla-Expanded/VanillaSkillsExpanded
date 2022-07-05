@@ -31,6 +31,23 @@ namespace VSE.Passions
                 new HarmonyMethod(me, nameof(CurrentStateInternal_Prefix)));
             harm.Patch(AccessTools.Method(typeof(SkillRecord), nameof(SkillRecord.Interval)),
                 transpiler: new HarmonyMethod(me, nameof(Interval_Transpiler)));
+            harm.Patch(AccessTools.Method(typeof(SkillRecord), nameof(SkillRecord.Learn)),
+                transpiler: new HarmonyMethod(me, nameof(Learn_Transpiler)));
+            harm.Patch(AccessTools.Method(typeof(Page_ConfigureStartingPawns), nameof(Page_ConfigureStartingPawns.FindBestSkillOwner)),
+                transpiler: new HarmonyMethod(me, nameof(FindBestSkillOwner_Transpiler)));
+            harm.Patch(AccessTools.Method(typeof(Pawn_SkillTracker), nameof(Pawn_SkillTracker.MaxPassionOfRelevantSkillsFor)),
+                transpiler: new HarmonyMethod(me, nameof(MaxPassion_Transpiler)));
+            if (SkillsMod.InsaneSkills)
+            {
+                harm.Patch(AccessTools.Method(AccessTools.TypeByName("DucksInsaneSkills.DucksSkills_GetSkillDescription"), "Prefix"),
+                    transpiler: new HarmonyMethod(me, nameof(SkillDescription_Transpiler)));
+                harm.Patch(AccessTools.Method(AccessTools.TypeByName("DucksInsaneSkills.DucksSkills_GetSkillDescription"), "Prefix"),
+                    transpiler: new HarmonyMethod(me, nameof(DucksSkillDescription_Transpiler)) {priority = Priority.Low});
+                harm.Patch(AccessTools.Method(AccessTools.TypeByName("DucksInsaneSkills.DucksSkills_Learn"), "Prefix"),
+                    transpiler: new HarmonyMethod(me, nameof(Learn_Transpiler)));
+                harm.Unpatch(AccessTools.Method(typeof(SkillRecord), nameof(SkillRecord.LearnRateFactor)),
+                    AccessTools.Method(AccessTools.TypeByName("DucksInsaneSkills.DucksSkills_LearnRateFactor"), "Prefix"));
+            }
         }
 
         public static bool GenerateSkills_Prefix(Pawn pawn)
@@ -116,7 +133,7 @@ namespace VSE.Passions
 
         public static bool LearnRateFactor_Prefix(bool direct, SkillRecord __instance, ref float __result)
         {
-            if (DebugSettings.fastLearning) return true;
+            if (DebugSettings.fastLearning && !SkillsMod.InsaneSkills) return true;
             __result = __instance.pawn.skills.skills
                 .Except(__instance)
                 .Aggregate(PassionManager.PassionToDef(__instance.passion).learnRateFactor,
@@ -125,8 +142,11 @@ namespace VSE.Passions
             {
                 __result *= __instance.pawn.GetStatValue(StatDefOf.GlobalLearningFactor);
                 if (__instance.def == SkillDefOf.Animals) __result *= __instance.pawn.GetStatValue(StatDefOf.AnimalsLearningFactor);
-                if (__instance.LearningSaturatedToday) __result *= 0.2f;
+                if (!SkillsMod.InsaneSkills && __instance.LearningSaturatedToday) __result *= 0.2f;
             }
+
+            if (SkillsMod.InsaneSkills && ModCompat.ValueSkillCap > 0f)
+                __result = Math.Min(1f / (Math.Max(__instance.xpSinceMidnight, 0f) / __result) * ModCompat.ValueSkillCap, 1f);
 
             return false;
         }
@@ -146,27 +166,19 @@ namespace VSE.Passions
             return codes;
         }
 
-        public static IEnumerable<CodeInstruction> SkillDescription_Transpiler(IEnumerable<CodeInstruction> instructions)
-        {
-            var codes = instructions.ToList();
-            var idx1 = codes.FindIndex(ins => ins.opcode == OpCodes.Switch);
-            if (!codes[idx1 + 1].Branches(out var label) || label == null) throw new Exception("Failed to find jump");
-            var idx2 = codes.FindIndex(idx1, ins => ins.labels.Contains(label.Value));
-            idx1--;
-            codes.RemoveRange(idx1, idx2 - idx1 - 2);
-            codes.InsertRange(idx1, new[]
+        public static IEnumerable<CodeInstruction> SkillDescription_Transpiler(IEnumerable<CodeInstruction> instructions) =>
+            SwitchReplacer(instructions, load => new[]
             {
                 new CodeInstruction(OpCodes.Ldloc_0),
-                new CodeInstruction(OpCodes.Ldloc, 6),
+                load,
                 CodeInstruction.Call(typeof(PassionManager), nameof(PassionManager.PassionToDef)),
                 new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(PassionDef), nameof(PassionDef.FullDescription)))
-            });
-            return codes;
-        }
+            }, ins => ins.opcode == OpCodes.Callvirt);
 
         public static bool CurrentStateInternal_Prefix(Pawn p, ref ThoughtState __result)
         {
-            if (p?.jobs?.curDriver?.ActiveSkill is not { } def || p.skills?.GetSkill(def) is not {passion: > Passion.Major}) return true;
+            if (p?.jobs?.curDriver?.ActiveSkill is not { } def || p.skills?.GetSkill(def) is not {passion: var passion} ||
+                PassionManager.PassionToDef(passion).isBad) return true;
             __result = ThoughtState.ActiveAtStage(1);
             return false;
         }
@@ -185,6 +197,79 @@ namespace VSE.Passions
                     yield return new CodeInstruction(OpCodes.Stloc_0);
                 }
             }
+        }
+
+        public static IEnumerable<CodeInstruction> DucksSkillDescription_Transpiler(IEnumerable<CodeInstruction> instructions) =>
+            SwitchReplacer(instructions, load => new[]
+            {
+                load,
+                CodeInstruction.Call(typeof(PassionManager), nameof(PassionManager.PassionToDef)),
+                new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(PassionDef), nameof(PassionDef.learnRateFactor))),
+                new CodeInstruction(OpCodes.Stloc_3)
+            });
+
+        public static IEnumerable<CodeInstruction> FindBestSkillOwner_Transpiler(IEnumerable<CodeInstruction> instructions) =>
+            CompareReplacer(instructions, ins => ins.opcode == OpCodes.Ble_S);
+
+        public static IEnumerable<CodeInstruction> MaxPassion_Transpiler(IEnumerable<CodeInstruction> instructions) =>
+            CompareReplacer(instructions, ins => ins.opcode == OpCodes.Ble_S);
+
+        public static IEnumerable<CodeInstruction> Learn_Transpiler(IEnumerable<CodeInstruction> instructions) => IsBadReplacer(instructions);
+
+        private static IEnumerable<CodeInstruction> SwitchReplacer(IEnumerable<CodeInstruction> instructions,
+            Func<CodeInstruction, IEnumerable<CodeInstruction>> getReplace, Predicate<CodeInstruction> findPreserve = null,
+            Predicate<CodeInstruction> additionalCheck = null)
+        {
+            var codes = instructions.ToList();
+            var idx1 = codes.FindIndex(ins => ins.opcode == OpCodes.Switch && (additionalCheck == null || additionalCheck(ins)));
+            var label1 = ((Label[]) codes[idx1].operand)[0];
+            var idx5 = codes.FindIndex(idx1, ins => ins.labels.Contains(label1));
+            var idx6 = codes.FindIndex(idx5, ins => ins.opcode == OpCodes.Br_S);
+            if (!codes[idx6].Branches(out var label) || label == null) throw new Exception("Failed to find jump");
+            var idx2 = codes.FindIndex(idx1, ins => ins.labels.Contains(label.Value));
+            var idx3 = findPreserve == null ? idx2 : codes.FindLastIndex(idx2, findPreserve);
+            var idx4 = codes.FindLastIndex(idx1, ins => ins.opcode == OpCodes.Ldloc_S);
+            var load = codes[idx4].Clone();
+            codes.RemoveRange(idx4, idx3 - idx4);
+            codes.InsertRange(idx4, getReplace(load));
+            return codes;
+        }
+
+        private static IEnumerable<CodeInstruction> CompareReplacer(IEnumerable<CodeInstruction> instructions, Predicate<CodeInstruction> doReplace,
+            bool ble = true)
+        {
+            var codes = instructions.ToList();
+            int idx1;
+            while ((idx1 = codes.FindIndex(doReplace)) >= 0)
+            {
+                var label = (Label) codes[idx1].operand;
+                codes.RemoveAt(idx1);
+                codes.InsertRange(idx1, new[]
+                {
+                    CodeInstruction.Call(typeof(PassionManager), nameof(PassionManager.ComparePassions)),
+                    ble ? new CodeInstruction(OpCodes.Brfalse, label) : new CodeInstruction(OpCodes.Brtrue, label)
+                });
+            }
+
+            return codes;
+        }
+
+        private static IEnumerable<CodeInstruction> IsBadReplacer(IEnumerable<CodeInstruction> instructions)
+        {
+            var codes = instructions.ToList();
+            var info = AccessTools.Field(typeof(SkillRecord), nameof(SkillRecord.passion));
+            var idx1 = codes.FindIndex(ins => ins.LoadsField(info));
+            Label? label = null;
+            var idx2 = codes.FindIndex(idx1, ins => ins.Branches(out label));
+            if (label == null) throw new Exception("Failed to find jump");
+            codes.RemoveRange(idx1 + 1, idx2 - idx1);
+            codes.InsertRange(idx1 + 1, new[]
+            {
+                CodeInstruction.Call(typeof(PassionManager), nameof(PassionManager.PassionToDef)),
+                new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(PassionDef), nameof(PassionDef.isBad))),
+                new CodeInstruction(OpCodes.Brfalse, label)
+            });
+            return codes;
         }
     }
 }

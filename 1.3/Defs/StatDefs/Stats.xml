@@ -41,6 +41,7 @@
         <hideAtValue>0</hideAtValue>
         <toStringStyle>PercentOne</toStringStyle>
         <toStringStyleUnfinalized>PercentTwo</toStringStyleUnfinalized>
+        <disableIfSkillDisabled>Artistic</disableIfSkillDisabled>
     </StatDef>
     <StatDef>
         <defName>VSE_ArtSpeed</defName>
@@ -51,6 +52,7 @@
         <minValue>0</minValue>
         <toStringStyle>PercentOne</toStringStyle>
         <toStringStyleUnfinalized>PercentOne</toStringStyleUnfinalized>
+        <disableIfSkillDisabled>Artistic</disableIfSkillDisabled>
         <statFactors>
           <li>GeneralLaborSpeed</li>
         </statFactors>
@@ -64,6 +66,7 @@
         <minValue>0</minValue>
         <toStringStyle>PercentOne</toStringStyle>
         <toStringStyleUnfinalized>PercentOne</toStringStyleUnfinalized>
+        <disableIfSkillDisabled>Construction</disableIfSkillDisabled>
         <statFactors>
           <li>ConstructionSpeed</li>
         </statFactors>
@@ -77,6 +80,7 @@
         <minValue>0</minValue>
         <toStringStyle>PercentOne</toStringStyle>
         <toStringStyleUnfinalized>PercentOne</toStringStyleUnfinalized>
+        <disableIfSkillDisabled>Construction</disableIfSkillDisabled>
         <statFactors>
           <li>ConstructionSpeed</li>
         </statFactors>
@@ -90,6 +94,7 @@
         <minValue>0</minValue>
         <toStringStyle>PercentOne</toStringStyle>
         <toStringStyleUnfinalized>PercentOne</toStringStyleUnfinalized>
+        <disableIfSkillDisabled>Construction</disableIfSkillDisabled>
     </StatDef>
     <StatDef>
         <defName>VSE_ConstructQuality</defName>
@@ -101,6 +106,7 @@
         <hideAtValue>0</hideAtValue>
         <toStringStyle>PercentOne</toStringStyle>
         <toStringStyleUnfinalized>PercentOne</toStringStyleUnfinalized>
+        <disableIfSkillDisabled>Construction</disableIfSkillDisabled>
     </StatDef>
     <StatDef>
       <defName>VSE_TailoringSpeed</defName>
@@ -111,6 +117,7 @@
       <minValue>0</minValue>
       <toStringStyle>PercentOne</toStringStyle>
       <toStringStyleUnfinalized>PercentOne</toStringStyleUnfinalized>
+      <disableIfSkillDisabled>Crafting</disableIfSkillDisabled>
       <statFactors>
         <li>GeneralLaborSpeed</li>
       </statFactors>
@@ -125,6 +132,7 @@
       <hideAtValue>1</hideAtValue>
       <toStringStyle>PercentOne</toStringStyle>
       <toStringStyleUnfinalized>PercentOne</toStringStyleUnfinalized>
+      <disableIfSkillDisabled>Crafting</disableIfSkillDisabled>
       <statFactors>
         <li>GeneralLaborSpeed</li>
       </statFactors>
@@ -139,6 +147,7 @@
       <hideAtValue>1</hideAtValue>
       <toStringStyle>PercentOne</toStringStyle>
       <toStringStyleUnfinalized>PercentOne</toStringStyleUnfinalized>
+      <disableIfSkillDisabled>Crafting</disableIfSkillDisabled>
       <statFactors>
         <li>GeneralLaborSpeed</li>
       </statFactors>
@@ -152,6 +161,7 @@
       <minValue>0</minValue>
       <toStringStyle>PercentOne</toStringStyle>
       <toStringStyleUnfinalized>PercentTwo</toStringStyleUnfinalized>
+      <disableIfSkillDisabled>Mining</disableIfSkillDisabled>
     </StatDef>
     <StatDef>
       <defName>VSE_RecruitRate</defName>
@@ -162,6 +172,7 @@
       <minValue>0</minValue>
       <toStringStyle>PercentOne</toStringStyle>
       <toStringStyleUnfinalized>PercentTwo</toStringStyleUnfinalized>
+      <disableIfSkillDisabled>Social</disableIfSkillDisabled>
       <statFactors>
         <li>NegotiationAbility</li>
       </statFactors>
@@ -175,6 +186,7 @@
       <minValue>0</minValue>
       <toStringStyle>PercentOne</toStringStyle>
       <toStringStyleUnfinalized>PercentTwo</toStringStyleUnfinalized>
+      <disableIfSkillDisabled>Social</disableIfSkillDisabled>
       <statFactors>
         <li>NegotiationAbility</li>
       </statFactors>

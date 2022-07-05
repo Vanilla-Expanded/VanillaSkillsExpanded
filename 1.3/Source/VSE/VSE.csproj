@@ -60,6 +60,7 @@
     <Compile Include="Expertise\ExpertiseTrackers.cs" />
     <Compile Include="Expertise\ExpertiseUIUtility.cs" />
     <Compile Include="Expertise\ExpertisePatches.cs" />
+    <Compile Include="ModCompat.cs" />
     <Compile Include="Passions\PassionDef.cs" />
     <Compile Include="Passions\PassionManager.cs" />
     <Compile Include="Passions\PassionPatches.cs" />

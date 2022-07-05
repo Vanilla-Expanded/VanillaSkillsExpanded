@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using HarmonyLib;
+﻿using HarmonyLib;
 using RimWorld;
+using UnityEngine;
 using Verse;
 using VSE.Expertise;
 using VSE.Passions;
@@ -10,22 +10,57 @@ namespace VSE
 {
     public class SkillsMod : Mod
     {
-        private static Dictionary<SkillDef, List<ExpertiseDef>> expertiseForSkill;
+        public static bool InsaneSkills;
+        public static SkillsModSettings Settings;
+        public static Harmony Harm;
 
         public SkillsMod(ModContentPack content) : base(content)
         {
-            var harm = new Harmony("vanillaexpanded.skills");
-            ExpertisePatches.Do(harm);
-            StatPatches.Do(harm);
-            PassionPatches.Do(harm);
-            LongEventHandler.ExecuteWhenFinished(delegate
-            {
-                expertiseForSkill = new Dictionary<SkillDef, List<ExpertiseDef>>();
-                foreach (var skill in DefDatabase<SkillDef>.AllDefs) expertiseForSkill.Add(skill, new List<ExpertiseDef>());
-                foreach (var expertiseDef in DefDatabase<ExpertiseDef>.AllDefs) expertiseForSkill[expertiseDef.skill].Add(expertiseDef);
-            });
+            Harm = new Harmony("vanillaexpanded.skills");
+            InsaneSkills = ModLister.HasActiveModWithName("Ducks' Insane Skills");
+            Settings = GetSettings<SkillsModSettings>();
+            ExpertisePatches.Do(Harm);
+            StatPatches.Do(Harm);
+            PassionPatches.Do(Harm);
+            ApplySettings();
+            ModCompat.Init();
         }
 
-        public static IEnumerable<ExpertiseDef> AllExpertiseForSkill(SkillDef skill) => expertiseForSkill[skill];
+        public override string SettingsCategory() => "VSE".Translate();
+
+        public override void DoSettingsWindowContents(Rect inRect)
+        {
+            base.DoSettingsWindowContents(inRect);
+            var listing = new Listing_Standard();
+            listing.Begin(inRect);
+            if (InsaneSkills) listing.CheckboxLabeled("VSE.EnableSkillLoss".Translate(), ref Settings.EnableSkillLoss, "VSE.EnableSkillsLoss.Desc".Translate());
+            listing.End();
+        }
+
+        public override void WriteSettings()
+        {
+            base.WriteSettings();
+            ApplySettings();
+        }
+
+        private static void ApplySettings()
+        {
+            if (InsaneSkills && Settings.EnableSkillLoss)
+            {
+                var type = AccessTools.TypeByName("DucksInsaneSkills.DucksSkills_Interval");
+                Harm.Unpatch(AccessTools.Method(typeof(SkillRecord), "Interval"), AccessTools.Method(type, "Prefix"));
+            }
+        }
+    }
+
+    public class SkillsModSettings : ModSettings
+    {
+        public bool EnableSkillLoss;
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Values.Look(ref EnableSkillLoss, "enableSkillsLoss");
+        }
     }
 }

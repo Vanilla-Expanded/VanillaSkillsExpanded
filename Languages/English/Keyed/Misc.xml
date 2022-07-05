@@ -29,4 +29,7 @@
     <VSE.NoPassion>No passion</VSE.NoPassion>
     <VSE.SkillTooLow>Insufficient skill</VSE.SkillTooLow>
     <VSE.MaxExpertise>At max expertise</VSE.MaxExpertise>
+    <VSE>Vanilla Skills Expanded</VSE>
+    <VSE.EnableSkillLoss>Re-enable skill loss</VSE.EnableSkillLoss>
+    <VSE.EnableSkillsLoss.Desc>By default, Ducks' Insane Skills disables all skill loss. By selecting this option, this mod will override Ducks and enable it again. Use this if you still want to be able to take advantage of the forget speed changes in the new passions.</VSE.EnableSkillsLoss.Desc>
 </LanguageData>

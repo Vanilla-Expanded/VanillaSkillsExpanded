@@ -25,5 +25,8 @@ namespace VSE.Passions
         public static PassionDef PassionToDef(Passion passion) => Passions[(ushort) passion];
 
         public static float ForgetRateFactor(this SkillRecord skillRecord) => PassionToDef(skillRecord.passion).forgetRateFactor;
+
+        public static bool ComparePassions(Passion passion1, Passion passion2) =>
+            PassionToDef(passion1).learnRateFactor > PassionToDef(passion2).learnRateFactor;
     }
 }
