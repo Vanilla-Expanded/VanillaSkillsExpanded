@@ -53,6 +53,7 @@
     <Publicize Include="Assembly-CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterEditorPatches.cs" />
     <Compile Include="Expertise\Alert_ExpertiseAvailable.cs" />
     <Compile Include="Expertise\ExpertiseDef.cs" />
     <Compile Include="Expertise\ExpertiseRecord.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Passions\PassionDef.cs" />
     <Compile Include="Passions\PassionManager.cs" />
     <Compile Include="Passions\PassionPatches.cs" />
+    <Compile Include="PrepareCarefullyPatches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkillsMod.cs" />
     <Compile Include="Stats\StatPatches.cs" />
