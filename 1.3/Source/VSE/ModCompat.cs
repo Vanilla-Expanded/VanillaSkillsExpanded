@@ -15,6 +15,7 @@ public static class ModCompat
         {
             insaneSetting = AccessTools.FieldRefAccess<object>("DucksInsaneSkills.DucksInsaneSkillsMod:settings");
             valueSkillCap = AccessTools.FieldRefAccess<int>("DucksInsaneSkills.DucksInsaneSkillsSettings:ValueSkillCap");
+            InsaneSkillsPatches.Do(SkillsMod.Harm);
         }
 
         if (SkillsMod.CharacterEditor) CharacterEditorPatches.Do(SkillsMod.Harm);

@@ -37,17 +37,6 @@ public static class PassionPatches
             transpiler: new HarmonyMethod(me, nameof(FindBestSkillOwner_Transpiler)));
         harm.Patch(AccessTools.Method(typeof(Pawn_SkillTracker), nameof(Pawn_SkillTracker.MaxPassionOfRelevantSkillsFor)),
             transpiler: new HarmonyMethod(me, nameof(MaxPassion_Transpiler)));
-        if (SkillsMod.InsaneSkills)
-        {
-            harm.Patch(AccessTools.Method(AccessTools.TypeByName("DucksInsaneSkills.DucksSkills_GetSkillDescription"), "Prefix"),
-                transpiler: new HarmonyMethod(me, nameof(SkillDescription_Transpiler)));
-            harm.Patch(AccessTools.Method(AccessTools.TypeByName("DucksInsaneSkills.DucksSkills_GetSkillDescription"), "Prefix"),
-                transpiler: new HarmonyMethod(me, nameof(DucksSkillDescription_Transpiler)) { priority = Priority.Low });
-            harm.Patch(AccessTools.Method(AccessTools.TypeByName("DucksInsaneSkills.DucksSkills_Learn"), "Prefix"),
-                transpiler: new HarmonyMethod(me, nameof(Learn_Transpiler)));
-            harm.Unpatch(AccessTools.Method(typeof(SkillRecord), nameof(SkillRecord.LearnRateFactor)),
-                AccessTools.Method(AccessTools.TypeByName("DucksInsaneSkills.DucksSkills_LearnRateFactor"), "Prefix"));
-        }
     }
 
     public static bool GenerateSkills_Prefix(Pawn pawn)
@@ -199,15 +188,6 @@ public static class PassionPatches
         }
     }
 
-    public static IEnumerable<CodeInstruction> DucksSkillDescription_Transpiler(IEnumerable<CodeInstruction> instructions) =>
-        SwitchReplacer(instructions, load => new[]
-        {
-            load,
-            CodeInstruction.Call(typeof(PassionManager), nameof(PassionManager.PassionToDef)),
-            new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(PassionDef), nameof(PassionDef.learnRateFactor))),
-            new CodeInstruction(OpCodes.Stloc_3)
-        });
-
     public static IEnumerable<CodeInstruction> FindBestSkillOwner_Transpiler(IEnumerable<CodeInstruction> instructions) =>
         CompareReplacer(instructions, ins => ins.opcode == OpCodes.Ble_S);
 
@@ -216,7 +196,7 @@ public static class PassionPatches
 
     public static IEnumerable<CodeInstruction> Learn_Transpiler(IEnumerable<CodeInstruction> instructions) => IsBadReplacer(instructions);
 
-    private static IEnumerable<CodeInstruction> SwitchReplacer(IEnumerable<CodeInstruction> instructions,
+    internal static IEnumerable<CodeInstruction> SwitchReplacer(IEnumerable<CodeInstruction> instructions,
         Func<CodeInstruction, IEnumerable<CodeInstruction>> getReplace, Predicate<CodeInstruction> findPreserve = null,
         Predicate<CodeInstruction> additionalCheck = null)
     {
