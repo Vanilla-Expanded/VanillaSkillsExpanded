@@ -28,12 +28,14 @@ public static class PrepareCarefullyPatches
     public static bool IncreasePassion_Prefix(SkillRecord record, UpdateSkillPassionHandler ___SkillPassionUpdated)
     {
         ___SkillPassionUpdated(record.def, record.passion.ChangePassion(1));
+        LearnRateFactorCache.ClearCacheFor(record);
         return false;
     }
 
     public static bool DecreasePassion_Prefix(SkillRecord record, UpdateSkillPassionHandler ___SkillPassionUpdated)
     {
         ___SkillPassionUpdated(record.def, record.passion.ChangePassion(-1));
+        LearnRateFactorCache.ClearCacheFor(record);
         return false;
     }
 

@@ -25,7 +25,8 @@
     <VSE.SelectExpertise>Select expertise</VSE.SelectExpertise>
     <VSE.ExpertiseDesc>Selecting an expertise will unlock a new skill that your pawn will level up, granting them powerful, but very specific bonuses.\nYou can only select {0} expertise, and only in skills your pawns is passionate about.</VSE.ExpertiseDesc>
     <VSE.ExpertiseAvailableDesc>Your colonist has reached high enough level in a skill they are passionate about that they can gain expertise.\n\nConsider picking an expertise for them to gain new bonuses to the work type they are good at.\n\nColonists that can get expertise:\n\n</VSE.ExpertiseAvailableDesc>
-    <VSE.LearnsForgets>   - Learns {0}\n   - Forgets {1}</VSE.LearnsForgets>
+    <VSE.LearnsForgets>\n   - Learns {0}\n   - Forgets {1}</VSE.LearnsForgets>
+    <VSE.LearnOther>\n   - Learns Others {0}</VSE.LearnOther>
     <VSE.NoPassion>No passion</VSE.NoPassion>
     <VSE.SkillTooLow>Insufficient skill</VSE.SkillTooLow>
     <VSE.MaxExpertise>At max expertise</VSE.MaxExpertise>

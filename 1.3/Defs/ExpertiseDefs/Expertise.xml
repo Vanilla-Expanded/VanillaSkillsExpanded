@@ -42,7 +42,7 @@
     <skill>Melee</skill>
     <description>An expertise in the fast-paced armed melee combat.</description>
     <statOffsets>
-      <VSE_MeleeCooldownFactor>-0.05</VSE_MeleeCooldownFactor>
+      <VSE_MeleeCooldownFactor>-0.025</VSE_MeleeCooldownFactor>
     </statOffsets>
   </VSE.Expertise.ExpertiseDef>
   <VSE.Expertise.ExpertiseDef>

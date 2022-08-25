@@ -5,6 +5,7 @@ using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using VSE.Expertise;
 using VSE.Passions;
 
 namespace VSE;
@@ -17,6 +18,9 @@ public static class CharacterEditorPatches
             "ATogglePassion"), new HarmonyMethod(typeof(CharacterEditorPatches), nameof(ATogglePassion_Prefix)));
         harm.Patch(AccessTools.Method(AccessTools.Inner(AccessTools.Inner(AccessTools.TypeByName("CharacterEditor.CEditor"), "EditorUI"), "BlockBio"),
             "ARandomSkills"), transpiler: new HarmonyMethod(typeof(CharacterEditorPatches), nameof(ARandomSkills_Transpiler)));
+        harm.Patch(AccessTools.Method(AccessTools.Inner(AccessTools.Inner(AccessTools.TypeByName("CharacterEditor.CEditor"), "EditorUI"), "BlockBio"),
+                "DrawSkills"), new HarmonyMethod(typeof(CharacterEditorPatches), nameof(DrawSkills_Prefix)),
+            new HarmonyMethod(typeof(CharacterEditorPatches), nameof(DrawSkills_Postfix)));
         harm.Patch(AccessTools.Method(AccessTools.Inner(AccessTools.Inner(AccessTools.TypeByName("CharacterEditor.CEditor"), "EditorUI"), "BlockPerson"),
             "ARandomizeBio"), transpiler: new HarmonyMethod(typeof(CharacterEditorPatches), nameof(ARandomSkills_Transpiler)));
         harm.Patch(AccessTools.Method(AccessTools.TypeByName("CharacterEditor.SkillTool"), "SetSkillsFromSeparatedString"),
@@ -28,7 +32,11 @@ public static class CharacterEditorPatches
     public static bool ATogglePassion_Prefix(SkillRecord record)
     {
         Find.WindowStack.Add(new FloatMenu(DefDatabase<PassionDef>.AllDefs.Select(passion =>
-            new FloatMenuOption(passion.LabelCap, () => { record.passion = (Passion)passion.index; }, passion.Icon, Color.white)).ToList()));
+            new FloatMenuOption(passion.LabelCap, () =>
+            {
+                record.passion = (Passion)passion.index;
+                LearnRateFactorCache.ClearCacheFor(record);
+            }, passion.Icon, Color.white)).ToList()));
         return false;
     }
 
@@ -45,6 +53,16 @@ public static class CharacterEditorPatches
     }
 
     public static Passion RandomPassion() => (Passion)DefDatabase<PassionDef>.AllDefs.RandomElement().index;
+
+    public static void DrawSkills_Prefix()
+    {
+        ExpertisePatches.ForceVanillaSkills = true;
+    }
+
+    public static void DrawSkills_Postfix()
+    {
+        ExpertisePatches.ForceVanillaSkills = false;
+    }
 
     public static IEnumerable<CodeInstruction> SetSkillsAsSeparatedString_Transpiler(IEnumerable<CodeInstruction> instructions)
     {

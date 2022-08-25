@@ -122,19 +122,16 @@ public static class PassionPatches
 
     public static bool LearnRateFactor_Prefix(bool direct, SkillRecord __instance, ref float __result)
     {
-        if (DebugSettings.fastLearning && !SkillsMod.InsaneSkills) return true;
-        __result = __instance.pawn.skills.skills
-            .Except(__instance)
-            .Aggregate(PassionManager.PassionToDef(__instance.passion).learnRateFactor,
-                (current, skillRecord) => current * PassionManager.PassionToDef(skillRecord.passion).learnRateFactorOther);
+        if (DebugSettings.fastLearning && !ModCompat.InsaneSkills) return true;
+        __result = __instance.LearnRateFactorBase();
         if (!direct)
         {
             __result *= __instance.pawn.GetStatValue(StatDefOf.GlobalLearningFactor);
             if (__instance.def == SkillDefOf.Animals) __result *= __instance.pawn.GetStatValue(StatDefOf.AnimalsLearningFactor);
-            if (!SkillsMod.InsaneSkills && __instance.LearningSaturatedToday) __result *= 0.2f;
+            if (!ModCompat.InsaneSkills && __instance.LearningSaturatedToday) __result *= 0.2f;
         }
 
-        if (SkillsMod.InsaneSkills && ModCompat.ValueSkillCap > 0f)
+        if (ModCompat.InsaneSkills && ModCompat.ValueSkillCap > 0f)
             __result = Math.Min(1f / (Math.Max(__instance.xpSinceMidnight, 0f) / __result) * ModCompat.ValueSkillCap, 1f);
 
         return false;

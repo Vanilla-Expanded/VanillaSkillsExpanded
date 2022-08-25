@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using RimWorld;
 using UnityEngine;
 using Verse;
 using VSE.Expertise;
@@ -10,24 +9,18 @@ namespace VSE;
 
 public class SkillsMod : Mod
 {
-    public static bool InsaneSkills;
-    public static bool CharacterEditor;
-    public static bool PrepareCarefully;
     public static SkillsModSettings Settings;
     public static Harmony Harm;
 
     public SkillsMod(ModContentPack content) : base(content)
     {
         Harm = new Harmony("vanillaexpanded.skills");
-        InsaneSkills = ModLister.HasActiveModWithName("Ducks' Insane Skills");
-        CharacterEditor = ModLister.HasActiveModWithName("Character Editor");
-        PrepareCarefully = ModLister.HasActiveModWithName("EdB Prepare Carefully");
         Settings = GetSettings<SkillsModSettings>();
         ExpertisePatches.Do(Harm);
         StatPatches.Do(Harm);
         PassionPatches.Do(Harm);
-        ApplySettings();
         ModCompat.Init();
+        ApplySettings();
     }
 
     public override string SettingsCategory() => "VSE".Translate();
@@ -37,7 +30,8 @@ public class SkillsMod : Mod
         base.DoSettingsWindowContents(inRect);
         var listing = new Listing_Standard();
         listing.Begin(inRect);
-        if (InsaneSkills) listing.CheckboxLabeled("VSE.EnableSkillLoss".Translate(), ref Settings.EnableSkillLoss, "VSE.EnableSkillsLoss.Desc".Translate());
+        if (ModCompat.InsaneSkills)
+            listing.CheckboxLabeled("VSE.EnableSkillLoss".Translate(), ref Settings.EnableSkillLoss, "VSE.EnableSkillsLoss.Desc".Translate());
         listing.End();
     }
 
@@ -49,11 +43,7 @@ public class SkillsMod : Mod
 
     private static void ApplySettings()
     {
-        if (InsaneSkills && Settings.EnableSkillLoss)
-        {
-            var type = AccessTools.TypeByName("DucksInsaneSkills.DucksSkills_Interval");
-            Harm.Unpatch(AccessTools.Method(typeof(SkillRecord), "Interval"), AccessTools.Method(type, "Prefix"));
-        }
+        if (ModCompat.InsaneSkills) InsaneSkillsPatches.UpdateSkillLoss(Settings.EnableSkillLoss, Harm);
     }
 }
 
