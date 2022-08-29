@@ -22,6 +22,8 @@ public class PassionDef : Def
                                      (Mathf.Approximately(learnRateFactorOther, 1f)
                                          ? ""
                                          : "VSE.LearnOther".Translate(learnRateFactorOther.ToStringPercent()).Resolve());
+
+    public bool IsCritical => !Mathf.Approximately(learnRateFactorOther, 1f);
 }
 
 [DefOf]

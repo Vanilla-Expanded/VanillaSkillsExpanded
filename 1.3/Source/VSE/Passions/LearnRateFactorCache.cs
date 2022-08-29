@@ -7,7 +7,7 @@ namespace VSE.Passions;
 
 public static class LearnRateFactorCache
 {
-    private static readonly ConditionalWeakTable<SkillRecord, CacheData> cache = new();
+    private static ConditionalWeakTable<SkillRecord, CacheData> cache = new();
 
     public static float LearnRateFactorBase(this SkillRecord sr) => cache.GetValue(sr, sr => new CacheData { Value = GetValueFor(sr) }).Value;
 
@@ -16,10 +16,18 @@ public static class LearnRateFactorCache
         cache.Remove(sr);
     }
 
-    private static float GetValueFor(SkillRecord sr) => sr.pawn.skills.skills
-        .Except(sr)
-        .Aggregate(PassionManager.PassionToDef(sr.passion).learnRateFactor,
-            (current, skillRecord) => current * PassionManager.PassionToDef(skillRecord.passion).learnRateFactorOther);
+    public static void ClearCache() => cache = new ConditionalWeakTable<SkillRecord, CacheData>();
+
+    private static float GetValueFor(SkillRecord sr)
+    {
+        var passionDef = PassionManager.PassionToDef(sr.passion);
+        if (SkillsMod.Settings.CriticalEffectPassions || passionDef.isBad)
+            return sr.pawn.skills.skills
+                .Except(sr)
+                .Aggregate(passionDef.learnRateFactor,
+                    (current, skillRecord) => current * PassionManager.PassionToDef(skillRecord.passion).learnRateFactorOther);
+        return passionDef.learnRateFactor;
+    }
 
     private class CacheData
     {

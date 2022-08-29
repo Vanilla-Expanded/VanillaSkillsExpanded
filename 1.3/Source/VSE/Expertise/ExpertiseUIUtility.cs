@@ -114,7 +114,7 @@ public static class ExpertiseUIUtility
         Widgets.EndScrollView();
 
         Text.Font = GameFont.Tiny;
-        Widgets.Label(textRect, "VSE.ExpertiseDesc".Translate(ExpertiseDef.MaxExpertise).Colorize(ColoredText.SubtleGrayColor));
+        Widgets.Label(textRect, "VSE.ExpertiseDesc".Translate(SkillsMod.Settings.MaxExpertise).Colorize(ColoredText.SubtleGrayColor));
 
         Text.Font = font;
         Text.Anchor = anchor;

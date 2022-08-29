@@ -53,6 +53,7 @@
     <Publicize Include="Assembly-CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebugActionsSkills.cs" />
     <Compile Include="ModCompat\CharacterEditorPatches.cs" />
     <Compile Include="Expertise\Alert_ExpertiseAvailable.cs" />
     <Compile Include="Expertise\ExpertiseDef.cs" />

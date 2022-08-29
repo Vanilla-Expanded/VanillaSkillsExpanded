@@ -13,25 +13,28 @@ Expertise will allow your pawns to truly excel in specific skills that fit their
 Expertise is a permanent choice, so be careful what you pick!
 
 This mod also introduces three new passion types - critical passion, natural passion and apathy!</description>
-<modDependencies>
-  <li>
-    <packageId>brrainz.harmony</packageId>
-    <displayName>Harmony</displayName>
-    <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
-    <steamWorkshopUrl>https://steamcommunity.com/workshop/filedetails/?id=2009463077</steamWorkshopUrl>
-  </li>
-  <li>
-    <packageId>OskarPotocki.VanillaFactionsExpanded.Core</packageId>
-    <displayName>Vanilla Expanded Framework</displayName>
-    <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2023507013</steamWorkshopUrl>
-  </li>
-</modDependencies>
-<loadAfter>
-  <li>Ludeon.RimWorld</li>
-  <li>Ludeon.RimWorld.Royalty</li>
-  <li>Ludeon.RimWorld.Ideology</li>
-  <li>brrainz.harmony</li>
-  <li>OskarPotocki.VanillaFactionsExpanded.Core</li>
-  <li>ducks.insaneskills</li>
-</loadAfter>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+      <steamWorkshopUrl>https://steamcommunity.com/workshop/filedetails/?id=2009463077</steamWorkshopUrl>
+    </li>
+    <li>
+      <packageId>OskarPotocki.VanillaFactionsExpanded.Core</packageId>
+      <displayName>Vanilla Expanded Framework</displayName>
+      <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2023507013</steamWorkshopUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>Ludeon.RimWorld</li>
+    <li>Ludeon.RimWorld.Royalty</li>
+    <li>Ludeon.RimWorld.Ideology</li>
+    <li>brrainz.harmony</li>
+    <li>OskarPotocki.VanillaFactionsExpanded.Core</li>
+    <li>ducks.insaneskills</li>
+  </loadAfter>
+  <loadBefore>
+    <li>ratys.madskills</li>
+  </loadBefore>
 </ModMetaData>

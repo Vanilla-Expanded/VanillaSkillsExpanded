@@ -48,18 +48,27 @@ public static class PassionPatches
         }
 
         var num = 5f + Mathf.Clamp(Rand.Gaussian(), -4f, 4f);
+        var hasCritical = false;
         foreach (var skillRecord in from skillRecord in pawn.skills.skills
                  from trait in pawn.story.traits.allTraits
                  where trait.def.RequiresPassion(skillRecord.def)
                  select skillRecord)
         {
-            skillRecord.passion = (Passion)DefDatabase<PassionDef>.AllDefs.Where(def => !def.isBad).RandomElementByWeight(def => def.commonality).index;
+            var hasCriticalInt = hasCritical;
+            var passionDef = DefDatabase<PassionDef>.AllDefs
+                .Where(def => !def.isBad && (SkillsMod.Settings.AllowMultipleCritical || !hasCriticalInt || !def.IsCritical))
+                .RandomElementByWeight(def => def.commonality);
+            if (passionDef.IsCritical) hasCritical = true;
+            skillRecord.passion = (Passion)passionDef.index;
             num -= 1f;
         }
 
         while (num >= 1f)
         {
-            var passion = DefDatabase<PassionDef>.AllDefs.RandomElementByWeight(def => def.commonality);
+            var hasCriticalInt = hasCritical;
+            var passion = DefDatabase<PassionDef>.AllDefs
+                .Where(def => SkillsMod.Settings.AllowMultipleCritical || !hasCriticalInt || !def.IsCritical)
+                .RandomElementByWeight(def => def.commonality);
             SkillRecord skillRecord;
             if (passion.isBad)
             {
@@ -73,6 +82,7 @@ public static class PassionPatches
                 skillRecord = pawn.skills.skills.RandomElementByWeight(sr => sr.Level);
             }
 
+            if (passion.IsCritical) hasCritical = true;
             skillRecord.passion = (Passion)passion.index;
         }
 
@@ -128,7 +138,7 @@ public static class PassionPatches
         {
             __result *= __instance.pawn.GetStatValue(StatDefOf.GlobalLearningFactor);
             if (__instance.def == SkillDefOf.Animals) __result *= __instance.pawn.GetStatValue(StatDefOf.AnimalsLearningFactor);
-            if (!ModCompat.InsaneSkills && __instance.LearningSaturatedToday) __result *= 0.2f;
+            if (!ModCompat.InsaneSkills && __instance.LearningSaturatedToday) __result *= ModCompat.MadSkills ? ModCompat.SaturatedXPMultiplier : 0.2f;
         }
 
         if (ModCompat.InsaneSkills && ModCompat.ValueSkillCap > 0f)

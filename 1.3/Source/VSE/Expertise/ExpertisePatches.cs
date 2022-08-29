@@ -76,6 +76,7 @@ public static class ExpertisePatches
 
     public static void PostLearn(SkillRecord __instance, float xp)
     {
+        if (xp <= 0f) return;
         foreach (var expertise in __instance.pawn.Expertise().AllExpertise)
             if (expertise.def.skill == __instance.def)
                 expertise.Learn(xp);
