@@ -1,32 +1,31 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using Verse;
 
-namespace VSE.Passions
+namespace VSE.Passions;
+
+[StaticConstructorOnStartup]
+public static class PassionManager
 {
-    [StaticConstructorOnStartup]
-    public static class PassionManager
+    public static PassionDef[] Passions;
+
+    static PassionManager()
     {
-        public static PassionDef[] Passions;
-
-        static PassionManager()
-        {
-            foreach (var passionDef in DefDatabase<PassionDef>.AllDefs) passionDef.index = ushort.MaxValue;
-            Passions = new PassionDef[DefDatabase<PassionDef>.DefCount];
-            ushort i = 0;
-            PassionDefOf.None.index = i++;
-            PassionDefOf.Minor.index = i++;
-            PassionDefOf.Major.index = i++;
-            foreach (var passionDef in DefDatabase<PassionDef>.AllDefs.Where(def => def.index == ushort.MaxValue)) passionDef.index = i++;
-            foreach (var passionDef in DefDatabase<PassionDef>.AllDefs) Passions[passionDef.index] = passionDef;
-            if (Passions.Length >= byte.MaxValue) Log.Error("[Vanilla Skills Expanded] Too many PassionDefs, this will cause issues");
-        }
-
-        public static PassionDef PassionToDef(Passion passion) => Passions[(ushort) passion];
-
-        public static float ForgetRateFactor(this SkillRecord skillRecord) => PassionToDef(skillRecord.passion).forgetRateFactor;
-
-        public static bool ComparePassions(Passion passion1, Passion passion2) =>
-            PassionToDef(passion1).learnRateFactor > PassionToDef(passion2).learnRateFactor;
+        foreach (var passionDef in DefDatabase<PassionDef>.AllDefs) passionDef.index = ushort.MaxValue;
+        Passions = new PassionDef[DefDatabase<PassionDef>.DefCount];
+        ushort i = 0;
+        PassionDefOf.None.index = i++;
+        PassionDefOf.Minor.index = i++;
+        PassionDefOf.Major.index = i++;
+        foreach (var passionDef in DefDatabase<PassionDef>.AllDefs.Where(def => def.index == ushort.MaxValue)) passionDef.index = i++;
+        foreach (var passionDef in DefDatabase<PassionDef>.AllDefs) Passions[passionDef.index] = passionDef;
+        if (Passions.Length >= byte.MaxValue) Log.Error("[Vanilla Skills Expanded] Too many PassionDefs, this will cause issues");
     }
+
+    public static IEnumerable<Passion> AllPassions => Passions.Select(def => (Passion)def.index);
+
+    public static PassionDef PassionToDef(Passion passion) => Passions[(ushort)passion];
+
+    public static float ForgetRateFactor(this SkillRecord skillRecord) => PassionToDef(skillRecord.passion).forgetRateFactor;
 }

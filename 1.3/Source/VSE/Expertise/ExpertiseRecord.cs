@@ -11,6 +11,10 @@ public class ExpertiseRecord : IExposable
     public ExpertiseDef def;
     private int level;
 
+    public float XpRequiredForLevelUp;
+
+    public float XpSinceLastLevel;
+
     public ExpertiseRecord()
     {
     }
@@ -35,10 +39,6 @@ public class ExpertiseRecord : IExposable
 
     public float XpProgressPercent => XpSinceLastLevel / XpRequiredForLevelUp;
 
-    public float XpSinceLastLevel { get; private set; }
-
-    public float XpRequiredForLevelUp { get; private set; }
-
     public Pawn Pawn { get; }
 
     public int Level => level;
@@ -57,6 +57,7 @@ public class ExpertiseRecord : IExposable
     {
         Scribe_Defs.Look(ref def, "def");
         Scribe_Values.Look(ref level, "level");
+        Scribe_Values.Look(ref XpSinceLastLevel, "xp");
         XpRequiredForLevelUp = SkillRecord.XpRequiredToLevelUpFrom(level);
     }
 

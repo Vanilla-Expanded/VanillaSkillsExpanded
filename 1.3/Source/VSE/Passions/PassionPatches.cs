@@ -24,7 +24,7 @@ public static class PassionPatches
             new HarmonyMethod(me, nameof(LearnRateFactor_Prefix)));
         harm.Patch(AccessTools.Method(typeof(SkillUI), nameof(SkillUI.DrawSkill),
                 new[] { typeof(SkillRecord), typeof(Rect), typeof(SkillUI.SkillDrawMode), typeof(string) }),
-            transpiler: new HarmonyMethod(me, nameof(DrawSkill_Transpiler)));
+            transpiler: new HarmonyMethod(me, nameof(DrawSkill_Transpiler)) { after = new[] { "StrangerDangerPatch" } });
         harm.Patch(AccessTools.Method(typeof(SkillUI), nameof(SkillUI.GetSkillDescription)),
             transpiler: new HarmonyMethod(me, nameof(SkillDescription_Transpiler)));
         harm.Patch(AccessTools.Method(typeof(ThoughtWorker_PassionateWork), nameof(ThoughtWorker_PassionateWork.CurrentStateInternal)),
@@ -151,7 +151,7 @@ public static class PassionPatches
     {
         var codes = instructions.ToList();
         var info = AccessTools.Field(typeof(SkillRecord), nameof(SkillRecord.passion));
-        var idx1 = codes.FindIndex(ins => ins.LoadsField(info));
+        var idx1 = codes.FindIndex(ins => ins.LoadsField(info) || (ModCompat.StrangerDanger && ins.Calls(ModCompat.SD_passion)));
         var idx2 = codes.FindIndex(idx1, ins => ins.opcode == OpCodes.Stloc_S);
         codes.RemoveRange(idx1 + 1, idx2 - idx1 - 1);
         codes.InsertRange(idx1 + 1, new[]
@@ -222,8 +222,8 @@ public static class PassionPatches
         return codes;
     }
 
-    private static IEnumerable<CodeInstruction> CompareReplacer(IEnumerable<CodeInstruction> instructions, Predicate<CodeInstruction> doReplace,
-        bool ble = true)
+    public static IEnumerable<CodeInstruction> CompareReplacer(IEnumerable<CodeInstruction> instructions, Predicate<CodeInstruction> doReplace,
+        bool ble = true, bool allowEq = false)
     {
         var codes = instructions.ToList();
         int idx1;
@@ -233,13 +233,19 @@ public static class PassionPatches
             codes.RemoveAt(idx1);
             codes.InsertRange(idx1, new[]
             {
-                CodeInstruction.Call(typeof(PassionManager), nameof(PassionManager.ComparePassions)),
+                CodeInstruction.Call(typeof(PassionPatches), allowEq ? nameof(ComparePassionsEq) : nameof(ComparePassions)),
                 ble ? new CodeInstruction(OpCodes.Brfalse, label) : new CodeInstruction(OpCodes.Brtrue, label)
             });
         }
 
         return codes;
     }
+
+    public static bool ComparePassions(Passion passion1, Passion passion2) =>
+        PassionManager.PassionToDef(passion1).learnRateFactor > PassionManager.PassionToDef(passion2).learnRateFactor;
+
+    public static bool ComparePassionsEq(Passion passion1, Passion passion2) =>
+        PassionManager.PassionToDef(passion1).learnRateFactor >= PassionManager.PassionToDef(passion2).learnRateFactor;
 
     private static IEnumerable<CodeInstruction> IsBadReplacer(IEnumerable<CodeInstruction> instructions)
     {

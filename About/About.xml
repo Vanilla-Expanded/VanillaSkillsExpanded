@@ -37,4 +37,8 @@ This mod also introduces three new passion types - critical passion, natural pas
   <loadBefore>
     <li>ratys.madskills</li>
   </loadBefore>
+  <incompatibleWith>
+    <li>zlj.staticqualityplus</li>
+    <li>imranfish.madderskills</li>
+  </incompatibleWith>
 </ModMetaData>

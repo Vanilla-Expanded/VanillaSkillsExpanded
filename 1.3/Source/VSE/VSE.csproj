@@ -64,6 +64,8 @@
     <Compile Include="Expertise\ExpertisePatches.cs" />
     <Compile Include="ModCompat\InsaneSkillsPatches.cs" />
     <Compile Include="ModCompat.cs" />
+    <Compile Include="ModCompat\PrepareModeratelyPatches.cs" />
+    <Compile Include="ModCompat\RandomPlusPatches.cs" />
     <Compile Include="Passions\LearnRateFactorCache.cs" />
     <Compile Include="Passions\PassionDef.cs" />
     <Compile Include="Passions\PassionManager.cs" />
