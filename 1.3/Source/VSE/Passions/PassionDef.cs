@@ -16,7 +16,10 @@ public class PassionDef : Def
     public bool isBad = false;
     public float learnRateFactor = 1f;
     public float learnRateFactorOther = 1f;
+    private Texture2D workBoxIcon;
+    public string workBoxIconPath;
     public Texture2D Icon => icon ??= ContentFinder<Texture2D>.Get(iconPath);
+    public Texture2D WorkBoxIcon => workBoxIcon ??= ContentFinder<Texture2D>.Get(workBoxIconPath);
 
     public string FullDescription => LabelCap + "VSE.LearnsForgets".Translate(learnRateFactor.ToStringPercent(), forgetRateFactor.ToStringPercent()) +
                                      (Mathf.Approximately(learnRateFactorOther, 1f)

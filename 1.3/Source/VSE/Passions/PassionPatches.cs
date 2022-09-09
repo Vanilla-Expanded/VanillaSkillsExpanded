@@ -37,10 +37,13 @@ public static class PassionPatches
             transpiler: new HarmonyMethod(me, nameof(FindBestSkillOwner_Transpiler)));
         harm.Patch(AccessTools.Method(typeof(Pawn_SkillTracker), nameof(Pawn_SkillTracker.MaxPassionOfRelevantSkillsFor)),
             transpiler: new HarmonyMethod(me, nameof(MaxPassion_Transpiler)));
+        harm.Patch(AccessTools.Method(typeof(WidgetsWork), "DrawWorkBoxBackground"),
+            transpiler: new HarmonyMethod(me, nameof(DrawWorkBoxBackground_Transpiler)));
     }
 
     public static bool GenerateSkills_Prefix(Pawn pawn)
     {
+        if (pawn.skills == null) return true;
         foreach (var skillDef in DefDatabase<SkillDef>.AllDefs)
         {
             var level = PawnGenerator.FinalLevelOfSkill(pawn, skillDef);
@@ -49,19 +52,20 @@ public static class PassionPatches
 
         var num = 5f + Mathf.Clamp(Rand.Gaussian(), -4f, 4f);
         var hasCritical = false;
-        foreach (var skillRecord in from skillRecord in pawn.skills.skills
-                 from trait in pawn.story.traits.allTraits
-                 where trait.def.RequiresPassion(skillRecord.def)
-                 select skillRecord)
-        {
-            var hasCriticalInt = hasCritical;
-            var passionDef = DefDatabase<PassionDef>.AllDefs
-                .Where(def => !def.isBad && (SkillsMod.Settings.AllowMultipleCritical || !hasCriticalInt || !def.IsCritical))
-                .RandomElementByWeight(def => def.commonality);
-            if (passionDef.IsCritical) hasCritical = true;
-            skillRecord.passion = (Passion)passionDef.index;
-            num -= 1f;
-        }
+        if (pawn.story?.traits != null)
+            foreach (var skillRecord in from skillRecord in pawn.skills.skills
+                     from trait in pawn.story.traits.allTraits
+                     where trait.def.RequiresPassion(skillRecord.def)
+                     select skillRecord)
+            {
+                var hasCriticalInt = hasCritical;
+                var passionDef = DefDatabase<PassionDef>.AllDefs
+                    .Where(def => !def.isBad && (SkillsMod.Settings.AllowMultipleCritical || !hasCriticalInt || !def.IsCritical))
+                    .RandomElementByWeight(def => def.commonality);
+                if (passionDef.IsCritical) hasCritical = true;
+                skillRecord.passion = (Passion)passionDef.index;
+                num -= 1f;
+            }
 
         while (num >= 1f)
         {
@@ -202,6 +206,24 @@ public static class PassionPatches
         CompareReplacer(instructions, ins => ins.opcode == OpCodes.Ble_S);
 
     public static IEnumerable<CodeInstruction> Learn_Transpiler(IEnumerable<CodeInstruction> instructions) => IsBadReplacer(instructions);
+
+    public static IEnumerable<CodeInstruction> DrawWorkBoxBackground_Transpiler(IEnumerable<CodeInstruction> instructions)
+    {
+        var codes = instructions.ToList();
+        var idx1 = codes.FindIndex(ins => ins.opcode == OpCodes.Ldc_I4_1) - 1;
+        var info1 = AccessTools.PropertyGetter(typeof(Color), nameof(Color.white));
+        var idx2 = codes.FindLastIndex(ins => ins.Calls(info1));
+        codes.RemoveRange(idx1, idx2 - idx1);
+        codes.InsertRange(idx1, new[]
+        {
+            new CodeInstruction(OpCodes.Ldloc, 5),
+            new CodeInstruction(OpCodes.Ldloc, 4),
+            CodeInstruction.Call(typeof(PassionManager), nameof(PassionManager.PassionToDef)),
+            new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(PassionDef), nameof(PassionDef.WorkBoxIcon))),
+            CodeInstruction.Call(typeof(GUI), nameof(GUI.DrawTexture), new[] { typeof(Rect), typeof(Texture) })
+        });
+        return codes;
+    }
 
     internal static IEnumerable<CodeInstruction> SwitchReplacer(IEnumerable<CodeInstruction> instructions,
         Func<CodeInstruction, IEnumerable<CodeInstruction>> getReplace, Predicate<CodeInstruction> findPreserve = null,

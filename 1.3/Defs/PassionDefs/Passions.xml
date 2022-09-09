@@ -18,6 +18,7 @@
         <commonality>1.5</commonality>
         <inspirationCommonality>2.5</inspirationCommonality>
         <iconPath>Passions/PassionMinor</iconPath>
+        <workBoxIconPath>UI/Icons/PassionMinorGray</workBoxIconPath>
     </VSE.Passions.PassionDef>
     <VSE.Passions.PassionDef>
         <defName>Major</defName>
@@ -26,6 +27,7 @@
         <learnRateFactor>1.5</learnRateFactor>
         <inspirationCommonality>5</inspirationCommonality>
         <iconPath>Passions/PassionMajor</iconPath>
+        <workBoxIconPath>UI/Icons/PassionMajorGray</workBoxIconPath>
     </VSE.Passions.PassionDef>
     <VSE.Passions.PassionDef>
         <defName>VSE_Apathy</defName>
@@ -47,6 +49,7 @@
         <commonality>0.5</commonality>
         <inspirationCommonality>7.5</inspirationCommonality>
         <iconPath>Passions/PassionNatural</iconPath>
+        <workBoxIconPath>Passions/PassionNaturalGrey</workBoxIconPath>
     </VSE.Passions.PassionDef>
     <VSE.Passions.PassionDef>
         <defName>VSE_Critical</defName>
@@ -58,5 +61,6 @@
         <commonality>0.25</commonality>
         <inspirationCommonality>10</inspirationCommonality>
         <iconPath>Passions/PassionCritical</iconPath>
+        <workBoxIconPath>Passions/PassionCriticalGrey</workBoxIconPath>
     </VSE.Passions.PassionDef>
 </Defs>
