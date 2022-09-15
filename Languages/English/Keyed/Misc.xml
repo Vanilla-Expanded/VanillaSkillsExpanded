@@ -32,14 +32,15 @@
     <VSE.AtMaxExpertise>At max expertise</VSE.AtMaxExpertise>
     <VSE>Vanilla Skills Expanded</VSE>
     <VSE.MaxExpertise>Maximum expertise per colonist:</VSE.MaxExpertise>
-    <VVE.AllowMultiCritical>Allow multiple critical passions</VVE.AllowMultiCritical>
-    <VVE.AllowMultiCritical.Desc>If false, will ensure that only one Critical passion will generate per pawn, to avoid them overlapping and causing them both to be useless.</VVE.AllowMultiCritical.Desc>
-    <VVE.CriticalEffectPassions>Critical effects passions</VVE.CriticalEffectPassions>
-    <VVE.CriticalEffectPassions.Desc>If false, the learn rate factor debuff on other skills from Critical will not effect other skills the pawn is passionate about.</VVE.CriticalEffectPassions.Desc>
-    <VVE.Commonalities>Edit passion commonalities, groups are separate</VVE.Commonalities>
-    <VVE.Reset>Reset to default</VVE.Reset>
-    <VVE.Bad>Bad:</VVE.Bad>
-    <VVE.Good>Good:</VVE.Good>
+    <VSE.AllowMultiCritical>Allow multiple critical passions</VSE.AllowMultiCritical>
+    <VSE.AllowMultiCritical.Desc>If false, will ensure that only one Critical passion will generate per pawn, to avoid them overlapping and causing them both to be useless.</VSE.AllowMultiCritical.Desc>
+    <VSE.CriticalEffectPassions>Critical effects passions</VSE.CriticalEffectPassions>
+    <VSE.CriticalEffectPassions.Desc>If false, the learn rate factor debuff on other skills from Critical will not effect other skills the pawn is passionate about.</VSE.CriticalEffectPassions.Desc>
+    <VSE.Commonalities>Edit passion commonalities, groups are separate</VSE.Commonalities>
+    <VSE.Reset>Reset to default</VSE.Reset>
+    <VSE.Bad>Bad:</VSE.Bad>
+    <VSE.Good>Good:</VSE.Good>
     <VSE.EnableSkillLoss>Re-enable skill loss</VSE.EnableSkillLoss>
+    <VSE.EnableAlert>Enable "Expertise Available" alert</VSE.EnableAlert>
     <VSE.EnableSkillsLoss.Desc>By default, Ducks' Insane Skills disables all skill loss. By selecting this option, this mod will override Ducks and enable it again. Use this if you still want to be able to take advantage of the forget speed changes in the new passions.</VSE.EnableSkillsLoss.Desc>
 </LanguageData>

@@ -50,13 +50,14 @@ public class SkillsMod : Mod
             Find.WindowStack.Add(new FloatMenu(list));
         }
 
-        listing.CheckboxLabeled("VVE.AllowMultiCritical".Translate(), ref Settings.AllowMultipleCritical, "VVE.AllowMultiCritical.Desc".Translate());
-        listing.CheckboxLabeled("VVE.CriticalEffectPassions".Translate(), ref Settings.CriticalEffectPassions, "VVE.CriticalEffectPassions.Desc".Translate());
+        listing.CheckboxLabeled("VSE.EnableAlert".Translate(), ref Settings.EnableAlert);
+        listing.CheckboxLabeled("VSE.AllowMultiCritical".Translate(), ref Settings.AllowMultipleCritical, "VSE.AllowMultiCritical.Desc".Translate());
+        listing.CheckboxLabeled("VSE.CriticalEffectPassions".Translate(), ref Settings.CriticalEffectPassions, "VSE.CriticalEffectPassions.Desc".Translate());
         if (ModCompat.InsaneSkills)
             listing.CheckboxLabeled("VSE.EnableSkillLoss".Translate(), ref Settings.EnableSkillLoss, "VSE.EnableSkillsLoss.Desc".Translate());
         var height = Text.LineHeight * (DefDatabase<PassionDef>.DefCount + 2) + 50f;
         var inner = listing.BeginSection(height);
-        if (inner.ButtonTextLabeled("VVE.Commonalities".Translate(), "VVE.Reset".Translate())) Settings.PassionCommonalities.Clear();
+        if (inner.ButtonTextLabeled("VSE.Commonalities".Translate(), "VSE.Reset".Translate())) Settings.PassionCommonalities.Clear();
 
         void DoEdit(PassionDef def)
         {
@@ -66,9 +67,9 @@ public class SkillsMod : Mod
             Settings.PassionCommonalities[def.defName] = Widgets.HorizontalSlider(rect, commonality, 0f, 10f);
         }
 
-        inner.Label("VVE.Good".Translate());
+        inner.Label("VSE.Good".Translate());
         foreach (var def in DefDatabase<PassionDef>.AllDefs.Where(def => !def.isBad)) DoEdit(def);
-        inner.Label("VVE.Bad".Translate());
+        inner.Label("VSE.Bad".Translate());
         foreach (var def in DefDatabase<PassionDef>.AllDefs.Where(def => def.isBad)) DoEdit(def);
 
         listing.EndSection(inner);
@@ -96,6 +97,7 @@ public class SkillsModSettings : ModSettings
 {
     public bool AllowMultipleCritical = true;
     public bool CriticalEffectPassions = true;
+    public bool EnableAlert = true;
     public bool EnableSkillLoss;
     public int MaxExpertise = 1;
     public Dictionary<string, float> PassionCommonalities = new();
@@ -107,6 +109,7 @@ public class SkillsModSettings : ModSettings
         Scribe_Values.Look(ref MaxExpertise, "maxExpertise", 1);
         Scribe_Values.Look(ref AllowMultipleCritical, "allowMultipleCritical", true);
         Scribe_Values.Look(ref CriticalEffectPassions, "criticalEffectPassions", true);
+        Scribe_Values.Look(ref EnableAlert, "enableAlert", true);
         Scribe_Collections.Look(ref PassionCommonalities, "passionCommonalities", LookMode.Value, LookMode.Value);
         PassionCommonalities ??= new Dictionary<string, float>();
     }

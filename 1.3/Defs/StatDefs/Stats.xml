@@ -95,6 +95,9 @@
         <toStringStyle>PercentOne</toStringStyle>
         <toStringStyleUnfinalized>PercentOne</toStringStyleUnfinalized>
         <disableIfSkillDisabled>Construction</disableIfSkillDisabled>
+        <statFactors>
+          <li>ConstructionSpeed</li>
+        </statFactors>
     </StatDef>
     <StatDef>
         <defName>VSE_ConstructQuality</defName>

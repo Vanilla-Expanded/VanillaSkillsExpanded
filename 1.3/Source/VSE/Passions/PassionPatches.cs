@@ -76,7 +76,6 @@ public static class PassionPatches
             SkillRecord skillRecord;
             if (passion.isBad)
             {
-                num += 1f;
                 var max = pawn.skills.skills.Max(sr => sr.Level);
                 skillRecord = pawn.skills.skills.RandomElementByWeight(sr => max - sr.Level);
             }
