@@ -20,6 +20,10 @@
     <VSE.Expertise18>Region-Leading Expert</VSE.Expertise18>
     <VSE.Expertise19>Planet-Known Expert</VSE.Expertise19>
     <VSE.Expertise20>Legendary Expert</VSE.Expertise20>
+    <VSE.Expertise>Expertise</VSE.Expertise>
+    <VSE.ForgetSpeed>Forgetting Speed</VSE.ForgetSpeed>
+    <VSE.Effects>Effects:</VSE.Effects>
+    <VSE.Effects.PerLevel>Effects (per level):</VSE.Effects.PerLevel>
     <VSE.ExpertiseAvailable>Colonist can gain expertise</VSE.ExpertiseAvailable>
     <VSE.ExpertiseAvailableMultiple>Colonists can gain expertise</VSE.ExpertiseAvailableMultiple>
     <VSE.SelectExpertise>Select expertise</VSE.SelectExpertise>
@@ -30,6 +34,7 @@
     <VSE.NoPassion>No passion</VSE.NoPassion>
     <VSE.SkillTooLow>Insufficient skill</VSE.SkillTooLow>
     <VSE.AtMaxExpertise>At max expertise</VSE.AtMaxExpertise>
+    <VSE.ExpertiseOverlap>Expertise overlap</VSE.ExpertiseOverlap>
     <VSE>Vanilla Skills Expanded</VSE>
     <VSE.MaxExpertise>Maximum expertise per colonist:</VSE.MaxExpertise>
     <VSE.AllowMultiCritical>Allow multiple critical passions</VSE.AllowMultiCritical>
@@ -40,6 +45,8 @@
     <VSE.Reset>Reset to default</VSE.Reset>
     <VSE.Bad>Bad:</VSE.Bad>
     <VSE.Good>Good:</VSE.Good>
+    <VSE.AllowExpertiseOverlap>Allow expertise overlap</VSE.AllowExpertiseOverlap>
+    <VSE.AllowExpertiseOverlap.Desc>If false, then only 1 expertise can be chosen per skill, regardless of max expertise setting.</VSE.AllowExpertiseOverlap.Desc>
     <VSE.EnableSkillLoss>Re-enable skill loss</VSE.EnableSkillLoss>
     <VSE.EnableAlert>Enable "Expertise Available" alert</VSE.EnableAlert>
     <VSE.EnableSkillsLoss.Desc>By default, Ducks' Insane Skills disables all skill loss. By selecting this option, this mod will override Ducks and enable it again. Use this if you still want to be able to take advantage of the forget speed changes in the new passions.</VSE.EnableSkillsLoss.Desc>
