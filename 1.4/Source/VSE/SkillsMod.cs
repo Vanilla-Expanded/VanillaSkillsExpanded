@@ -88,9 +88,15 @@ public class SkillsMod : Mod
     {
         if (ModCompat.InsaneSkills) InsaneSkillsPatches.UpdateSkillLoss(Settings.EnableSkillLoss, Harm);
         if (Current.ProgramState == ProgramState.Playing) LearnRateFactorCache.ClearCache();
+        float total = 0;
         foreach (var def in DefDatabase<PassionDef>.AllDefs)
-            if (Settings.PassionCommonalities.TryGetValue(def.defName, out var val)) def.commonality = val;
-            else if (defaultCommonalities.TryGetValue(def.defName, out val)) def.commonality = val;
+            if (Settings.PassionCommonalities.TryGetValue(def.defName, out var val)) total += def.commonality = val;
+            else if (defaultCommonalities.TryGetValue(def.defName, out val)) total += def.commonality = val;
+        if (total == 0)
+        {
+            Log.Warning("[VSE] Total commonality is 0. This will cause errors. Setting None to 1.");
+            PassionDefOf.None.commonality = 1f;
+        }
     }
 }
 
