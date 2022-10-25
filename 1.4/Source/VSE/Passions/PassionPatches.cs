@@ -43,10 +43,13 @@ public static class PassionPatches
         harm.Patch(AccessTools.Method(typeof(SkillUI), nameof(SkillUI.GetSkillDescription)),
             transpiler: new HarmonyMethod(me, nameof(GetSkillDescription_Transpiler)));
         harm.Patch(AccessTools.Method(typeof(DebugToolsPawns), nameof(DebugToolsPawns.SetPassion)), new HarmonyMethod(me, nameof(SetPassion_Prefix)));
+        harm.Patch(AccessTools.Method(typeof(PassionExtension), nameof(PassionExtension.IncrementPassion)),
+            new HarmonyMethod(me, nameof(IncrementPassion_Prefix)));
     }
 
     public static bool GenerateSkills_Prefix(Pawn pawn, PawnGenerationRequest request)
     {
+        if (pawn.ageTracker.AgeBiologicalYears < 13) return true;
         if (pawn.skills == null) return true;
         foreach (var skillDef in DefDatabase<SkillDef>.AllDefs)
         {
@@ -322,6 +325,12 @@ public static class PassionPatches
             __result.Add(debugActionNode);
         }
 
+        return false;
+    }
+
+    public static bool IncrementPassion_Prefix(Passion passion, ref Passion __result)
+    {
+        __result = passion.ChangePassion(1);
         return false;
     }
 

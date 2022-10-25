@@ -4,7 +4,6 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
-using Verse;
 using VSE.Passions;
 
 namespace VSE;
@@ -37,16 +36,6 @@ public static class PrepareCarefullyPatches
         ___SkillPassionUpdated(record.def, record.passion.ChangePassion(-1));
         LearnRateFactorCache.ClearCacheFor(record);
         return false;
-    }
-
-    public static Passion ChangePassion(this Passion passion, int offset)
-    {
-        var passions = PassionManager.Passions.ToList();
-        passions.SortBy(def => def.learnRateFactor);
-        var idx = passions.IndexOf(PassionManager.PassionToDef(passion)) + offset;
-        if (idx < 0) idx += passions.Count;
-        if (idx >= passions.Count) idx -= passions.Count;
-        return (Passion)passions[idx].index;
     }
 
     public static IEnumerable<CodeInstruction> DrawPanelContent_Transpiler(IEnumerable<CodeInstruction> instructions)
