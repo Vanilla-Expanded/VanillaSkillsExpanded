@@ -16,19 +16,19 @@ public static class PrepareModeratelyPatches
         harm.Patch(AccessTools.Method(typeof(FloatMenuUtility), nameof(FloatMenuUtility.MakeMenu), generics: new[] { typeof(Passion) }),
             new HarmonyMethod(typeof(PrepareModeratelyPatches), nameof(MakeMenu_Prefix)));
         harm.Patch(
-            AccessTools.Method(AccessTools.TypeByName("Lakuna.PrepareModerately.Filter.FilterPart.FilterPart"), "GetRandomOfEnum",
+            AccessTools.Method(AccessTools.TypeByName("Lakuna.PrepareModerately.Filter.Part.PawnFilterPart"), "GetRandomOfEnum",
                 generics: new[] { typeof(Passion) }), new HarmonyMethod(typeof(PrepareModeratelyPatches), nameof(GetRandomOfEnum_Prefix)));
         harm.Patch(
-            AccessTools.Method(AccessTools.TypeByName("Lakuna.PrepareModerately.Filter.FilterPart.HasPassionsAtLevelFilterPart"), "DoEditInterface"),
+            AccessTools.Method(AccessTools.TypeByName("Lakuna.PrepareModerately.Filter.Part.Types.HasPassionsAtLevel"), "DoEditInterface"),
             transpiler: new HarmonyMethod(typeof(PrepareModeratelyPatches), nameof(PassionStringTranspiler)));
         harm.Patch(
-            AccessTools.Method(AccessTools.TypeByName("Lakuna.PrepareModerately.Filter.FilterPart.HasPassionsAtLevelFilterPart"), "Summary"),
+            AccessTools.Method(AccessTools.TypeByName("Lakuna.PrepareModerately.Filter.Part.Types.HasPassionsAtLevel"), "Summary"),
             transpiler: new HarmonyMethod(typeof(PrepareModeratelyPatches), nameof(PassionStringTranspiler)));
         harm.Patch(
-            AccessTools.Method(AccessTools.TypeByName("Lakuna.PrepareModerately.Filter.FilterPart.HasPassionFilterPart"), "DoEditInterface"),
+            AccessTools.Method(AccessTools.TypeByName("Lakuna.PrepareModerately.Filter.Part.Types.HasPassion"), "DoEditInterface"),
             transpiler: new HarmonyMethod(typeof(PrepareModeratelyPatches), nameof(PassionStringTranspiler)));
         harm.Patch(
-            AccessTools.Method(AccessTools.TypeByName("Lakuna.PrepareModerately.Filter.FilterPart.HasPassionFilterPart"), "Summary"),
+            AccessTools.Method(AccessTools.TypeByName("Lakuna.PrepareModerately.Filter.Part.Types.HasPassion"), "Summary"),
             transpiler: new HarmonyMethod(typeof(PrepareModeratelyPatches), nameof(PassionStringTranspiler)));
     }
 

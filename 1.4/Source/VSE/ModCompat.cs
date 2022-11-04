@@ -9,8 +9,6 @@ namespace VSE;
 
 public static class ModCompat
 {
-    private static AccessTools.FieldRef<object, object> insaneSetting;
-    private static AccessTools.FieldRef<object, int> valueSkillCap;
     private static Func<float> saturatedXPMultiplier;
     private static Action<object, Passion> setPassion;
     private static Func<object, Passion> getPassion;
@@ -26,8 +24,6 @@ public static class ModCompat
 
     public static float SaturatedXPMultiplier => saturatedXPMultiplier();
 
-    public static float ValueSkillCap => valueSkillCap(insaneSetting());
-
     public static Passion GetPassion(object obj) => getPassion(obj);
     public static void SetPassion(object obj, Passion passion) => setPassion(obj, passion);
 
@@ -41,12 +37,7 @@ public static class ModCompat
         RandomPlus = ModLister.HasActiveModWithName("RandomPlus");
         StrangerDanger = ModLister.HasActiveModWithName("Stranger Danger");
 
-        if (InsaneSkills)
-        {
-            insaneSetting = AccessTools.FieldRefAccess<object>("DucksInsaneSkills.DucksInsaneSkillsMod:settings");
-            valueSkillCap = AccessTools.FieldRefAccess<int>("DucksInsaneSkills.DucksInsaneSkillsSettings:ValueSkillCap");
-            InsaneSkillsPatches.Do(SkillsMod.Harm);
-        }
+        if (InsaneSkills) InsaneSkillsPatches.Do(SkillsMod.Harm);
 
         if (CharacterEditor) CharacterEditorPatches.Do(SkillsMod.Harm);
 
