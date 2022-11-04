@@ -39,7 +39,7 @@
     <VSE.MaxExpertise>Maximum expertise per colonist:</VSE.MaxExpertise>
     <VSE.AllowMultiCritical>Allow multiple critical passions</VSE.AllowMultiCritical>
     <VSE.AllowMultiCritical.Desc>If false, will ensure that only one Critical passion will generate per pawn, to avoid them overlapping and causing them both to be useless.</VSE.AllowMultiCritical.Desc>
-    <VSE.CriticalEffectPassions>Critical effects passions</VSE.CriticalEffectPassions>
+    <VSE.CriticalEffectPassions>Critical affects passions</VSE.CriticalEffectPassions>
     <VSE.CriticalEffectPassions.Desc>If false, the learn rate factor debuff on other skills from Critical will not effect other skills the pawn is passionate about.</VSE.CriticalEffectPassions.Desc>
     <VSE.Commonalities>Edit passion commonalities, groups are separate</VSE.Commonalities>
     <VSE.Reset>Reset to default</VSE.Reset>
