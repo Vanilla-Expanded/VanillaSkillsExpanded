@@ -13,6 +13,7 @@ namespace VSE.Expertise;
 public static class ExpertisePatches
 {
     public static bool ForceVanillaSkills;
+    private static readonly Type inner = AccessTools.FirstInner(typeof(CharacterCardUtility), type => AccessTools.Method(type, "<DoLeftSection>b__3") != null);
 
     public static void Do(Harmony harm)
     {
@@ -30,7 +31,7 @@ public static class ExpertisePatches
             transpiler: new HarmonyMethod(me, nameof(CharacterCardTranspiler)));
         harm.Patch(AccessTools.Method(typeof(CharacterCardUtility), nameof(CharacterCardUtility.DoLeftSection)),
             transpiler: new HarmonyMethod(me, nameof(ExpertiseTitleTranspiler)));
-        harm.Patch(AccessTools.Method(AccessTools.Inner(typeof(CharacterCardUtility), "<>c__DisplayClass40_0"), "<DoLeftSection>b__3"),
+        harm.Patch(AccessTools.Method(inner, "<DoLeftSection>b__3"),
             transpiler: new HarmonyMethod(me, nameof(ExpertiseTitleTranspiler2)));
         harm.Patch(AccessTools.Method(typeof(SkillUI), nameof(SkillUI.DrawSkillsOf)), new HarmonyMethod(me, nameof(DrawExpertiseToo)));
         harm.Patch(AccessTools.Method(typeof(ITab_Pawn_Character), nameof(ITab_Pawn_Character.FillTab)),
@@ -69,9 +70,7 @@ public static class ExpertisePatches
         foreach (var instruction in instructions)
             if (instruction.opcode == OpCodes.Newobj && instruction.OperandIs(info))
             {
-                yield return new CodeInstruction(OpCodes.Ldloc_1).WithLabels(instruction.ExtractLabels());
-                yield return CodeInstruction.LoadField(AccessTools.Inner(typeof(CharacterCardUtility), "<>c__DisplayClass40_1"), "CS$<>8__locals1");
-                yield return CodeInstruction.LoadField(AccessTools.Inner(typeof(CharacterCardUtility), "<>c__DisplayClass40_0"), "pawn");
+                yield return new CodeInstruction(OpCodes.Ldarg_2).WithLabels(instruction.ExtractLabels());
                 yield return CodeInstruction.Call(typeof(ExpertiseTrackers), nameof(ExpertiseTrackers.Expertise), new[] { typeof(Pawn) });
                 yield return CodeInstruction.Call(typeof(ExpertiseTracker), nameof(ExpertiseTracker.HasExpertise));
                 yield return new CodeInstruction(OpCodes.Brfalse, label);
@@ -96,13 +95,12 @@ public static class ExpertisePatches
             {
                 finishedLoop = false;
                 yield return new CodeInstruction(OpCodes.Ldarg_0).WithLabels(instruction.ExtractLabels());
-                yield return CodeInstruction.LoadField(AccessTools.Inner(typeof(CharacterCardUtility), "<>c__DisplayClass40_0"), "pawn");
+                yield return CodeInstruction.LoadField(inner, "pawn");
                 yield return new CodeInstruction(OpCodes.Ldarga, 1);
                 yield return CodeInstruction.Call(typeof(Rect), "get_x");
                 yield return new CodeInstruction(OpCodes.Ldloca, 0);
                 yield return new CodeInstruction(OpCodes.Ldarg_0);
-                yield return new CodeInstruction(OpCodes.Ldflda, AccessTools.Field(AccessTools.Inner(typeof(CharacterCardUtility), "<>c__DisplayClass40_0"),
-                    "leftRect"));
+                yield return new CodeInstruction(OpCodes.Ldflda, AccessTools.Field(inner, "leftRect"));
                 yield return CodeInstruction.Call(typeof(Rect), "get_width");
                 yield return CodeInstruction.Call(typeof(ExpertiseUIUtility), nameof(ExpertiseUIUtility.DoExpertiseTitle));
             }
