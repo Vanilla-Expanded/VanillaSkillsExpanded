@@ -135,7 +135,7 @@ public static class ExpertisePatches
         var codes = instructions.ToList();
         var info = AccessTools.Field(typeof(Pawn), nameof(Pawn.skills));
         var idx1 = FindIfJumpIndex(codes, 0, info);
-        var label = LocateJump(codes, 0, AccessTools.Field(typeof(StatDef), nameof(StatDef.skillNeedOffsets)));
+        var label = RewriteJump(codes, generator, 0, AccessTools.Field(typeof(StatDef), nameof(StatDef.skillNeedOffsets)));
         if (label is null) throw new Exception("Failed to find jump location");
         codes.InsertRange(idx1 - 1, new[]
         {
@@ -147,7 +147,7 @@ public static class ExpertisePatches
             CodeInstruction.Call(typeof(ExpertiseTracker), nameof(ExpertiseTracker.OffsetStat))
         });
         var idx2 = FindIfJumpIndex(codes, idx1, info);
-        label = LocateJump(codes, idx1, AccessTools.Field(typeof(StatDef), nameof(StatDef.skillNeedFactors)));
+        label = RewriteJump(codes, generator, idx1, AccessTools.Field(typeof(StatDef), nameof(StatDef.skillNeedFactors)));
         if (label is null) throw new Exception("Failed to find jump location");
         codes.InsertRange(idx2 - 1, new[]
         {
@@ -166,7 +166,7 @@ public static class ExpertisePatches
         var codes = instructions.ToList();
         var info = AccessTools.Field(typeof(Pawn), nameof(Pawn.skills));
         var idx1 = FindIfJumpIndex(codes, 0, info);
-        var label = LocateJump(codes, 0, AccessTools.Field(typeof(StatDef), nameof(StatDef.skillNeedOffsets)));
+        var label = RewriteJump(codes, generator, 0, AccessTools.Field(typeof(StatDef), nameof(StatDef.skillNeedOffsets)));
         if (label is null) throw new Exception("Failed to find jump location");
         codes.InsertRange(idx1, new[]
         {
@@ -178,7 +178,7 @@ public static class ExpertisePatches
             CodeInstruction.Call(typeof(ExpertiseTracker), nameof(ExpertiseTracker.OffsetStatExplain))
         });
         var idx2 = FindIfJumpIndex(codes, idx1, info);
-        label = LocateJump(codes, idx1, AccessTools.Field(typeof(StatDef), nameof(StatDef.skillNeedFactors)));
+        label = RewriteJump(codes, generator, idx1, AccessTools.Field(typeof(StatDef), nameof(StatDef.skillNeedFactors)));
         if (label is null) throw new Exception("Failed to find jump location");
         codes.InsertRange(idx2, new[]
         {
@@ -195,6 +195,7 @@ public static class ExpertisePatches
     public static void PawnCardSize_Postfix(Pawn pawn, ref Vector2 __result)
     {
         if (pawn?.skills?.Expertise() is { AllExpertise: { Count: var count, Count: > 0 } }) __result.y += count * 30f;
+        if (__result.y > UI.screenHeight - 30f - 165f) __result.y = UI.screenHeight - 30 - 165f;
     }
 
     private static int FindIfJumpIndex(List<CodeInstruction> codes, int startIndex, FieldInfo field)
@@ -206,14 +207,12 @@ public static class ExpertisePatches
         return codes.FindIndex(idx2, ins => ins.labels.Contains(label.Value));
     }
 
-    private static Label? LocateJump(List<CodeInstruction> codes, int startIndex, FieldInfo field)
+    private static Label? RewriteJump(List<CodeInstruction> codes, ILGenerator generator, int startIndex, FieldInfo field)
     {
         var idx1 = codes.FindIndex(startIndex, ins => ins.LoadsField(field));
         Label? label = null;
         var idx2 = codes.FindIndex(idx1, ins => ins.Branches(out label));
-        if (label is not null)
-            foreach (var instruction in codes.Skip(idx2).Where(ins => ins.labels.Contains(label.Value)))
-                instruction.labels.Remove(label.Value);
+        if (label is not null) label = (Label?)(codes[idx2].operand = generator.DefineLabel());
         return label;
     }
 }

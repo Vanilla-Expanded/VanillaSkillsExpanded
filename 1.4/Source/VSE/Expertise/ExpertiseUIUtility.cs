@@ -33,9 +33,12 @@ public static class ExpertiseUIUtility
 
     public static void DoOpenExpertiseButton(Pawn pawn, ref float x)
     {
-        var rect = new Rect(x, 0, 30f, 30f);
-        if (Widgets.ButtonImage(rect, OpenExpertiseIcon)) ShowExpertise = !ShowExpertise;
-        x -= 40f;
+        if (pawn.IsColonist)
+        {
+            var rect = new Rect(x, 0, 30f, 30f);
+            if (Widgets.ButtonImage(rect, OpenExpertiseIcon)) ShowExpertise = !ShowExpertise;
+            x -= 40f;
+        }
     }
 
     public static void DoExpertiseTitle(Pawn pawn, float x, ref float y, float width)

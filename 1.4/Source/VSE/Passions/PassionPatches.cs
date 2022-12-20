@@ -50,7 +50,7 @@ public static class PassionPatches
     public static bool GenerateSkills_Prefix(Pawn pawn, PawnGenerationRequest request)
     {
         if (pawn.ageTracker.AgeBiologicalYears < 13) return true;
-        if (pawn.skills == null) return true;
+        if (pawn.skills?.skills == null) return true;
         foreach (var skillDef in DefDatabase<SkillDef>.AllDefs)
         {
             var level = PawnGenerator.FinalLevelOfSkill(pawn, skillDef, request);
@@ -67,8 +67,8 @@ public static class PassionPatches
             {
                 var hasCriticalInt = hasCritical;
                 var passionDef = DefDatabase<PassionDef>.AllDefs
-                    .Where(def => !def.isBad && (SkillsMod.Settings.AllowMultipleCritical || !hasCriticalInt || !def.IsCritical))
-                    .RandomElementByWeight(def => def.commonality);
+                   .Where(def => !def.isBad && (SkillsMod.Settings.AllowMultipleCritical || !hasCriticalInt || !def.IsCritical))
+                   .RandomElementByWeight(def => def.commonality);
                 if (passionDef.IsCritical) hasCritical = true;
                 skillRecord.passion = (Passion)passionDef.index;
                 num -= 1f;
@@ -78,8 +78,8 @@ public static class PassionPatches
         {
             var hasCriticalInt = hasCritical;
             var passion = DefDatabase<PassionDef>.AllDefs
-                .Where(def => SkillsMod.Settings.AllowMultipleCritical || !hasCriticalInt || !def.IsCritical)
-                .RandomElementByWeight(def => def.commonality);
+               .Where(def => SkillsMod.Settings.AllowMultipleCritical || !hasCriticalInt || !def.IsCritical)
+               .RandomElementByWeight(def => def.commonality);
             SkillRecord skillRecord;
             if (passion.isBad)
             {
