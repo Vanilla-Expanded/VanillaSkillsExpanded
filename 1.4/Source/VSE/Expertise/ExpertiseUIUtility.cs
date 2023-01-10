@@ -19,9 +19,11 @@ public static class ExpertiseUIUtility
     private static readonly Texture2D OpenExpertiseIcon = ContentFinder<Texture2D>.Get("UI/Icon_OpenExpertisePanel");
     private static readonly Texture2D ExpertisePassion = ContentFinder<Texture2D>.Get("UI/Passion_Expertise");
 
-    private static Vector2 scrollPos;
+    private static Vector2 expertiseScrollPos;
 
     private static readonly Dictionary<string, string> truncateCache = new();
+
+    private static Vector2 skillsScrollPos;
 
     public static Vector2 ExpertisePanelSize(Pawn pawn)
     {
@@ -89,7 +91,7 @@ public static class ExpertiseUIUtility
                 skill.def.listOrder descending
             select ex).ToList();
         var viewRect = new Rect(0, 0, inRect.width - 30f, allExpertise.Count * 60f);
-        Widgets.BeginScrollView(inRect, ref scrollPos, viewRect);
+        Widgets.BeginScrollView(inRect, ref expertiseScrollPos, viewRect);
         var y = 0f;
         for (var i = 0; i < allExpertise.Count; i++)
         {
@@ -128,14 +130,16 @@ public static class ExpertiseUIUtility
         Text.Anchor = anchor;
     }
 
-    public static void DrawSkillsAndExpertiseOf(Pawn pawn, Vector2 offset, SkillUI.SkillDrawMode mode)
+    public static void DrawSkillsAndExpertiseOf(Pawn pawn, Vector2 offset, SkillUI.SkillDrawMode mode, Rect container)
     {
         Text.Font = GameFont.Small;
+        var height = 0f;
         var allDefsListForReading = DefDatabase<SkillDef>.AllDefsListForReading;
         for (var i = 0; i < allDefsListForReading.Count; i++)
         {
             var x = Text.CalcSize(allDefsListForReading[i].skillLabel.CapitalizeFirst()).x;
             if (x > SkillUI.levelLabelWidth) SkillUI.levelLabelWidth = x;
+            height += 27f;
         }
 
         var expertise = pawn.Expertise().AllExpertise.OrderByDescending(ex => ex.def.skill.listOrder).ToList();
@@ -143,22 +147,27 @@ public static class ExpertiseUIUtility
         {
             var x = Text.CalcSize(expertise[i].def.LabelCap).x;
             if (x > SkillUI.levelLabelWidth) SkillUI.levelLabelWidth = x;
+            height += 27f;
         }
 
+        var viewRect = new Rect(0, 0, 230f, height);
+        Widgets.BeginScrollView(new Rect(offset.x, offset.y, 250f, container.height), ref skillsScrollPos, viewRect);
         var k = 0;
-        var y = offset.y;
+        var y = 0f;
         for (var j = 0; j < SkillUI.skillDefsInListOrderCached.Count; j++)
         {
             var skillDef = SkillUI.skillDefsInListOrderCached[j];
-            SkillUI.DrawSkill(pawn.skills.GetSkill(skillDef), new Vector2(offset.x, y), mode);
+            SkillUI.DrawSkill(pawn.skills.GetSkill(skillDef), new Vector2(0, y), mode);
             y += 27f;
             while (k < expertise.Count && expertise[k].def.skill == skillDef)
             {
-                DrawExpertise(expertise[k], new Rect(offset.x, y, 230f, 24f), mode);
+                DrawExpertise(expertise[k], new Rect(0, y, 230f, 24f), mode);
                 k++;
                 y += 27f;
             }
         }
+
+        Widgets.EndScrollView();
     }
 
     public static void DrawExpertise(ExpertiseRecord expertise, Rect holdingRect, SkillUI.SkillDrawMode mode, string tooltipPrefix = "")

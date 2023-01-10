@@ -34,6 +34,7 @@ This mod also introduces three new passion types - critical passion, natural pas
     <li>brrainz.harmony</li>
     <li>OskarPotocki.VanillaFactionsExpanded.Core</li>
     <li>ducks.insaneskills</li>
+    <li>jaxe.rimhud</li>
   </loadAfter>
   <loadBefore>
     <li>ratys.madskills</li>

@@ -19,6 +19,8 @@
         <inspirationCommonality>2.5</inspirationCommonality>
         <iconPath>Passions/PassionMinor</iconPath>
         <workBoxIconPath>UI/Icons/PassionMinorGray</workBoxIconPath>
+        <indicatorString>★</indicatorString>
+        <color>Minor</color>
     </VSE.Passions.PassionDef>
     <VSE.Passions.PassionDef>
         <defName>Major</defName>
@@ -28,6 +30,8 @@
         <inspirationCommonality>5</inspirationCommonality>
         <iconPath>Passions/PassionMajor</iconPath>
         <workBoxIconPath>UI/Icons/PassionMajorGray</workBoxIconPath>
+        <indicatorString>★★</indicatorString>
+        <color>Major</color>
     </VSE.Passions.PassionDef>
     <VSE.Passions.PassionDef>
         <defName>VSE_Apathy</defName>
@@ -39,6 +43,8 @@
         <commonality>0.5</commonality> <!-- Assigned automatically -->
         <inspirationCommonality>0.1</inspirationCommonality>
         <iconPath>Passions/PassionApathy</iconPath>
+        <indicatorString>Ø</indicatorString>
+        <color>Disabled</color>
     </VSE.Passions.PassionDef>
     <VSE.Passions.PassionDef>
         <defName>VSE_Natural</defName>
@@ -50,6 +56,8 @@
         <inspirationCommonality>7.5</inspirationCommonality>
         <iconPath>Passions/PassionNatural</iconPath>
         <workBoxIconPath>Passions/PassionNaturalGrey</workBoxIconPath>
+        <indicatorString>☆</indicatorString>
+        <color>Minor</color>
     </VSE.Passions.PassionDef>
     <VSE.Passions.PassionDef>
         <defName>VSE_Critical</defName>
@@ -62,5 +70,7 @@
         <inspirationCommonality>10</inspirationCommonality>
         <iconPath>Passions/PassionCritical</iconPath>
         <workBoxIconPath>Passions/PassionCriticalGrey</workBoxIconPath>
+        <indicatorString>★★★</indicatorString>
+        <color>Major</color>
     </VSE.Passions.PassionDef>
 </Defs>

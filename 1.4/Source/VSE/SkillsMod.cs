@@ -41,7 +41,7 @@ public class SkillsMod : Mod
         if (listing.ButtonTextLabeled("VSE.MaxExpertise".Translate(), Settings.MaxExpertise.ToString()))
         {
             var list = new List<FloatMenuOption>();
-            for (var i = 1; i < 11; i++)
+            for (var i = 1; i < DefDatabase<ExpertiseDef>.DefCount; i++)
             {
                 var num = i;
                 list.Add(new FloatMenuOption(i.ToString(), () => Settings.MaxExpertise = num));

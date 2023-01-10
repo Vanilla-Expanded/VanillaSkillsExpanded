@@ -21,6 +21,7 @@ public static class ModCompat
     public static bool PrepareModerately;
     public static bool RandomPlus;
     public static bool StrangerDanger;
+    public static bool RimHUD;
 
     public static float SaturatedXPMultiplier => saturatedXPMultiplier();
 
@@ -36,6 +37,7 @@ public static class ModCompat
         PrepareModerately = ModLister.HasActiveModWithName("Prepare Moderately");
         RandomPlus = ModLister.HasActiveModWithName("RandomPlus");
         StrangerDanger = ModLister.HasActiveModWithName("Stranger Danger");
+        RimHUD = ModLister.HasActiveModWithName("RimHUD");
 
         if (InsaneSkills) InsaneSkillsPatches.Do(SkillsMod.Harm);
 
@@ -45,7 +47,7 @@ public static class ModCompat
 
         if (MadSkills)
             saturatedXPMultiplier = AccessTools.PropertyGetter(AccessTools.TypeByName("RTMadSkills.ModSettings"), "saturatedXPMultiplier")
-                .CreateDelegate<Func<float>>();
+               .CreateDelegate<Func<float>>();
 
         if (PrepareModerately) PrepareModeratelyPatches.Do(SkillsMod.Harm);
 
@@ -58,5 +60,10 @@ public static class ModCompat
         }
 
         if (StrangerDanger) SD_passion = AccessTools.TypeByName("Stranger_Danger.ReplacementMethods").GetMethod("SD_passion");
+
+        LongEventHandler.ExecuteWhenFinished(delegate
+        {
+            if (RimHUD) RimHUDPatches.Do(SkillsMod.Harm);
+        });
     }
 }

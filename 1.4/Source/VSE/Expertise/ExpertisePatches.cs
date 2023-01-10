@@ -40,12 +40,12 @@ public static class ExpertisePatches
             postfix: new HarmonyMethod(me, nameof(PawnCardSize_Postfix)));
     }
 
-    public static bool DrawExpertiseToo(Pawn p, Vector2 offset, SkillUI.SkillDrawMode mode)
+    public static bool DrawExpertiseToo(Pawn p, Vector2 offset, SkillUI.SkillDrawMode mode, Rect container)
     {
         if (ForceVanillaSkills) return true;
         if (p.DevelopmentalStage.Baby()) return true;
         if (!p.Expertise().HasExpertise()) return true;
-        ExpertiseUIUtility.DrawSkillsAndExpertiseOf(p, offset, mode);
+        ExpertiseUIUtility.DrawSkillsAndExpertiseOf(p, offset, mode, container);
         return false;
     }
 
@@ -127,6 +127,7 @@ public static class ExpertisePatches
             new(OpCodes.Ldloca, 20),
             CodeInstruction.Call(typeof(ExpertiseUIUtility), nameof(ExpertiseUIUtility.DoOpenExpertiseButton))
         }));
+        codes.Find(ins => ins.opcode == OpCodes.Ldc_R4 && ins.operand is 258f).operand = 290f;
         return codes;
     }
 
@@ -194,8 +195,15 @@ public static class ExpertisePatches
 
     public static void PawnCardSize_Postfix(Pawn pawn, ref Vector2 __result)
     {
-        if (pawn?.skills?.Expertise() is { AllExpertise: { Count: var count, Count: > 0 } }) __result.y += count * 30f;
-        if (__result.y > UI.screenHeight - 30f - 165f) __result.y = UI.screenHeight - 30 - 165f;
+        if (pawn?.skills?.Expertise() is { AllExpertise: { Count: var count } })
+        {
+            if (count > 5)
+            {
+                __result.x += 40f;
+                __result.y += 30f;
+            }
+            else if (count > 0) __result.y += 30f * count;
+        }
     }
 
     private static int FindIfJumpIndex(List<CodeInstruction> codes, int startIndex, FieldInfo field)
