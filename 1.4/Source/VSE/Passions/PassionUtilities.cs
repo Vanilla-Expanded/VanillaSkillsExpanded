@@ -15,4 +15,6 @@ public static class PassionUtilities
         if (idx >= passions.Count) idx -= passions.Count;
         return (Passion)passions[idx].index;
     }
+
+    public static bool IsCritical(this Passion passion) => PassionManager.PassionToDef(passion).IsCritical;
 }

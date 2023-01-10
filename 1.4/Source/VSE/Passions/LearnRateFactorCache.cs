@@ -11,9 +11,12 @@ public static class LearnRateFactorCache
 
     public static float LearnRateFactorBase(this SkillRecord sr) => cache.GetValue(sr, sr => new CacheData { Value = GetValueFor(sr) }).Value;
 
-    public static void ClearCacheFor(SkillRecord sr)
+    public static void ClearCacheFor(SkillRecord sr, Passion? other = null)
     {
         cache.Remove(sr);
+        if (sr.passion.IsCritical() || (other.HasValue && other.Value.IsCritical()))
+            foreach (var record in sr.pawn.skills.skills)
+                cache.Remove(record);
     }
 
     public static void ClearCache() => cache = new ConditionalWeakTable<SkillRecord, CacheData>();
@@ -23,8 +26,8 @@ public static class LearnRateFactorCache
         var passionDef = PassionManager.PassionToDef(sr.passion);
         if (SkillsMod.Settings.CriticalEffectPassions || passionDef.isBad)
             return sr.pawn.skills.skills
-                .Except(sr)
-                .Aggregate(passionDef.learnRateFactor,
+               .Except(sr)
+               .Aggregate(passionDef.learnRateFactor,
                     (current, skillRecord) => current * PassionManager.PassionToDef(skillRecord.passion).learnRateFactorOther);
         return passionDef.learnRateFactor;
     }

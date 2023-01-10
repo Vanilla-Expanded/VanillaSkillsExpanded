@@ -32,11 +32,12 @@ public static class CharacterEditorPatches
     public static bool ATogglePassion_Prefix(SkillRecord record)
     {
         Find.WindowStack.Add(new FloatMenu(DefDatabase<PassionDef>.AllDefs.Select(passion =>
-            new FloatMenuOption(passion.LabelCap, () =>
-            {
-                record.passion = (Passion)passion.index;
-                LearnRateFactorCache.ClearCacheFor(record);
-            }, passion.Icon, Color.white)).ToList()));
+                new FloatMenuOption(passion.LabelCap, () =>
+                {
+                    LearnRateFactorCache.ClearCacheFor(record, (Passion)passion.index);
+                    record.passion = (Passion)passion.index;
+                }, passion.Icon, Color.white))
+           .ToList()));
         return false;
     }
 
