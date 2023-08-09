@@ -39,16 +39,10 @@ public class SkillsMod : Mod
         var listing = new Listing_Standard();
         listing.Begin(inRect);
         if (listing.ButtonTextLabeled("VSE.MaxExpertise".Translate(), Settings.MaxExpertise.ToString()))
-        {
-            var list = new List<FloatMenuOption>();
-            for (var i = 1; i < DefDatabase<ExpertiseDef>.DefCount; i++)
-            {
-                var num = i;
-                list.Add(new FloatMenuOption(i.ToString(), () => Settings.MaxExpertise = num));
-            }
-
-            Find.WindowStack.Add(new FloatMenu(list));
-        }
+            Find.WindowStack.Add(new FloatMenu(Enumerable.Range(1, DefDatabase<ExpertiseDef>.DefCount)
+               .Select(static num =>
+                    new FloatMenuOption(num.ToString(), () => Settings.MaxExpertise = num))
+               .ToList()));
 
         listing.CheckboxLabeled("VSE.EnableAlert".Translate(), ref Settings.EnableAlert);
         listing.CheckboxLabeled("VSE.AllowMultiCritical".Translate(), ref Settings.AllowMultipleCritical, "VSE.AllowMultiCritical.Desc".Translate());

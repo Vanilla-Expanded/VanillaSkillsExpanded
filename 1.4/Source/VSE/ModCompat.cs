@@ -59,7 +59,7 @@ public static class ModCompat
             getPassion = AccessTools.PropertyGetter(type, "Passion").CreateDelegate<Func<object, Passion>>();
         }
 
-        if (StrangerDanger) SD_passion = AccessTools.TypeByName("Stranger_Danger.ReplacementMethods").GetMethod("SD_passion");
+        if (StrangerDanger) SD_passion = AccessTools.TypeByName("Stranger_Danger.BioSkillsPatch").GetMethod("passion_sd");
 
         LongEventHandler.ExecuteWhenFinished(delegate
         {
