@@ -22,7 +22,7 @@ public static class ExpertisePatches
             transpiler: new HarmonyMethod(me, nameof(StatTranspiler)));
         harm.Patch(AccessTools.Method(typeof(StatWorker), nameof(StatWorker.GetExplanationUnfinalized)),
             transpiler: new HarmonyMethod(me, nameof(StatExplainTranspiler)));
-        harm.Patch(AccessTools.Constructor(typeof(Pawn_SkillTracker)),
+        harm.Patch(AccessTools.Constructor(typeof(Pawn_SkillTracker), new Type[] {typeof(Pawn)}),
             postfix: new HarmonyMethod(typeof(ExpertiseTrackers), nameof(ExpertiseTrackers.CreateExpertise)));
         harm.Patch(AccessTools.Method(typeof(Pawn_SkillTracker), nameof(Pawn_SkillTracker.ExposeData)),
             postfix: new HarmonyMethod(typeof(ExpertiseTrackers), nameof(ExpertiseTrackers.SaveExpertise)));
