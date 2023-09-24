@@ -21,16 +21,15 @@ public static class RimHUDPatches
         var major = AccessTools.MethodDelegate<ColourDelegate>(AccessTools.PropertyGetter("RimHUD.Configuration.Theme:SkillMajorPassionColor"));
         var disabled = AccessTools.MethodDelegate<ColourDelegate>(AccessTools.PropertyGetter("RimHUD.Configuration.Theme:DisabledColor"));
         var mainText = AccessTools.MethodDelegate<ColourDelegate>(AccessTools.PropertyGetter("RimHUD.Configuration.Theme:MainTextColor"));
-        var value = AccessTools.PropertyGetter("RimHUD.Configuration.ColorOption:Value");
+        var value = AccessTools.PropertyGetter("RimHUD.Configuration.Settings.ColorSetting:Value");
         getMinor = AccessTools.MethodDelegate<RHDelegate>(value, minor());
         getMajor = AccessTools.MethodDelegate<RHDelegate>(value, major());
         getDisabled = AccessTools.MethodDelegate<RHDelegate>(value, disabled());
         getMain = AccessTools.MethodDelegate<RHDelegate>(value, mainText());
-        harm.Patch(AccessTools.Constructor(AccessTools.TypeByName("RimHUD.Interface.Hud.Models.SkillModel"),
-                new[] { AccessTools.TypeByName("RimHUD.Interface.Hud.Models.PawnModel"), typeof(SkillDef) }),
-            transpiler: new HarmonyMethod(typeof(RimHUDPatches), nameof(Constructor_Transpiler)));
-        harm.Patch(AccessTools.Method(AccessTools.TypeByName("SkillModel"), "GetSkillColor"),
-            new HarmonyMethod(typeof(RimHUDPatches), nameof(GetSkillColor_Prefix)));
+        harm.Patch(AccessTools.Constructor(AccessTools.TypeByName("RimHUD.Interface.Hud.Models.Values.SkillValue"),
+            new[] { typeof(SkillDef) }), transpiler: new(typeof(RimHUDPatches), nameof(Constructor_Transpiler)));
+        harm.Patch(AccessTools.Method(AccessTools.TypeByName("RimHUD.Interface.Hud.Models.Values.SkillValue"), "GetColor"),
+            new(typeof(RimHUDPatches), nameof(GetSkillColor_Prefix)));
     }
 
     public static bool GetSkillColor_Prefix(ref Color __result, SkillRecord skill)
