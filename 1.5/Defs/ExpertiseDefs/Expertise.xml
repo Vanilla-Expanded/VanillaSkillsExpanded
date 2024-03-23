@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Precision</defName>
+    <label>Sharpshooting</label>
+    <description>An expertise in accuracy when firing both high-tech and low-tech ranged weapons.</description>
+    <skill>Shooting</skill>
+    <statOffsets>
+      <ShootingAccuracyPawn>0.05</ShootingAccuracyPawn>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>CloseQuarters</defName>
+    <label>Aiming</label>
+    <skill>Shooting</skill>
+    <description>An expertise in aiming when firing both high-tech and low-tech ranged weapons.</description>
+    <statOffsets>
+      <AimingDelayFactor>-0.05</AimingDelayFactor>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Gunner</defName>
+    <label>Reloading</label>
+    <skill>Shooting</skill>
+    <description>An expertise in reloading both high-tech and low-tech ranged weapons.</description>
+    <statOffsets>
+      <VEF_VerbCooldownFactor>-0.025</VEF_VerbCooldownFactor>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Sharp</defName>
+    <label>Piercing</label>
+    <skill>Melee</skill>
+    <description>An expertise in armor piercing when using sharp melee weapons.</description>
+    <statOffsets>
+      <VSE_ArmorPenetrationFactor>0.05</VSE_ArmorPenetrationFactor>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Blunt</defName>
+    <label>Dueling</label>
+    <skill>Melee</skill>
+    <description>An expertise in the fast-paced armed melee combat.</description>
+    <statOffsets>
+      <VSE_MeleeCooldownFactor>-0.025</VSE_MeleeCooldownFactor>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Tamer</defName>
+    <label>Taming</label>
+    <skill>Animals</skill>
+    <description>An expertise in taming wild animals.</description>
+    <statOffsets>
+      <TameAnimalChance>0.05</TameAnimalChance>
+      <VSE_AttackOnFailChanceFactor>-0.05</VSE_AttackOnFailChanceFactor>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Rancher</defName>
+    <label>Ranching</label>
+    <skill>Animals</skill>
+    <description>An expertise in ranching and animal produce gathering.</description>
+    <statOffsets>
+      <AnimalGatherYield>0.05</AnimalGatherYield>
+      <AnimalGatherSpeed>0.05</AnimalGatherSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Hunter</defName>
+    <label>Hunting</label>
+    <skill>Animals</skill>
+    <description>An expertise in the art of hunting.</description>
+    <statOffsets>
+      <HuntingStealth>0.05</HuntingStealth>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Trainer</defName>
+    <label>Handling</label>
+    <skill>Animals</skill>
+    <description>An expertise in handling and training colony animals.</description>
+    <statOffsets>
+      <TrainAnimalChance>0.05</TrainAnimalChance>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>QualityExpert</defName>
+    <label>Art Quality</label>
+    <skill>Artistic</skill>
+    <description>An expertise in creating works of art with increased quality.</description>
+    <statOffsets>
+      <VSE_ArtQuality>0.05</VSE_ArtQuality>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>QuantityExpert</defName>
+    <label>Art Quantity</label>
+    <skill>Artistic</skill>
+    <description>An expertise in creating works of art quickly and efficiently.</description>
+    <statOffsets>
+      <VSE_ArtSpeed>0.05</VSE_ArtSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Flooring</defName>
+    <label>Flooring</label>
+    <skill>Construction</skill>
+    <description>An expertise in constructing floors.</description>
+    <statOffsets>
+      <VSE_FloorSpeed>0.05</VSE_FloorSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Repairman</defName>
+    <label>Repairing</label>
+    <skill>Construction</skill>
+    <description>An expertise in repairing broken down and damaged structures.</description>
+    <statOffsets>
+      <FixBrokenDownBuildingSuccessChance>0.05</FixBrokenDownBuildingSuccessChance>
+      <VSE_RepairSpeed>0.05</VSE_RepairSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Architect</defName>
+    <label>Architecture</label>
+    <skill>Construction</skill>
+    <description>An expertise in creating complex and beautiful buildings.</description>
+    <statOffsets>
+      <ConstructSuccessChance>0.05</ConstructSuccessChance>
+      <VSE_ConstructQuality>0.05</VSE_ConstructQuality>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Foreman</defName>
+    <label>Building</label>
+    <skill>Construction</skill>
+    <description>An expertise in constructing massive amounts of buildings quickly and efficiently.</description>
+    <statOffsets>
+      <ConstructionSpeed>0.05</ConstructionSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Butcher</defName>
+    <label>Butchering</label>
+    <skill>Cooking</skill>
+    <description>An expertise in butchering dead animals.</description>
+    <statOffsets>
+      <ButcheryFleshSpeed>0.05</ButcheryFleshSpeed>
+      <ButcheryFleshEfficiency>0.05</ButcheryFleshEfficiency>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>DrugChef</defName>
+    <label>Drug Cooking</label>
+    <skill>Cooking</skill>
+    <description>An expertise in creating drugs.</description>
+    <statOffsets>
+      <DrugCookingSpeed>0.05</DrugCookingSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>TopChef</defName>
+    <label>Food Hygiene</label>
+    <skill>Cooking</skill>
+    <description>An expertise in creating safe to consume meals in any environment.</description>
+    <statOffsets>
+      <FoodPoisonChance>-0.05</FoodPoisonChance>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>IndustrialChef</defName>
+    <label>Feeding</label>
+    <skill>Cooking</skill>
+    <description>An expertise in creating large amounts of meals to feed many people quickly.</description>
+    <statOffsets>
+      <CookSpeed>0.05</CookSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>MechanoidExpert</defName>
+    <label>Disassembler</label>
+    <skill>Crafting</skill>
+    <description>An expertise in all things mechanoids, including shredding and disassembling them.</description>
+    <statOffsets>
+      <ButcheryMechanoidSpeed>0.05</ButcheryMechanoidSpeed>
+      <ButcheryMechanoidEfficiency>0.05</ButcheryMechanoidEfficiency>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Tailor</defName>
+    <label>Tailoring</label>
+    <skill>Crafting</skill>
+    <description>An expertise in tailoring excellent clothes.</description>
+    <statOffsets>
+      <VSE_TailoringSpeed>0.05</VSE_TailoringSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Weaponsmith</defName>
+    <label>Weaponsmithing</label>
+    <skill>Crafting</skill>
+    <description>An expertise in creating excellent weapons.</description>
+    <statOffsets>
+      <VSE_WeaponCreationSpeed>0.05</VSE_WeaponCreationSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>IndustrialProcessExpert</defName>
+    <label>Fabricating</label>
+    <skill>Crafting</skill>
+    <description>An expertise in crafting components efficiently.</description>
+    <statOffsets>
+      <VSE_ComponentCraftingSpeed>0.05</VSE_ComponentCraftingSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Surgeon</defName>
+    <label>Surgery</label>
+    <skill>Medicine</skill>
+    <description>An expertise in performing safe and effective surgeries.</description>
+    <statOffsets>
+      <SurgerySuccessChanceFactor>0.05</SurgerySuccessChanceFactor>
+      <MedicalSurgerySuccessChance>0.05</MedicalSurgerySuccessChance>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>BattlefieldMedic</defName>
+    <label>First Aid</label>
+    <skill>Medicine</skill>
+    <description>An expertise at rapid treatment and medical tend speed.</description>
+    <statOffsets>
+      <MedicalTendSpeed>0.05</MedicalTendSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>InfectiousDiseaseExpert</defName>
+    <label>Nursing</label>
+    <skill>Medicine</skill>
+    <description>An expertise in caring for ill patients, suffering from various diseases.</description>
+    <statOffsets>
+      <MedicalTendQuality>0.05</MedicalTendQuality>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Driller</defName>
+    <label>Drilling</label>
+    <skill>Mining</skill>
+    <description>An expertise in using a deep drill to mine resources more efficiently.</description>
+    <statOffsets>
+      <DeepDrillingSpeed>0.05</DeepDrillingSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>OreExpert</defName>
+    <label>Prospecting</label>
+    <skill>Mining</skill>
+    <description>An expertise in digging up ore and finding more of it.</description>
+    <statOffsets>
+      <MiningYield>0.05</MiningYield>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Tunneller</defName>
+    <label>Tunnelling</label>
+    <skill>Mining</skill>
+    <description>An expertise in digging massive tunnels and caverns.</description>
+    <statOffsets>
+      <MiningSpeed>0.05</MiningSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Geologist</defName>
+    <label>Geology</label>
+    <skill>Mining</skill>
+    <description>An expertise in rocks and obtaining more stone chunks when digging.</description>
+    <statOffsets>
+      <VSE_RockChunkChance>0.05</VSE_RockChunkChance>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Pharmacologist</defName>
+    <label>Synthesizing</label>
+    <skill>Intellectual</skill>
+    <description>An expertise in creating complex drugs efficiently.</description>
+    <statOffsets>
+      <DrugSynthesisSpeed>0.05</DrugSynthesisSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef MayRequire="ludeon.rimworld.ideology">
+    <defName>Hacker</defName>
+    <label>Hacking</label>
+    <skill>Intellectual</skill>
+    <description>An expertise in hacking terminals and ancient systems.</description>
+    <statOffsets>
+      <HackingSpeed>0.05</HackingSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Researcher</defName>
+    <label>Researching</label>
+    <skill>Intellectual</skill>
+    <description>An expertise in researching new technologies.</description>
+    <statOffsets>
+      <ResearchSpeed>0.05</ResearchSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Forager</defName>
+    <label>Foraging</label>
+    <skill>Plants</skill>
+    <description>An expertise in living off the land and foraging the fruits of the forest.</description>
+    <statOffsets>
+      <ForagedNutritionPerDay>0.05</ForagedNutritionPerDay>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef MayRequire="ludeon.rimworld.ideology">
+    <defName>Treespeaker</defName>
+    <label>Pruning</label>
+    <skill>Plants</skill>
+    <description>An expertise in communicating psychically and pruning the Gauranlen trees.</description>
+    <statOffsets>
+      <PruningSpeed>0.05</PruningSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>HarvesterCareful</defName>
+    <label>Harvesting</label>
+    <skill>Plants</skill>
+    <description>An expertise in ensuring no parts of the plant are wasted on harvesting.</description>
+    <statOffsets>
+      <PlantHarvestYield>0.05</PlantHarvestYield>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>GreenThumb</defName>
+    <label>Sowing</label>
+    <skill>Plants</skill>
+    <description>An expertise in quickly sowing and harvesting large amounts of plants.</description>
+    <statOffsets>
+      <PlantWorkSpeed>0.05</PlantWorkSpeed>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Warden</defName>
+    <label>Wardening</label>
+    <skill>Social</skill>
+    <description>An expertise in handling prisoners and slaves, recruiting them and arresting them if needed.</description>
+    <statOffsets>
+      <ArrestSuccessChance>0.05</ArrestSuccessChance>
+      <SuppressionPower MayRequire="ludeon.rimworld.ideology">0.05</SuppressionPower>
+      <VSE_RecruitRate>0.05</VSE_RecruitRate>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Negotiator</defName>
+    <label>Negotiating</label>
+    <skill>Social</skill>
+    <description>An expertise in handling negotiations and trading.</description>
+    <statOffsets>
+      <TradePriceImprovement>0.05</TradePriceImprovement>
+      <VSE_PeaceTalksChance>0.05</VSE_PeaceTalksChance>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef MayRequire="ludeon.rimworld.ideology">
+    <defName>Proselytizer</defName>
+    <label>Proselytizing</label>
+    <skill>Social</skill>
+    <description>An expertise in converting others to their own ways of thinking.</description>
+    <statOffsets>
+      <ConversionPower>0.05</ConversionPower>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+</Defs>
