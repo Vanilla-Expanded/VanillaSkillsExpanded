@@ -117,7 +117,7 @@ public static class ExpertiseUIUtility
                 GUI.color = Color.white;
             }
 
-            TooltipHandler.TipRegion(buttonRect, expertise.description + "\n\n" + "VSE.Effects.PerLevel".Translate() + expertise.Effects(0, "  - "));
+            TooltipHandler.TipRegion(buttonRect, expertise.description + "\n\n" + "VSE.Effects.PerLevel".Translate() + expertise.Effects(1, "  - "));
             y += 60f;
         }
 
