@@ -261,14 +261,12 @@ public static class PassionPatches
             CodeInstruction.Call(typeof(PassionPatches), nameof(AddForgetRateInfo))
         });
 
-        var info1 = AccessTools.Field(typeof(StatDefOf), nameof(StatDefOf.AnimalsLearningFactor));
-        var idx3 = codes.FindLastIndex(ins => ins.LoadsField(info1));
-        var idx5 = codes.FindIndex(idx3, ins => ins.opcode == OpCodes.Ldarg_0);
-        labels = codes[idx5].labels.ListFullCopy();
-        codes[idx5].labels.Clear();
-        codes.InsertRange(idx5, new[]
+        var info1 = AccessTools.Method(typeof(SkillUI), nameof(SkillUI.GetLearningFactor));
+        var idx3 = codes.FindLastIndex(ins => ins.Calls(info1));
+        var idx5 = codes.FindIndex(idx3, ins => ins.opcode == OpCodes.Pop);
+        codes.InsertRange(idx5 + 1, new[]
         {
-            new CodeInstruction(OpCodes.Ldarg_0).WithLabels(labels),
+            new CodeInstruction(OpCodes.Ldarg_0),
             new CodeInstruction(OpCodes.Ldloc_0),
             CodeInstruction.Call(typeof(PassionPatches), nameof(AddLearnRateOtherInfo))
         });
