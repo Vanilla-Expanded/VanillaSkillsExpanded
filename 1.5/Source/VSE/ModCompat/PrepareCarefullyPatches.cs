@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -11,8 +9,6 @@ namespace VSE;
 
 public static class PrepareCarefullyPatches
 {
-    public delegate void UpdateSkillPassionHandler(SkillDef skill, Passion level);
-
     public static void Do(Harmony harm)
     {
         harm.Patch(AccessTools.Method(AccessTools.TypeByName("EdB.PrepareCarefully.ManagerPawns"), "UpdatePawnSkillPassion"),
@@ -34,4 +30,6 @@ public static class PrepareCarefullyPatches
         LearnRateFactorCache.ClearCacheFor(skillRecord, passion);
         skillRecord.passion = passion;
     }
+
+    public static Texture2D PassionTex(this Passion passion) => PassionManager.PassionToDef(passion).Icon;
 }
