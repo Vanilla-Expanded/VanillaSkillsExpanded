@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -10,45 +9,26 @@ namespace VSE;
 
 public static class PrepareCarefullyPatches
 {
-    public delegate void UpdateSkillPassionHandler(SkillDef skill, Passion level);
-
     public static void Do(Harmony harm)
     {
-        harm.Patch(AccessTools.Method(AccessTools.TypeByName("EdB.PrepareCarefully.PanelSkills"), "IncreasePassion"),
-            new HarmonyMethod(typeof(PrepareCarefullyPatches), nameof(IncreasePassion_Prefix)));
-        harm.Patch(AccessTools.Method(AccessTools.TypeByName("EdB.PrepareCarefully.PanelSkills"), "DecreasePassion"),
-            new HarmonyMethod(typeof(PrepareCarefullyPatches), nameof(DecreasePassion_Prefix)));
-        harm.Patch(AccessTools.Method(AccessTools.TypeByName("EdB.PrepareCarefully.PanelSkills"), "DrawPanelContent"),
-            transpiler: new HarmonyMethod(typeof(PrepareCarefullyPatches), nameof(DrawPanelContent_Transpiler)));
-        harm.Patch(AccessTools.Method(AccessTools.TypeByName("EdB.PrepareCarefully.PanelSkills"), "GetSkillDescription"),
-            transpiler: new HarmonyMethod(typeof(PassionPatches), nameof(PassionPatches.SkillDescription_Transpiler)));
+        harm.Patch(AccessTools.Method(AccessTools.TypeByName("EdB.PrepareCarefully.ManagerPawns"), "UpdatePawnSkillPassion"),
+            transpiler: new HarmonyMethod(typeof(PrepareCarefullyPatches), nameof(UpdatePawnSkillPassion_Transpiler)));
     }
-
-    public static bool IncreasePassion_Prefix(SkillRecord record, UpdateSkillPassionHandler ___SkillPassionUpdated)
+    
+    public static IEnumerable<CodeInstruction> UpdatePawnSkillPassion_Transpiler(IEnumerable<CodeInstruction> instructions)
     {
-        var newPassion = record.passion.ChangePassion(1);
-        LearnRateFactorCache.ClearCacheFor(record);
-        ___SkillPassionUpdated(record.def, newPassion);
-        return false;
-    }
-
-    public static bool DecreasePassion_Prefix(SkillRecord record, UpdateSkillPassionHandler ___SkillPassionUpdated)
-    {
-        var newPassion = record.passion.ChangePassion(-1);
-        LearnRateFactorCache.ClearCacheFor(record);
-        ___SkillPassionUpdated(record.def, newPassion);
-        return false;
-    }
-
-    public static IEnumerable<CodeInstruction> DrawPanelContent_Transpiler(IEnumerable<CodeInstruction> instructions)
-    {
+        var passionField = AccessTools.Field(typeof(SkillRecord), nameof(SkillRecord.passion));
         var codes = instructions.ToList();
-        var idx1 = codes.FindIndex(ins => ins.opcode == OpCodes.Ldloc_S && ins.operand is LocalBuilder { LocalIndex: 9 });
-        var info = AccessTools.Field(AccessTools.TypeByName("EdB.PrepareCarefully.Textures"), "TexturePassionNone");
-        var idx2 = codes.FindIndex(idx1, ins => ins.LoadsField(info));
-        codes.RemoveRange(idx1 + 1, idx2 - idx1);
-        codes.Insert(idx1 + 1, CodeInstruction.Call(typeof(PrepareCarefullyPatches), nameof(PassionTex)));
+        var idx1 = codes.FindIndex(ins => ins.StoresField(passionField));
+        codes.RemoveAt(idx1);
+        codes.Insert(idx1, CodeInstruction.Call(typeof(PrepareCarefullyPatches), nameof(UpdatePawnSkillPassionAndClearCache)));
         return codes;
+    }
+
+    public static void UpdatePawnSkillPassionAndClearCache(SkillRecord skillRecord, Passion passion)
+    {
+        LearnRateFactorCache.ClearCacheFor(skillRecord, passion);
+        skillRecord.passion = passion;
     }
 
     public static Texture2D PassionTex(this Passion passion) => PassionManager.PassionToDef(passion).Icon;
