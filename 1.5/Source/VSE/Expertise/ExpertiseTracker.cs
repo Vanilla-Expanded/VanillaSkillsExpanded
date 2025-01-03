@@ -39,7 +39,7 @@ public class ExpertiseTracker : IExposable
         for (var i = 0; i < expertise.Count; i++)
         {
             var expertiseRecord = expertise[i];
-            value += expertiseRecord.def.statOffsets.GetStatOffsetFromList(stat) * expertiseRecord.LevelPlusOne;
+            value += expertiseRecord.def.statOffsets.GetStatOffsetFromList(stat) * expertiseRecord.Level;
         }
     }
 
@@ -54,7 +54,7 @@ public class ExpertiseTracker : IExposable
             if (offset != 0f)
             {
                 builder.AppendLine(
-                    $"  {expertiseRecord.def.LabelCap} ({expertiseRecord.Level}): {stat.Worker.ValueToString(offset * expertiseRecord.LevelPlusOne, false, ToStringNumberSense.Offset)}");
+                    $"  {expertiseRecord.def.LabelCap} ({expertiseRecord.Level}): {stat.Worker.ValueToString(offset * expertiseRecord.Level, false, ToStringNumberSense.Offset)}");
                 addedAnything = true;
             }
         }
@@ -69,11 +69,11 @@ public class ExpertiseTracker : IExposable
         for (var i = 0; i < expertise.Count; i++)
         {
             var expertiseRecord = expertise[i];
-            var offset = expertiseRecord.def.statFactors.GetStatFactorFromList(stat);
-            if (offset != 1f)
+            var factorOffset = expertiseRecord.def.statFactors.GetStatValueFromList(stat, 0f);
+            if (factorOffset != 0f)
             {
                 builder.AppendLine(
-                    $"  {expertiseRecord.def.LabelCap} ({expertiseRecord.Level}): {stat.Worker.ValueToString(offset * expertiseRecord.LevelPlusOne, false, ToStringNumberSense.Factor)}");
+                    $"  {expertiseRecord.def.LabelCap} ({expertiseRecord.Level}): {stat.Worker.ValueToString(1f + factorOffset * expertiseRecord.Level, false, ToStringNumberSense.Factor)}");
                 addedAnything = true;
             }
         }
@@ -86,8 +86,8 @@ public class ExpertiseTracker : IExposable
         for (var i = 0; i < expertise.Count; i++)
         {
             var expertiseRecord = expertise[i];
-            var factor = expertiseRecord.def.statFactors.GetStatFactorFromList(stat);
-            if (factor != 1f) value *= factor * expertiseRecord.LevelPlusOne;
+            var factor = expertiseRecord.def.statFactors.GetStatValueFromList(stat, 0f);
+            if (factor != 0f) value *= 1f + factor * expertiseRecord.Level;
         }
     }
 }

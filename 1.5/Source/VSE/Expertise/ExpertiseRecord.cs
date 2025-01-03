@@ -26,6 +26,7 @@ public class ExpertiseRecord : IExposable
     {
         Pawn = pawn;
         this.def = def;
+        this.XpRequiredForLevelUp = SkillRecord.XpRequiredToLevelUpFrom(0);
     }
 
     public float XpTotalEarned
@@ -43,7 +44,6 @@ public class ExpertiseRecord : IExposable
     public Pawn Pawn { get; }
 
     public int Level => level;
-    public int LevelPlusOne => level + 1;
 
     public string LevelDescriptor => level is < 0 or > 20 ? "Unknown".Translate() : $"VSE.Expertise{level}".Translate();
 

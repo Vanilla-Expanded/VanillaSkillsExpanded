@@ -169,7 +169,7 @@ public static class ExpertisePatches
         var idx1 = FindIfJumpIndex(codes, 0, info);
         var label = RewriteJump(codes, generator, 0, AccessTools.Field(typeof(StatDef), nameof(StatDef.skillNeedOffsets)));
         if (label is null) throw new("Failed to find jump location");
-        codes.InsertRange(idx1, new[]
+        codes.InsertRange(idx1 - 1, new[]
         {
             new CodeInstruction(OpCodes.Ldloc_2).WithLabels(label.Value),
             CodeInstruction.Call(typeof(ExpertiseTrackers), nameof(ExpertiseTrackers.Expertise), new[] { typeof(Pawn) }),
@@ -181,7 +181,7 @@ public static class ExpertisePatches
         var idx2 = FindIfJumpIndex(codes, idx1, info);
         label = RewriteJump(codes, generator, idx1, AccessTools.Field(typeof(StatDef), nameof(StatDef.skillNeedFactors)));
         if (label is null) throw new("Failed to find jump location");
-        codes.InsertRange(idx2, new[]
+        codes.InsertRange(idx2 - 1, new[]
         {
             new CodeInstruction(OpCodes.Ldloc_2).WithLabels(label.Value),
             CodeInstruction.Call(typeof(ExpertiseTrackers), nameof(ExpertiseTrackers.Expertise), new[] { typeof(Pawn) }),
