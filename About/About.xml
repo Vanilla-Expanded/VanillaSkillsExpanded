@@ -15,7 +15,7 @@ Expertise will allow your pawns to truly excel in specific skills that fit their
 Expertise is a permanent choice, so be careful what you pick!
 
 This mod also introduces three new passion types - critical passion, natural passion and apathy!</description>
-  <modDependencies>
+  <modDependencies> 
     <li>
       <packageId>brrainz.harmony</packageId>
       <displayName>Harmony</displayName>
