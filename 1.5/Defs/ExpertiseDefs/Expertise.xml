@@ -6,7 +6,7 @@
     <description>An expertise in accuracy when firing both high-tech and low-tech ranged weapons.</description>
     <skill>Shooting</skill>
     <statOffsets>
-      <ShootingAccuracyPawn>0.05</ShootingAccuracyPawn>
+      <ShootingAccuracyPawn>1</ShootingAccuracyPawn>
     </statOffsets>
   </VSE.Expertise.ExpertiseDef>
   <VSE.Expertise.ExpertiseDef>
