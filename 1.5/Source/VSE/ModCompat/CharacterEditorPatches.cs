@@ -89,8 +89,11 @@ public static class CharacterEditorPatches
         var info = AccessTools.Field(typeof(SkillRecord), nameof(SkillRecord.passion));
         var idx1 = codes.FindIndex(ins => ins.LoadsField(info));
         var idx2 = codes.FindIndex(idx1, ins => ins.opcode == OpCodes.Stloc_3);
-        codes.RemoveRange(idx2, 3);
-        codes.Insert(idx2, CodeInstruction.Call(typeof(CharacterEditorPatches), nameof(GetStringFromPassion)));
+        codes.RemoveRange(idx2+1, 2);
+        codes.InsertRange(idx2 + 1, [CodeInstruction.LoadArgument(0),CodeInstruction.LoadField(typeof(SkillRecord), nameof(SkillRecord.passion)),
+
+            CodeInstruction.Call(typeof(CharacterEditorPatches), nameof(GetStringFromPassion))]);
+       
         return codes;
     }
 
