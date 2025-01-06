@@ -39,7 +39,7 @@ public class ExpertiseTracker : IExposable
         for (var i = 0; i < expertise.Count; i++)
         {
             var expertiseRecord = expertise[i];
-            value += expertiseRecord.def.statOffsets.GetStatOffsetFromList(stat) * expertiseRecord.Level;
+            value += expertiseRecord.def.statOffsets.GetStatOffsetFromList(stat) * expertiseRecord.Level * SkillsMod.Settings.StatMultiplier;
         }
     }
 
@@ -54,7 +54,7 @@ public class ExpertiseTracker : IExposable
             if (offset != 0f)
             {
                 builder.AppendLine(
-                    $"  {expertiseRecord.def.LabelCap} ({expertiseRecord.Level}): {stat.Worker.ValueToString(offset * expertiseRecord.Level, false, ToStringNumberSense.Offset)}");
+                    $"  {expertiseRecord.def.LabelCap} ({expertiseRecord.Level}): {stat.Worker.ValueToString(offset * expertiseRecord.Level * SkillsMod.Settings.StatMultiplier, false, ToStringNumberSense.Offset)}");
                 addedAnything = true;
             }
         }
@@ -73,7 +73,7 @@ public class ExpertiseTracker : IExposable
             if (factorOffset != 0f)
             {
                 builder.AppendLine(
-                    $"  {expertiseRecord.def.LabelCap} ({expertiseRecord.Level}): {stat.Worker.ValueToString(1f + factorOffset * expertiseRecord.Level, false, ToStringNumberSense.Factor)}");
+                    $"  {expertiseRecord.def.LabelCap} ({expertiseRecord.Level}): {stat.Worker.ValueToString(1f + factorOffset * expertiseRecord.Level * SkillsMod.Settings.StatMultiplier, false, ToStringNumberSense.Factor)}");
                 addedAnything = true;
             }
         }
@@ -87,7 +87,7 @@ public class ExpertiseTracker : IExposable
         {
             var expertiseRecord = expertise[i];
             var factor = expertiseRecord.def.statFactors.GetStatValueFromList(stat, 0f);
-            if (factor != 0f) value *= 1f + factor * expertiseRecord.Level;
+            if (factor != 0f) value *= 1f + factor * expertiseRecord.Level * SkillsMod.Settings.StatMultiplier;
         }
     }
 }

@@ -55,7 +55,10 @@ public class SkillsMod : Mod
         listing.LabelPlus("VSE.MinSkillForExpertise".Translate() + ": " + Settings.LevelToGetExpertise, "VSE.MinSkillForExpertiseDesc".Translate());
         Settings.LevelToGetExpertise = (int)Math.Round(listing.Slider(Settings.LevelToGetExpertise, 1f, 20f), 1);
 
-     
+        listing.LabelPlus("VSE.StatMultiplier".Translate() + ": " + Settings.StatMultiplier, "VSE.StatMultiplierDesc".Translate());
+        Settings.StatMultiplier = (float)Math.Round(listing.Slider(Settings.StatMultiplier, 0.1f, 5f), 1);
+
+
         var height = Text.LineHeight * (DefDatabase<PassionDef>.DefCount + 2) + 50f;
         var inner = listing.BeginSection(height);
         if (inner.ButtonTextLabeled("VSE.Commonalities".Translate(), "VSE.Reset".Translate())) Settings.PassionCommonalities.Clear();
@@ -109,6 +112,7 @@ public class SkillsModSettings : ModSettings
     public bool EnableSkillLoss;
     public int MaxExpertise = 1;
     public int LevelToGetExpertise = 15;
+    public float StatMultiplier = 1;
 
     public Dictionary<string, float> PassionCommonalities = new();
 
@@ -122,6 +126,8 @@ public class SkillsModSettings : ModSettings
         Scribe_Values.Look(ref EnableAlert, "enableAlert", true);
         Scribe_Values.Look(ref AllowExpertiseOverlap, "allowExpertiseOverlap", true);
         Scribe_Values.Look(ref LevelToGetExpertise, "LevelToGetExpertise", 15);
+        Scribe_Values.Look(ref StatMultiplier, "StatMultiplier", 1);
+
         Scribe_Collections.Look(ref PassionCommonalities, "passionCommonalities", LookMode.Value, LookMode.Value);
         PassionCommonalities ??= new Dictionary<string, float>();
     }

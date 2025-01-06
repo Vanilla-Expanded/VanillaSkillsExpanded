@@ -52,4 +52,6 @@
     <VSE.EnableSkillsLoss.Desc>By default, Ducks' Insane Skills disables all skill loss. By selecting this option, this mod will override Ducks and enable it again. Use this if you still want to be able to take advantage of the forget speed changes in the new passions.</VSE.EnableSkillsLoss.Desc>
 	<VSE.MinSkillForExpertise>Minimum skill to get an expertise</VSE.MinSkillForExpertise>
 	<VSE.MinSkillForExpertiseDesc>The colonist will need to reach this skill level before being offered an expertise.</VSE.MinSkillForExpertiseDesc>
+	<VSE.StatMultiplier>Expertise stat factor / offset multiplier</VSE.StatMultiplier>
+	<VSE.StatMultiplierDesc>Is our balance too easy? Too hard? Go bitch on Reddit! Errrr... I mean, change it with this slider! The effects expertise have on stats will be multiplied by this number, so 0.1 will make expertise super weak, while 5 will make them incredibly overpowered.</VSE.StatMultiplierDesc>
 </LanguageData>

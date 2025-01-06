@@ -54,8 +54,8 @@ public class ExpertiseDef : Def
             statFactors.Aggregate("",
                 (current, factor) =>
                     current +
-                    $"\n{prefix}{factor.stat.LabelCap}: {factor.stat.Worker.ValueToString(1 + factor.value * level, false, ToStringNumberSense.Factor)}"),
+                    $"\n{prefix}{factor.stat.LabelCap}: {factor.stat.Worker.ValueToString(1 + factor.value * level *SkillsMod.Settings.StatMultiplier, false, ToStringNumberSense.Factor)}"),
             (current, offset) =>
                 current +
-                $"\n{prefix}{offset.stat.LabelCap}: {offset.stat.Worker.ValueToString(offset.value * level, false, ToStringNumberSense.Offset)}");
+                $"\n{prefix}{offset.stat.LabelCap}: {offset.stat.Worker.ValueToString(offset.value * level * SkillsMod.Settings.StatMultiplier, false, ToStringNumberSense.Offset)}");
 }
