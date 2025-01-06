@@ -87,6 +87,10 @@ public class ExpertiseRecord : IExposable
         {
             XpSinceLastLevel -= XpRequiredForLevelUp;
             level++;
+            foreach (StatDef item in DefDatabase<StatDef>.AllDefsListForReading)
+            {
+                item.Worker.TryClearCache();
+            }
             XpRequiredForLevelUp = SkillRecord.XpRequiredToLevelUpFrom(level);
             if (level >= 20)
             {

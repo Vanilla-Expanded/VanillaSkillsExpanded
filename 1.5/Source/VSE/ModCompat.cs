@@ -52,10 +52,10 @@ public static class ModCompat
 
         if (RandomPlus)
         {
-            RandomPlusPatches.Do(SkillsMod.Harm);
+            /*RandomPlusPatches.Do(SkillsMod.Harm);
             var type = AccessTools.TypeByName("RandomPlus.SkillContainer");
             setPassion = (Action<object, Passion>)AccessTools.PropertySetter(type, "Passion").CreateDelegate(typeof(Action<object, Passion>));
-            getPassion = (Func<object, Passion>)AccessTools.PropertyGetter(type, "Passion").CreateDelegate(typeof(Func<object, Passion>));
+           getPassion = (Func<object, Passion>)AccessTools.PropertyGetter(type, "Passion").CreateDelegate(typeof(Func<object, Passion>));*/
         }
 
         if (StrangerDanger) SD_passion = AccessTools.TypeByName("Stranger_Danger.BioSkillsPatch").GetMethod("passion_sd");
