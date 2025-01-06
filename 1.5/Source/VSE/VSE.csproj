@@ -99,6 +99,7 @@
     <Compile Include="ModCompat\PrepareCarefullyPatches.cs" />
     <Compile Include="Passions\PassionUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsHelper.cs" />
     <Compile Include="SkillsMod.cs" />
     <Compile Include="Stats\StatPatches.cs" />
     <Compile Include="Stats\MoreStatDefOf.cs" />

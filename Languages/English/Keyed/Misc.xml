@@ -50,4 +50,6 @@
     <VSE.EnableSkillLoss>Re-enable skill loss</VSE.EnableSkillLoss>
     <VSE.EnableAlert>Enable "Expertise Available" alert</VSE.EnableAlert>
     <VSE.EnableSkillsLoss.Desc>By default, Ducks' Insane Skills disables all skill loss. By selecting this option, this mod will override Ducks and enable it again. Use this if you still want to be able to take advantage of the forget speed changes in the new passions.</VSE.EnableSkillsLoss.Desc>
+	<VSE.MinSkillForExpertise>Minimum skill to get an expertise</VSE.MinSkillForExpertise>
+	<VSE.MinSkillForExpertiseDesc>The colonist will need to reach this skill level before being offered an expertise.</VSE.MinSkillForExpertiseDesc>
 </LanguageData>

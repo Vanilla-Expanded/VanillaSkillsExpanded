@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using UnityEngine;
@@ -50,6 +51,11 @@ public class SkillsMod : Mod
         listing.CheckboxLabeled("VSE.AllowExpertiseOverlap".Translate(), ref Settings.AllowExpertiseOverlap, "VSE.AllowExpertiseOverlap.Desc".Translate());
         if (ModCompat.InsaneSkills)
             listing.CheckboxLabeled("VSE.EnableSkillLoss".Translate(), ref Settings.EnableSkillLoss, "VSE.EnableSkillsLoss.Desc".Translate());
+
+        listing.LabelPlus("VSE.MinSkillForExpertise".Translate() + ": " + Settings.LevelToGetExpertise, "VSE.MinSkillForExpertiseDesc".Translate());
+        Settings.LevelToGetExpertise = (int)Math.Round(listing.Slider(Settings.LevelToGetExpertise, 1f, 20f), 1);
+
+     
         var height = Text.LineHeight * (DefDatabase<PassionDef>.DefCount + 2) + 50f;
         var inner = listing.BeginSection(height);
         if (inner.ButtonTextLabeled("VSE.Commonalities".Translate(), "VSE.Reset".Translate())) Settings.PassionCommonalities.Clear();
@@ -102,6 +108,8 @@ public class SkillsModSettings : ModSettings
     public bool EnableAlert = true;
     public bool EnableSkillLoss;
     public int MaxExpertise = 1;
+    public int LevelToGetExpertise = 15;
+
     public Dictionary<string, float> PassionCommonalities = new();
 
     public override void ExposeData()
@@ -113,6 +121,7 @@ public class SkillsModSettings : ModSettings
         Scribe_Values.Look(ref CriticalEffectPassions, "criticalEffectPassions", true);
         Scribe_Values.Look(ref EnableAlert, "enableAlert", true);
         Scribe_Values.Look(ref AllowExpertiseOverlap, "allowExpertiseOverlap", true);
+        Scribe_Values.Look(ref LevelToGetExpertise, "LevelToGetExpertise", 15);
         Scribe_Collections.Look(ref PassionCommonalities, "passionCommonalities", LookMode.Value, LookMode.Value);
         PassionCommonalities ??= new Dictionary<string, float>();
     }

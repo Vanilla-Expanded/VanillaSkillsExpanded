@@ -27,7 +27,7 @@ public class ExpertiseDef : Def
             return false;
         }
 
-        if (skillRecord.Level < 15)
+        if (skillRecord.Level < SkillsMod.Settings.LevelToGetExpertise)
         {
             reason = "VSE.SkillTooLow".Translate();
             return false;
