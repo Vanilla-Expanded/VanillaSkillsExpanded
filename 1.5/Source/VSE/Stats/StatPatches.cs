@@ -18,9 +18,9 @@ public static class StatPatches
         foreach (var methodInfo in typeof(VerbProperties).GetMethods(AccessTools.all)
                     .Where(mi => mi.Name == "AdjustedArmorPenetration" && mi.GetParameters().Length > 2))
             harm.Patch(methodInfo, postfix: new(myType, nameof(AdjustArmorPenetration)));
-        foreach (var methodInfo in typeof(VerbProperties).GetMethods(AccessTools.all)
+        /*foreach (var methodInfo in typeof(VerbProperties).GetMethods(AccessTools.all)
                     .Where(mi => mi.Name == "AdjustedCooldown" && mi.GetParameters().Length > 2))
-            harm.Patch(methodInfo, postfix: new(myType, nameof(AdjustMeleeCooldown)));
+            harm.Patch(methodInfo, postfix: new(myType, nameof(AdjustMeleeCooldown)));*/
         harm.Patch(AccessTools.Method(typeof(Pawn_MindState), nameof(Pawn_MindState.CheckStartMentalStateBecauseRecruitAttempted)),
             transpiler: new(myType, nameof(AttackOnTameFailTranspiler)));
         harm.Patch(AccessTools.Method(typeof(GenRecipe), nameof(GenRecipe.PostProcessProduct)),
@@ -48,10 +48,10 @@ public static class StatPatches
         if (attacker is not null) __result *= attacker.GetStatValue(MoreStatDefOf.VSE_ArmorPenetrationFactor);
     }
 
-    public static void AdjustMeleeCooldown(Pawn attacker, ref float __result, Tool tool)
+    /*public static void AdjustMeleeCooldown(Pawn attacker, ref float __result, Tool tool)
     {
         if (attacker is not null && tool is not null) __result *= attacker.GetStatValue(MoreStatDefOf.VSE_MeleeCooldownFactor);
-    }
+    }*/
 
     public static IEnumerable<CodeInstruction> AttackOnTameFailTranspiler(IEnumerable<CodeInstruction> instructions)
     {
