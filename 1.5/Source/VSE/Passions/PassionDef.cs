@@ -1,6 +1,7 @@
 ﻿using RimWorld;
 using UnityEngine;
 using Verse;
+using System.Collections.Generic;
 
 // ReSharper disable InconsistentNaming
 
@@ -25,6 +26,9 @@ public class PassionDef : Def
     public string Indicator => indicatorString.NullOrEmpty() ? "" : " " + indicatorString;
     public Texture2D Icon => icon ??= ContentFinder<Texture2D>.Get(iconPath);
     public Texture2D WorkBoxIcon => workBoxIcon ??= ContentFinder<Texture2D>.Get(workBoxIconPath);
+    public List<TraitDef> blockingTraits = new List<TraitDef>();
+    public List<PreceptDef> blockingPrecepts = new List<PreceptDef>();
+    public List<GeneDef> blockingGenes = new List<GeneDef>();
 
     public string FullDescription =>
         LabelCap + "VSE.LearnsForgets".Translate(learnRateFactor.ToStringPercent(), forgetRateFactor.ToStringPercent()) +
