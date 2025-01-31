@@ -27,6 +27,7 @@ public class PassionDef : Def
     public Texture2D Icon => icon ??= ContentFinder<Texture2D>.Get(iconPath);
     public Texture2D WorkBoxIcon => workBoxIcon ??= ContentFinder<Texture2D>.Get(workBoxIconPath);
     public List<TraitDef> blockingTraits = new List<TraitDef>();
+    public List<TraitRequirement> blockingTraitsWithDegree = new List<TraitRequirement>();
     public List<PreceptDef> blockingPrecepts = new List<PreceptDef>();
     public List<GeneDef> blockingGenes = new List<GeneDef>();
 

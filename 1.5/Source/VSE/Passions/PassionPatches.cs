@@ -80,9 +80,10 @@ public static class PassionPatches
             var hasCriticalInt = hasCritical;
             var passion = DefDatabase<PassionDef>.AllDefs
                .Where(def => (SkillsMod.Settings.AllowMultipleCritical || !hasCriticalInt || !def.IsCritical)&&
-               (def.blockingTraits.Count==0 || pawn.story?.traits?.allTraits?.Select(x => x.def).ToList().Intersect(def.blockingTraits).Any()==false)&&
-                (def.blockingPrecepts.Count == 0 || pawn.Faction?.ideos?.PrimaryIdeo?.PreceptsListForReading?.Select(x => x.def).ToList().Intersect(def.blockingPrecepts).Any() == false)&&
-                 (def.blockingGenes.Count == 0 || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.blockingGenes).Any() == false)
+               (def.blockingTraits.NullOrEmpty() || pawn.story?.traits?.allTraits?.Select(x => x.def).ToList().Intersect(def.blockingTraits).Any()==false)&&
+               (def.blockingTraitsWithDegree.NullOrEmpty() || def.blockingTraitsWithDegree.TrueForAll(trait => !trait.HasTrait(pawn))) &&
+                (def.blockingPrecepts.NullOrEmpty() || pawn.Faction?.ideos?.PrimaryIdeo?.PreceptsListForReading?.Select(x => x.def).ToList().Intersect(def.blockingPrecepts).Any() == false)&&
+                 (def.blockingGenes.NullOrEmpty() || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.blockingGenes).Any() == false)
 
                )
                .RandomElementByWeight(def => def.commonality);
