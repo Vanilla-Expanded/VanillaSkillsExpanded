@@ -13,7 +13,7 @@
     <VSE.Passions.PassionDef>
         <defName>Minor</defName>
         <label>interested</label>
-        <description>minor passion</description>
+        <description>This skill is found enjoyable, but it’s more of a hobby than a calling.</description>
         <learnRateFactor>1</learnRateFactor>
         <commonality>1.5</commonality>
         <inspirationCommonality>2.5</inspirationCommonality>
@@ -25,7 +25,7 @@
     <VSE.Passions.PassionDef>
         <defName>Major</defName>
         <label>burning</label>
-        <description>major passion</description>
+        <description>A defining skill, driven by deep passion or a pivotal moment in their past.</description>
         <learnRateFactor>1.5</learnRateFactor>
         <inspirationCommonality>5</inspirationCommonality>
         <iconPath>Passions/PassionMajor</iconPath>
@@ -36,7 +36,7 @@
     <VSE.Passions.PassionDef>
         <defName>VSE_Apathy</defName>
         <label>apathy</label>
-        <description>no interest in this skill</description>
+        <description>Absolutely no interest in this skill.</description>
         <learnRateFactor>0.25</learnRateFactor>
         <forgetRateFactor>1.25</forgetRateFactor>
         <isBad>true</isBad>

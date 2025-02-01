@@ -54,4 +54,5 @@
 	<VSE.MinSkillForExpertiseDesc>The colonist will need to reach this skill level before being offered an expertise.</VSE.MinSkillForExpertiseDesc>
 	<VSE.StatMultiplier>Expertise stat factor / offset multiplier</VSE.StatMultiplier>
 	<VSE.StatMultiplierDesc>Is our balance too easy? Too hard? Go bitch on Reddit! Errrr... I mean, change it with this slider! The effects expertise have on stats will be multiplied by this number, so 0.1 will make expertise super weak, while 5 will make them incredibly overpowered.</VSE.StatMultiplierDesc>
+	<VSE_Passion>Passion: {0}</VSE_Passion>
 </LanguageData>

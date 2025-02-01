@@ -46,6 +46,9 @@ public static class PassionPatches
         harm.Patch(AccessTools.Method(typeof(DebugToolsPawns), nameof(DebugToolsPawns.SetPassion)), new(me, nameof(SetPassion_Prefix)));
         harm.Patch(AccessTools.Method(typeof(PassionExtension), nameof(PassionExtension.IncrementPassion)),
             new(me, nameof(IncrementPassion_Prefix)));
+
+        harm.Patch(AccessTools.Method(typeof(SkillUI), nameof(SkillUI.GetSkillDescription)),
+            postfix:new(typeof(VSE_SkillUI_GetSkillDescription_Patch), nameof(VSE_SkillUI_GetSkillDescription_Patch.AddPassionDescription)));
     }
 
     public static bool GenerateSkills_Prefix(Pawn pawn, PawnGenerationRequest request)
@@ -293,6 +296,8 @@ public static class PassionPatches
                      where !Mathf.Approximately(passion.learnRateFactorOther, 1f)
                      select (record, passion))
                 builder.AppendLine("  - " + record.def.LabelCap + ": " + passion.LabelCap + ": x" + passion.learnRateFactorOther.ToStringPercent("F0"));
+
+
     }
 
     public static void AddForgetRateInfo(SkillRecord sk, StringBuilder builder)
