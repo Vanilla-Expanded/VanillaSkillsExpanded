@@ -86,7 +86,9 @@ public static class PassionPatches
                (def.blockingTraits.NullOrEmpty() || pawn.story?.traits?.allTraits?.Select(x => x.def).ToList().Intersect(def.blockingTraits).Any()==false)&&
                (def.blockingTraitsWithDegree.NullOrEmpty() || def.blockingTraitsWithDegree.TrueForAll(trait => !trait.HasTrait(pawn))) &&
                 (def.blockingPrecepts.NullOrEmpty() || pawn.Faction?.ideos?.PrimaryIdeo?.PreceptsListForReading?.Select(x => x.def).ToList().Intersect(def.blockingPrecepts).Any() == false)&&
-                 (def.blockingGenes.NullOrEmpty() || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.blockingGenes).Any() == false)
+                 (def.blockingGenes.NullOrEmpty() || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.blockingGenes).Any() == false)&&
+                 (def.maxAge==-1 || pawn.ageTracker.AgeBiologicalYears<def.maxAge)&&
+                  (def.minAge == -1 || pawn.ageTracker.AgeBiologicalYears > def.minAge)
 
                )
                .RandomElementByWeight(def => def.commonality);
@@ -104,6 +106,10 @@ public static class PassionPatches
 
             if (passion.IsCritical) hasCritical = true;
             skillRecord.passion = (Passion)passion.index;
+            if (passion.hediffToAdd != null)
+            {
+                pawn.health.AddHediff(passion.hediffToAdd);
+            }
         }
 
         return false;
@@ -324,6 +330,10 @@ public static class PassionPatches
                         if (p.skills != null)
                         {
                             p.skills.GetSkill(skill).passion = (Passion)passion.index;
+                            if (passion.hediffToAdd != null)
+                            {
+                                p.health.AddHediff(passion.hediffToAdd);
+                            }
                             DebugActionsUtility.DustPuffFrom(p);
                         }
                     }

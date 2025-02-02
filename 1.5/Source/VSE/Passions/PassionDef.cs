@@ -30,6 +30,9 @@ public class PassionDef : Def
     public List<TraitRequirement> blockingTraitsWithDegree = new List<TraitRequirement>();
     public List<PreceptDef> blockingPrecepts = new List<PreceptDef>();
     public List<GeneDef> blockingGenes = new List<GeneDef>();
+    public int maxAge = -1;
+    public int minAge = -1;
+    public HediffDef hediffToAdd = null;
 
     public string FullDescription =>
         LabelCap + "VSE.LearnsForgets".Translate(learnRateFactor.ToStringPercent(), forgetRateFactor.ToStringPercent()) +
