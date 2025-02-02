@@ -90,6 +90,12 @@ public static class PassionPatches
                  (def.maxAge==-1 || pawn.ageTracker.AgeBiologicalYears<def.maxAge)&&
                   (def.minAge == -1 || pawn.ageTracker.AgeBiologicalYears > def.minAge)
 
+                  &&
+               (def.requiredTraits.NullOrEmpty() || pawn.story?.traits?.allTraits?.Select(x => x.def).ToList().Intersect(def.requiredTraits).Count() == def.requiredTraits.Count()) &&
+               (def.requiredTraitsWithDegree.NullOrEmpty() || def.requiredTraitsWithDegree.TrueForAll(trait => trait.HasTrait(pawn))) &&
+                (def.requiredPrecepts.NullOrEmpty() || pawn.Faction?.ideos?.PrimaryIdeo?.PreceptsListForReading?.Select(x => x.def).ToList().Intersect(def.requiredPrecepts).Count() == def.requiredPrecepts.Count()) &&
+                 (def.requiredGenes.NullOrEmpty() || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.requiredGenes).Count() == def.requiredGenes.Count())
+
                )
                .RandomElementByWeight(def => def.commonality);
             SkillRecord skillRecord;

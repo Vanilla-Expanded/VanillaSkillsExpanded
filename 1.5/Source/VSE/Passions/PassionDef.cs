@@ -30,6 +30,10 @@ public class PassionDef : Def
     public List<TraitRequirement> blockingTraitsWithDegree = new List<TraitRequirement>();
     public List<PreceptDef> blockingPrecepts = new List<PreceptDef>();
     public List<GeneDef> blockingGenes = new List<GeneDef>();
+    public List<TraitDef> requiredTraits = new List<TraitDef>();
+    public List<TraitRequirement> requiredTraitsWithDegree = new List<TraitRequirement>();
+    public List<PreceptDef> requiredPrecepts = new List<PreceptDef>();
+    public List<GeneDef> requiredGenes = new List<GeneDef>();
     public int maxAge = -1;
     public int minAge = -1;
     public HediffDef hediffToAdd = null;
