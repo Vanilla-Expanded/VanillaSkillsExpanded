@@ -49,6 +49,7 @@
         <indicatorString>Ø</indicatorString>
         <color>Disabled</color>
 		<passionToIncreaseTo>None</passionToIncreaseTo>
+		<randomForBabies>true</randomForBabies>
     </VSE.Passions.PassionDef>
     <VSE.Passions.PassionDef>
         <defName>VSE_Natural</defName>
@@ -63,6 +64,7 @@
         <indicatorString>☆</indicatorString>
         <color>Minor</color>
 		<passionToIncreaseTo>Major</passionToIncreaseTo>
+		<randomForBabies>true</randomForBabies>
     </VSE.Passions.PassionDef>
     <VSE.Passions.PassionDef>
         <defName>VSE_Critical</defName>

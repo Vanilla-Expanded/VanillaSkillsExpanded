@@ -60,32 +60,37 @@ namespace VSE
             if (Rand.Chance(0.05f))
             {
                 Pawn pawn = __instance.pawn;
-                var passion = DefDatabase<PassionDef>.AllDefs
-               .Where(def => def.isBad &&
-               (def.blockingTraits.NullOrEmpty() || pawn.story?.traits?.allTraits?.Select(x => x.def).ToList().Intersect(def.blockingTraits).Any() == false) &&
-               (def.blockingTraitsWithDegree.NullOrEmpty() || def.blockingTraitsWithDegree.TrueForAll(trait => !trait.HasTrait(pawn))) &&
-                (def.blockingPrecepts.NullOrEmpty() || pawn.Faction?.ideos?.PrimaryIdeo?.PreceptsListForReading?.Select(x => x.def).ToList().Intersect(def.blockingPrecepts).Any() == false) &&
-                 (def.blockingGenes.NullOrEmpty() || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.blockingGenes).Any() == false) &&
-                 (def.maxAge == -1 || pawn.ageTracker.AgeBiologicalYears < def.maxAge) &&
-                  (def.minAge == -1 || pawn.ageTracker.AgeBiologicalYears > def.minAge) &&
-               (def.requiredTraits.NullOrEmpty() || pawn.story?.traits?.allTraits?.Select(x => x.def).ToList().Intersect(def.requiredTraits).Count() == def.requiredTraits.Count()) &&
-               (def.requiredTraitsWithDegree.NullOrEmpty() || def.requiredTraitsWithDegree.TrueForAll(trait => trait.HasTrait(pawn))) &&
-                (def.requiredPrecepts.NullOrEmpty() || pawn.Faction?.ideos?.PrimaryIdeo?.PreceptsListForReading?.Select(x => x.def).ToList().Intersect(def.requiredPrecepts).Count() == def.requiredPrecepts.Count()) &&
-                 (def.requiredGenes.NullOrEmpty() || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.requiredGenes).Count() == def.requiredGenes.Count())
-
-               )
-               .RandomElementByWeight(def => def.commonality);
-
-
-                foreach (SkillDef skillChosen in skills.InRandomOrder())
+                if (pawn.ageTracker.AgeBiologicalYears <= 13)
                 {
-                    SkillRecord skill = pawn.skills.GetSkill(skillChosen);
-                    if (skill.passion == Passion.None)
+                    var passion = DefDatabase<PassionDef>.AllDefs
+              .Where(def => def.randomForBabies &&
+              (def.blockingTraits.NullOrEmpty() || pawn.story?.traits?.allTraits?.Select(x => x.def).ToList().Intersect(def.blockingTraits).Any() == false) &&
+              (def.blockingTraitsWithDegree.NullOrEmpty() || def.blockingTraitsWithDegree.TrueForAll(trait => !trait.HasTrait(pawn))) &&
+               (def.blockingPrecepts.NullOrEmpty() || pawn.Faction?.ideos?.PrimaryIdeo?.PreceptsListForReading?.Select(x => x.def).ToList().Intersect(def.blockingPrecepts).Any() == false) &&
+                (def.blockingGenes.NullOrEmpty() || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.blockingGenes).Any() == false) &&
+                (def.maxAge == -1 || pawn.ageTracker.AgeBiologicalYears < def.maxAge) &&
+                 (def.minAge == -1 || pawn.ageTracker.AgeBiologicalYears > def.minAge) &&
+              (def.requiredTraits.NullOrEmpty() || pawn.story?.traits?.allTraits?.Select(x => x.def).ToList().Intersect(def.requiredTraits).Count() == def.requiredTraits.Count()) &&
+              (def.requiredTraitsWithDegree.NullOrEmpty() || def.requiredTraitsWithDegree.TrueForAll(trait => trait.HasTrait(pawn))) &&
+               (def.requiredPrecepts.NullOrEmpty() || pawn.Faction?.ideos?.PrimaryIdeo?.PreceptsListForReading?.Select(x => x.def).ToList().Intersect(def.requiredPrecepts).Count() == def.requiredPrecepts.Count()) &&
+                (def.requiredGenes.NullOrEmpty() || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.requiredGenes).Count() == def.requiredGenes.Count())
+
+              )
+              .RandomElementByWeight(def => def.commonality);
+
+
+                    foreach (SkillDef skillChosen in skills.InRandomOrder())
                     {
-                        skill.passion = (Passion)passion.index;
-                        return;
+                        SkillRecord skill = pawn.skills.GetSkill(skillChosen);
+                        if (skill.passion == Passion.None)
+                        {
+                            skill.passion = (Passion)passion.index;
+                            return;
+                        }
                     }
                 }
+
+               
             }
 
 
