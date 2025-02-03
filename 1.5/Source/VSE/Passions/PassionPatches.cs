@@ -46,14 +46,22 @@ public static class PassionPatches
         harm.Patch(AccessTools.Method(typeof(DebugToolsPawns), nameof(DebugToolsPawns.SetPassion)), new(me, nameof(SetPassion_Prefix)));
         harm.Patch(AccessTools.Method(typeof(PassionExtension), nameof(PassionExtension.IncrementPassion)),
             new(me, nameof(IncrementPassion_Prefix)));
-
         harm.Patch(AccessTools.Method(typeof(SkillUI), nameof(SkillUI.GetSkillDescription)),
-            postfix:new(typeof(VSE_SkillUI_GetSkillDescription_Patch), nameof(VSE_SkillUI_GetSkillDescription_Patch.AddPassionDescription)));
+            postfix: new(typeof(VSE_SkillUI_GetSkillDescription_Patch), nameof(VSE_SkillUI_GetSkillDescription_Patch.AddPassionDescription)));
+        harm.Patch(AccessTools.Method(typeof(Dialog_GrowthMomentChoices), "DrawPassionChoices"),
+           transpiler: new(typeof(VSE_Dialog_GrowthMomentChoices_DrawPassionChoices_Patch), nameof(VSE_Dialog_GrowthMomentChoices_DrawPassionChoices_Patch.TweakPassionDrawings)));
+        harm.Patch(AccessTools.Method(typeof(ChoiceLetter_GrowthMoment), "MakeChoices"),
+          transpiler: new(typeof(VSE_ChoiceLetter_GrowthMoment_MakeChoices_Patch), nameof(VSE_ChoiceLetter_GrowthMoment_MakeChoices_Patch.ChooseCorrectPassionIncrement)));
+        harm.Patch(AccessTools.Method(typeof(ChoiceLetter_GrowthMoment), nameof(ChoiceLetter_GrowthMoment.IsValidGrowthPassionOption)),
+            transpiler: new(typeof(VSE_ChoiceLetter_GrowthMoment_IsValidGrowthPassionOption_Patch), nameof(VSE_ChoiceLetter_GrowthMoment_IsValidGrowthPassionOption_Patch.BetterSelectUpgradeablePassions)));
+        harm.Patch(AccessTools.Method(typeof(ChoiceLetter_GrowthMoment), nameof(ChoiceLetter_GrowthMoment.MakeChoices)),
+            postfix: new(typeof(VSE_ChoiceLetter_GrowthMoment_MakeChoices_Patch), nameof(VSE_ChoiceLetter_GrowthMoment_MakeChoices_Patch.AddRandomBadPassion)));
     }
+    
 
     public static bool GenerateSkills_Prefix(Pawn pawn, PawnGenerationRequest request)
     {
-        if (pawn.ageTracker.AgeBiologicalYears < 1) return true;
+       
         if (pawn.skills?.skills == null) return true;
         foreach (var skillDef in DefDatabase<SkillDef>.AllDefs)
         {
@@ -65,9 +73,9 @@ public static class PassionPatches
         var hasCritical = false;
         if (pawn.story?.traits != null)
             foreach (var skillRecord in from skillRecord in pawn.skills.skills
-                     from trait in pawn.story.traits.allTraits
-                     where trait.def.RequiresPassion(skillRecord.def)
-                     select skillRecord)
+                                        from trait in pawn.story.traits.allTraits
+                                        where trait.def.RequiresPassion(skillRecord.def)
+                                        select skillRecord)
             {
                 var hasCriticalInt = hasCritical;
                 var passionDef = DefDatabase<PassionDef>.AllDefs
@@ -82,21 +90,21 @@ public static class PassionPatches
         {
             var hasCriticalInt = hasCritical;
             var passion = DefDatabase<PassionDef>.AllDefs
-               .Where(def => (SkillsMod.Settings.AllowMultipleCritical || !hasCriticalInt || !def.IsCritical)&&
-               (def.blockingTraits.NullOrEmpty() || pawn.story?.traits?.allTraits?.Select(x => x.def).ToList().Intersect(def.blockingTraits).Any()==false)&&
+               .Where(def => (SkillsMod.Settings.AllowMultipleCritical || !hasCriticalInt || !def.IsCritical) &&
+               (def.blockingTraits.NullOrEmpty() || pawn.story?.traits?.allTraits?.Select(x => x.def).ToList().Intersect(def.blockingTraits).Any() == false) &&
                (def.blockingTraitsWithDegree.NullOrEmpty() || def.blockingTraitsWithDegree.TrueForAll(trait => !trait.HasTrait(pawn))) &&
-                (def.blockingPrecepts.NullOrEmpty() || pawn.Faction?.ideos?.PrimaryIdeo?.PreceptsListForReading?.Select(x => x.def).ToList().Intersect(def.blockingPrecepts).Any() == false)&&
-                 (def.blockingGenes.NullOrEmpty() || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.blockingGenes).Any() == false)&&
-                 (def.maxAge==-1 || pawn.ageTracker.AgeBiologicalYears<def.maxAge)&&
-                  (def.minAge == -1 || pawn.ageTracker.AgeBiologicalYears > def.minAge)&&
+                (def.blockingPrecepts.NullOrEmpty() || pawn.Faction?.ideos?.PrimaryIdeo?.PreceptsListForReading?.Select(x => x.def).ToList().Intersect(def.blockingPrecepts).Any() == false) &&
+                 (def.blockingGenes.NullOrEmpty() || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.blockingGenes).Any() == false) &&
+                 (def.maxAge == -1 || pawn.ageTracker.AgeBiologicalYears < def.maxAge) &&
+                  (def.minAge == -1 || pawn.ageTracker.AgeBiologicalYears > def.minAge) &&
                (def.requiredTraits.NullOrEmpty() || pawn.story?.traits?.allTraits?.Select(x => x.def).ToList().Intersect(def.requiredTraits).Count() == def.requiredTraits.Count()) &&
                (def.requiredTraitsWithDegree.NullOrEmpty() || def.requiredTraitsWithDegree.TrueForAll(trait => trait.HasTrait(pawn))) &&
                 (def.requiredPrecepts.NullOrEmpty() || pawn.Faction?.ideos?.PrimaryIdeo?.PreceptsListForReading?.Select(x => x.def).ToList().Intersect(def.requiredPrecepts).Count() == def.requiredPrecepts.Count()) &&
                  (def.requiredGenes.NullOrEmpty() || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.requiredGenes).Count() == def.requiredGenes.Count())
-    
+
                )
                .RandomElementByWeight(def => def.commonality);
-            SkillRecord skillRecord=null;
+            SkillRecord skillRecord = null;
             if (passion.isBad)
             {
                 var max = pawn.skills.skills.Max(sr => sr.Level);
@@ -107,7 +115,7 @@ public static class PassionPatches
                 num -= 1f;
                 pawn.skills.skills.Where(sr => passion.onlyForSkill is null || sr.def == passion.onlyForSkill)?.TryRandomElementByWeight(sr => sr.Level, out skillRecord);
             }
-            if(skillRecord!=null)
+            if (skillRecord != null)
             {
                 if (passion.IsCritical) hasCritical = true;
                 skillRecord.passion = (Passion)passion.index;
@@ -116,7 +124,7 @@ public static class PassionPatches
                     pawn.health.AddHediff(passion.hediffToAdd);
                 }
             }
-            
+
         }
 
         return false;
@@ -305,9 +313,9 @@ public static class PassionPatches
     {
         if (SkillsMod.Settings.CriticalEffectPassions || PassionManager.PassionToDef(sk.passion).isBad)
             foreach (var (record, passion) in from record in sk.pawn.skills.skills.Except(sk)
-                     let passion = PassionManager.PassionToDef(record.passion)
-                     where !Mathf.Approximately(passion.learnRateFactorOther, 1f)
-                     select (record, passion))
+                                              let passion = PassionManager.PassionToDef(record.passion)
+                                              where !Mathf.Approximately(passion.learnRateFactorOther, 1f)
+                                              select (record, passion))
                 builder.AppendLine("  - " + record.def.LabelCap + ": " + passion.LabelCap + ": x" + passion.learnRateFactorOther.ToStringPercent("F0"));
 
 
@@ -332,7 +340,7 @@ public static class PassionPatches
             foreach (var passion in DefDatabase<PassionDef>.AllDefs)
                 debugActionNode.AddChild(new(passion.defName, DebugActionType.ToolMapForPawns)
                 {
-                    pawnAction = delegate(Pawn p)
+                    pawnAction = delegate (Pawn p)
                     {
                         if (p.skills != null)
                         {
