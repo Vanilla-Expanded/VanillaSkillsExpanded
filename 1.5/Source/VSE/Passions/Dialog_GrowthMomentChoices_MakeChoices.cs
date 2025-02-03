@@ -57,8 +57,9 @@ namespace VSE
 
         public static void AddRandomBadPassion(List<SkillDef> skills, ChoiceLetter_GrowthMoment __instance)
         {
-            if (Rand.Chance(0.05f))
+            if (Rand.Chance(SkillsMod.Settings.GrowthMomentRandomPassionsChance/100))
             {
+               
                 Pawn pawn = __instance.pawn;
                 if (pawn.ageTracker.AgeBiologicalYears <= 13)
                 {
@@ -79,12 +80,13 @@ namespace VSE
               .RandomElementByWeight(def => def.commonality);
 
 
-                    foreach (SkillDef skillChosen in skills.InRandomOrder())
+                    foreach (SkillRecord skill in pawn.skills.skills.InRandomOrder())
                     {
-                        SkillRecord skill = pawn.skills.GetSkill(skillChosen);
+                       
                         if (skill.passion == Passion.None)
                         {
                             skill.passion = (Passion)passion.index;
+                           
                             return;
                         }
                     }

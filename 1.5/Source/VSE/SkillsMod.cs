@@ -58,6 +58,9 @@ public class SkillsMod : Mod
         listing.LabelPlus("VSE.StatMultiplier".Translate() + ": " + Settings.StatMultiplier, "VSE.StatMultiplierDesc".Translate());
         Settings.StatMultiplier = (float)Math.Round(listing.Slider(Settings.StatMultiplier, 0.1f, 5f), 1);
 
+        listing.LabelPlus("VSE.GrowthMomentRandomPassions".Translate() + ": " + Settings.GrowthMomentRandomPassionsChance, "VSE.GrowthMomentRandomPassionsDesc".Translate());
+        Settings.GrowthMomentRandomPassionsChance = (float)Math.Round(listing.Slider(Settings.GrowthMomentRandomPassionsChance, 1f, 100f), 0);
+
 
         var height = Text.LineHeight * (DefDatabase<PassionDef>.DefCount + 2) + 50f;
         var inner = listing.BeginSection(height);
@@ -113,6 +116,7 @@ public class SkillsModSettings : ModSettings
     public int MaxExpertise = 1;
     public int LevelToGetExpertise = 15;
     public float StatMultiplier = 1;
+    public float GrowthMomentRandomPassionsChance = 5;
 
     public Dictionary<string, float> PassionCommonalities = new();
 
@@ -127,6 +131,8 @@ public class SkillsModSettings : ModSettings
         Scribe_Values.Look(ref AllowExpertiseOverlap, "allowExpertiseOverlap", true);
         Scribe_Values.Look(ref LevelToGetExpertise, "LevelToGetExpertise", 15);
         Scribe_Values.Look(ref StatMultiplier, "StatMultiplier", 1);
+        Scribe_Values.Look(ref GrowthMomentRandomPassionsChance, "GrowthMomentRandomPassionsChance", 5);
+
 
         Scribe_Collections.Look(ref PassionCommonalities, "passionCommonalities", LookMode.Value, LookMode.Value);
         PassionCommonalities ??= new Dictionary<string, float>();
