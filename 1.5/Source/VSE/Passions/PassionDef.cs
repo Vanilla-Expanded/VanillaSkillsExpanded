@@ -37,6 +37,7 @@ public class PassionDef : Def
     public int maxAge = -1;
     public int minAge = -1;
     public HediffDef hediffToAdd = null;
+    public SkillDef onlyForSkill = null;
 
     public string FullDescription =>
         LabelCap + "VSE.LearnsForgets".Translate(learnRateFactor.ToStringPercent(), forgetRateFactor.ToStringPercent()) +

@@ -53,7 +53,7 @@ public static class PassionPatches
 
     public static bool GenerateSkills_Prefix(Pawn pawn, PawnGenerationRequest request)
     {
-        if (pawn.ageTracker.AgeBiologicalYears < 13) return true;
+        if (pawn.ageTracker.AgeBiologicalYears < 1) return true;
         if (pawn.skills?.skills == null) return true;
         foreach (var skillDef in DefDatabase<SkillDef>.AllDefs)
         {
@@ -88,34 +88,35 @@ public static class PassionPatches
                 (def.blockingPrecepts.NullOrEmpty() || pawn.Faction?.ideos?.PrimaryIdeo?.PreceptsListForReading?.Select(x => x.def).ToList().Intersect(def.blockingPrecepts).Any() == false)&&
                  (def.blockingGenes.NullOrEmpty() || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.blockingGenes).Any() == false)&&
                  (def.maxAge==-1 || pawn.ageTracker.AgeBiologicalYears<def.maxAge)&&
-                  (def.minAge == -1 || pawn.ageTracker.AgeBiologicalYears > def.minAge)
-
-                  &&
+                  (def.minAge == -1 || pawn.ageTracker.AgeBiologicalYears > def.minAge)&&
                (def.requiredTraits.NullOrEmpty() || pawn.story?.traits?.allTraits?.Select(x => x.def).ToList().Intersect(def.requiredTraits).Count() == def.requiredTraits.Count()) &&
                (def.requiredTraitsWithDegree.NullOrEmpty() || def.requiredTraitsWithDegree.TrueForAll(trait => trait.HasTrait(pawn))) &&
                 (def.requiredPrecepts.NullOrEmpty() || pawn.Faction?.ideos?.PrimaryIdeo?.PreceptsListForReading?.Select(x => x.def).ToList().Intersect(def.requiredPrecepts).Count() == def.requiredPrecepts.Count()) &&
                  (def.requiredGenes.NullOrEmpty() || pawn.genes?.GenesListForReading?.Select(x => x.def).ToList().Intersect(def.requiredGenes).Count() == def.requiredGenes.Count())
-
+    
                )
                .RandomElementByWeight(def => def.commonality);
-            SkillRecord skillRecord;
+            SkillRecord skillRecord=null;
             if (passion.isBad)
             {
                 var max = pawn.skills.skills.Max(sr => sr.Level);
-                skillRecord = pawn.skills.skills.RandomElementByWeight(sr => max - sr.Level);
+                pawn.skills.skills.Where(sr => passion.onlyForSkill is null || sr.def == passion.onlyForSkill)?.TryRandomElementByWeight(sr => max - sr.Level, out skillRecord);
             }
             else
             {
                 num -= 1f;
-                skillRecord = pawn.skills.skills.RandomElementByWeight(sr => sr.Level);
+                pawn.skills.skills.Where(sr => passion.onlyForSkill is null || sr.def == passion.onlyForSkill)?.TryRandomElementByWeight(sr => sr.Level, out skillRecord);
             }
-
-            if (passion.IsCritical) hasCritical = true;
-            skillRecord.passion = (Passion)passion.index;
-            if (passion.hediffToAdd != null)
+            if(skillRecord!=null)
             {
-                pawn.health.AddHediff(passion.hediffToAdd);
+                if (passion.IsCritical) hasCritical = true;
+                skillRecord.passion = (Passion)passion.index;
+                if (passion.hediffToAdd != null)
+                {
+                    pawn.health.AddHediff(passion.hediffToAdd);
+                }
             }
+            
         }
 
         return false;
