@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
+using RimWorld;
 using UnityEngine;
 using Verse;
 using VFECore.UItils;
@@ -16,6 +17,7 @@ public class SkillsMod : Mod
     public static SkillsModSettings Settings;
     public static Harmony Harm;
     private static Dictionary<string, float> defaultCommonalities;
+    private static Vector2 scrollPosition = Vector2.zero;
 
     public SkillsMod(ModContentPack content) : base(content)
     {
@@ -38,7 +40,26 @@ public class SkillsMod : Mod
     {
         base.DoSettingsWindowContents(inRect);
         var listing = new Listing_Standard();
-        listing.Begin(inRect);
+        var scrollContainer = inRect.ContractedBy(10);
+        scrollContainer.height -= listing.CurHeight;
+        scrollContainer.y += listing.CurHeight;
+        Widgets.DrawBoxSolid(scrollContainer, Color.grey);
+        var innerContainer = scrollContainer.ContractedBy(1);
+        Widgets.DrawBoxSolid(innerContainer, new ColorInt(42, 43, 44).ToColor);
+        var frameRect = innerContainer.ContractedBy(5);
+        frameRect.y += 15;
+        frameRect.height -= 15;
+        var contentRect = frameRect;
+        contentRect.x = 0;
+        contentRect.y = 0;
+        contentRect.width -= 20;
+        int numberPassions = DefDatabase<PassionDef>.AllDefsListForReading.Where(x => !x.isTriggered).Count();
+
+        contentRect.height = numberPassions * 32 + 380f;
+
+        Widgets.BeginScrollView(frameRect, ref scrollPosition, contentRect, true);
+
+        listing.Begin(contentRect.AtZero());
         if (listing.ButtonTextLabeled("VSE.MaxExpertise".Translate(), Settings.MaxExpertise.ToString()))
             Find.WindowStack.Add(new FloatMenu(Enumerable.Range(1, DefDatabase<ExpertiseDef>.DefCount)
                .Select(static num =>
@@ -62,7 +83,7 @@ public class SkillsMod : Mod
         Settings.GrowthMomentRandomPassionsChance = (float)Math.Round(listing.Slider(Settings.GrowthMomentRandomPassionsChance, 1f, 100f), 0);
 
 
-        var height = Text.LineHeight * (DefDatabase<PassionDef>.DefCount + 2) + 50f;
+        var height = Text.LineHeight * (DefDatabase<PassionDef>.AllDefs.Where(def => !def.isTriggered).Count() + 2) + 50f;
         var inner = listing.BeginSection(height);
         if (inner.ButtonTextLabeled("VSE.Commonalities".Translate(), "VSE.Reset".Translate())) Settings.PassionCommonalities.Clear();
 
@@ -74,14 +95,15 @@ public class SkillsMod : Mod
             Settings.PassionCommonalities[def.defName] = Widgets.HorizontalSlider(rect, commonality, 0f, 10f);
         }
 
-        inner.Label("VSE.Good".Translate());
-        foreach (var def in DefDatabase<PassionDef>.AllDefs.Where(def => !def.isBad)) DoEdit(def);
-        inner.Label("VSE.Bad".Translate());
-        foreach (var def in DefDatabase<PassionDef>.AllDefs.Where(def => def.isBad)) DoEdit(def);
+        inner.Label("VSE.Good".Translate().Colorize(Color.yellow));
+        foreach (var def in DefDatabase<PassionDef>.AllDefs.Where(def => !def.isBad && !def.isTriggered)) DoEdit(def);
+        inner.Label("VSE.Bad".Translate().Colorize(Color.yellow));
+        foreach (var def in DefDatabase<PassionDef>.AllDefs.Where(def => def.isBad && !def.isTriggered)) DoEdit(def);
 
         listing.EndSection(inner);
 
         listing.End();
+        Widgets.EndScrollView();
     }
 
     public override void WriteSettings()

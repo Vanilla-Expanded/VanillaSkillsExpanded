@@ -41,6 +41,7 @@ public class PassionDef : Def
     public PassionDef passionToIncreaseTo = null;
     public bool upgradeableInGrowthMoments = true;
     public bool randomForBabies = false;
+    public bool isTriggered = false;
 
     public string FullDescription =>
         LabelCap + "VSE.LearnsForgets".Translate(learnRateFactor.ToStringPercent(), forgetRateFactor.ToStringPercent()) +
