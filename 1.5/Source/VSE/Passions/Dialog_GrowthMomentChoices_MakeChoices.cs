@@ -86,7 +86,7 @@ namespace VSE
                         if (skill.passion == Passion.None)
                         {
                             skill.passion = (Passion)passion.index;
-                           
+                            LearnRateFactorCache.ClearCacheFor(skill);
                             return;
                         }
                     }
