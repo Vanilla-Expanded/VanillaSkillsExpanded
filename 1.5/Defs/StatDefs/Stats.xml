@@ -43,6 +43,18 @@
         <toStringStyleUnfinalized>PercentTwo</toStringStyleUnfinalized>
         <disableIfSkillDisabled>Artistic</disableIfSkillDisabled>
     </StatDef>
+	<StatDef>
+        <defName>VSE_CraftingQuality</defName>
+        <label>crafting quality bonus</label>
+        <description>A bonus to the quality of non-art crafts produced by this pawn.</description>
+        <category>PawnWork</category>
+        <defaultBaseValue>0</defaultBaseValue>
+        <minValue>0</minValue>
+        <hideAtValue>0</hideAtValue>
+        <toStringStyle>PercentOne</toStringStyle>
+        <toStringStyleUnfinalized>PercentTwo</toStringStyleUnfinalized>
+        <disableIfSkillDisabled>Crafting</disableIfSkillDisabled>
+    </StatDef>
     <StatDef>
         <defName>VSE_ArtSpeed</defName>
         <label>art creation speed</label>

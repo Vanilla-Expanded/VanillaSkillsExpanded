@@ -10,6 +10,8 @@ namespace VSE.Stats
             var start = RimWorld.QualityUtility.GenerateQualityCreatedByPawn(worker, workSkill);
             if (workSkill == SkillDefOf.Artistic) start.AddFromStat(worker.GetStatValue(MoreStatDefOf.VSE_ArtQuality));
             if (workSkill == SkillDefOf.Construction) start.AddFromStat(worker.GetStatValue(MoreStatDefOf.VSE_ConstructQuality));
+            if (workSkill == SkillDefOf.Crafting) start.AddFromStat(worker.GetStatValue(MoreStatDefOf.VSE_CraftingQuality));
+
             return start;
         }
 
