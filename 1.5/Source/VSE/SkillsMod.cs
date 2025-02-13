@@ -23,10 +23,15 @@ public class SkillsMod : Mod
     {
         Harm = new Harmony("vanillaexpanded.skills");
         Settings = GetSettings<SkillsModSettings>();
-        ExpertisePatches.Do(Harm);
-        StatPatches.Do(Harm);
-        PassionPatches.Do(Harm);
-        ModCompat.Init();
+        try
+        {
+            ExpertisePatches.Do(Harm);
+            StatPatches.Do(Harm);
+            PassionPatches.Do(Harm);
+            ModCompat.Init();
+        }
+        catch (Exception) { }
+       
         LongEventHandler.ExecuteWhenFinished(delegate
         {
             defaultCommonalities = DefDatabase<PassionDef>.AllDefs.ToDictionary(def => def.defName, def => def.commonality);
