@@ -30,7 +30,7 @@ public class SkillsMod : Mod
             PassionPatches.Do(Harm);
             ModCompat.Init();
         }
-        catch (Exception) { }
+        catch (Exception e) { Log.Message(e); }
        
         LongEventHandler.ExecuteWhenFinished(delegate
         {
