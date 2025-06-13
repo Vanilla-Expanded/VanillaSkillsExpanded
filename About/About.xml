@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
 	<name>Vanilla Skills Expanded</name>
-	<author>legodude17, Oskar Potocki</author>
+	<author>legodude17, Oskar Potocki, Sarg Bjornson</author>
 	<modIconPath IgnoreIfNoMatchingField="True">UI/VELogo</modIconPath>
 	<supportedVersions>
-		<li>1.3</li>
 		<li>1.4</li>
 		<li>1.5</li>
+		<li>1.6</li>
 	</supportedVersions>
 	<packageId>vanillaexpanded.skills</packageId>
 	<description>Vanilla Skills Expanded is a new mod that expands on the vanilla skills system by introducing expertise to the extremely broad skill categories that vanilla has. Only 1 expertise per pawn can be gained. Expertise can only be gained in skills with both a passion and more than 15 levels. In addition, other mods can add more to account for their own additions of tasks.
@@ -30,10 +30,6 @@ This mod also introduces three new passion types - critical passion, natural pas
 		</li>
 	</modDependencies>
 	<loadAfter>
-		<li>Ludeon.RimWorld</li>
-		<li>Ludeon.RimWorld.Royalty</li>
-		<li>Ludeon.RimWorld.Ideology</li>
-		<li>brrainz.harmony</li>
 		<li>OskarPotocki.VanillaFactionsExpanded.Core</li>
 		<li>ducks.insaneskills</li>
 		<li>jaxe.rimhud</li>
