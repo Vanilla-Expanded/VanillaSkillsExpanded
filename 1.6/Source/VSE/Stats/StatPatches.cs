@@ -29,7 +29,7 @@ public static class StatPatches
             transpiler: new(myType, nameof(RoofStatTranspiler)));
         harm.Patch(AccessTools.PropertyGetter(typeof(JobDriver_RemoveFloor), nameof(JobDriver_RemoveFloor.SpeedStat)),
             transpiler: new(myType, nameof(FloorStatTranspiler)));
-        harm.Patch(AccessTools.Method(AccessTools.Inner(typeof(JobDriver_ConstructFinishFrame), "<>c__DisplayClass6_0"), "<MakeNewToils>b__1"),
+        harm.Patch(AccessTools.Method(AccessTools.Inner(typeof(JobDriver_ConstructFinishFrame), "<>c__DisplayClass8_0"), "<MakeNewToils>b__1"),
             transpiler: new(myType, nameof(FloorStatOptionTranspiler)));
         harm.Patch(AccessTools.Method(AccessTools.Inner(typeof(JobDriver_Repair), "<>c__DisplayClass8_0"), "<MakeNewToils>b__1"),
             transpiler: new(myType, nameof(RepairStatTranspiler)));
@@ -74,7 +74,7 @@ public static class StatPatches
     public static IEnumerable<CodeInstruction> CraftingQualityTranspiler(IEnumerable<CodeInstruction> instructions)
     {
         var info = AccessTools.Method(typeof(RimWorld.QualityUtility), nameof(RimWorld.QualityUtility.GenerateQualityCreatedByPawn),
-            new[] { typeof(Pawn), typeof(SkillDef) });
+            new[] { typeof(Pawn), typeof(SkillDef), typeof(bool) });
         foreach (var instruction in instructions)
             if (instruction.Calls(info))
             {
@@ -87,7 +87,7 @@ public static class StatPatches
     public static IEnumerable<CodeInstruction> ConstructionQualityTranspiler(IEnumerable<CodeInstruction> instructions)
     {
         var info = AccessTools.Method(typeof(RimWorld.QualityUtility), nameof(RimWorld.QualityUtility.GenerateQualityCreatedByPawn),
-            new[] { typeof(Pawn), typeof(SkillDef) });
+            new[] { typeof(Pawn), typeof(SkillDef), typeof(bool) });
         foreach (var instruction in instructions)
             if (instruction.Calls(info))
             {

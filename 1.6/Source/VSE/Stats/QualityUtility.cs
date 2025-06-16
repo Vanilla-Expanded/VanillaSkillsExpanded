@@ -5,9 +5,9 @@ namespace VSE.Stats
 {
     public static class QualityUtility
     {
-        public static QualityCategory GenerateQuality(Pawn worker, SkillDef workSkill, Thing thing = null)
+        public static QualityCategory GenerateQuality(Pawn worker, SkillDef workSkill, bool consumeInspiration = true, Thing thing = null)
         {
-            var start = RimWorld.QualityUtility.GenerateQualityCreatedByPawn(worker, workSkill);
+            var start = RimWorld.QualityUtility.GenerateQualityCreatedByPawn(worker, workSkill, consumeInspiration);
             if (workSkill == SkillDefOf.Artistic) start.AddFromStat(worker.GetStatValue(MoreStatDefOf.VSE_ArtQuality));
             if (workSkill == SkillDefOf.Construction) start.AddFromStat(worker.GetStatValue(MoreStatDefOf.VSE_ConstructQuality));
             if (workSkill == SkillDefOf.Crafting) start.AddFromStat(worker.GetStatValue(MoreStatDefOf.VSE_CraftingQuality));

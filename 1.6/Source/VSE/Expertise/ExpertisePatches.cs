@@ -20,7 +20,7 @@ public static class ExpertisePatches
         var me = typeof(ExpertisePatches);
         harm.Patch(AccessTools.Method(typeof(StatWorker), nameof(StatWorker.GetValueUnfinalized)),
             transpiler: new(me, nameof(StatTranspiler)));
-        harm.Patch(AccessTools.Method(typeof(StatWorker), nameof(StatWorker.GetExplanationUnfinalized)),
+        harm.Patch(AccessTools.Method(typeof(StatWorker), nameof(StatWorker.GetOffsetsAndFactorsExplanation)),
             transpiler: new(me, nameof(StatExplainTranspiler)));
         harm.Patch(AccessTools.Constructor(typeof(Pawn_SkillTracker), new[] { typeof(Pawn) }),
             postfix: new(typeof(ExpertiseTrackers), nameof(ExpertiseTrackers.CreateExpertise)));
@@ -171,11 +171,11 @@ public static class ExpertisePatches
         if (label is null) throw new("Failed to find jump location");
         codes.InsertRange(idx1 - 1, new[]
         {
-            new CodeInstruction(OpCodes.Ldloc_2).WithLabels(label.Value),
+            CodeInstruction.LoadLocal(0).WithLabels(label.Value),
             CodeInstruction.Call(typeof(ExpertiseTrackers), nameof(ExpertiseTrackers.Expertise), new[] { typeof(Pawn) }),
-            new CodeInstruction(OpCodes.Ldarg_0),
+            CodeInstruction.LoadArgument(0),
             CodeInstruction.LoadField(typeof(StatWorker), "stat"),
-            new CodeInstruction(OpCodes.Ldloc_0),
+            CodeInstruction.LoadArgument(2),
             CodeInstruction.Call(typeof(ExpertiseTracker), nameof(ExpertiseTracker.OffsetStatExplain))
         });
         var idx2 = FindIfJumpIndex(codes, idx1, info);
@@ -183,11 +183,11 @@ public static class ExpertisePatches
         if (label is null) throw new("Failed to find jump location");
         codes.InsertRange(idx2 - 1, new[]
         {
-            new CodeInstruction(OpCodes.Ldloc_2).WithLabels(label.Value),
+            CodeInstruction.LoadLocal(0).WithLabels(label.Value),
             CodeInstruction.Call(typeof(ExpertiseTrackers), nameof(ExpertiseTrackers.Expertise), new[] { typeof(Pawn) }),
-            new CodeInstruction(OpCodes.Ldarg_0),
+            CodeInstruction.LoadArgument(0),
             CodeInstruction.LoadField(typeof(StatWorker), "stat"),
-            new CodeInstruction(OpCodes.Ldloc_0),
+            CodeInstruction.LoadArgument(2),
             CodeInstruction.Call(typeof(ExpertiseTracker), nameof(ExpertiseTracker.MultiplyStatExplain))
         });
         return codes;
