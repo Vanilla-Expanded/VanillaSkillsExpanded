@@ -24,7 +24,7 @@
 		<skill>Shooting</skill>
 		<description>An expertise in reloading both high-tech and low-tech ranged weapons.</description>
 		<statOffsets>
-			<VEF_VerbCooldownFactor>-0.025</VEF_VerbCooldownFactor>
+			<VEF_RangeAttackSpeedFactor>0.025</VEF_RangeAttackSpeedFactor>
 		</statOffsets>
 	</VSE.Expertise.ExpertiseDef>
 	<VSE.Expertise.ExpertiseDef>
@@ -51,7 +51,7 @@
 		<skill>Melee</skill>
 		<description>An expertise in the fast-paced armed melee combat.</description>
 		<statOffsets>
-			<MeleeCooldownFactor>-0.025</MeleeCooldownFactor>
+			<VEF_MeleeAttackSpeedFactor>0.025</VEF_MeleeAttackSpeedFactor>
 		</statOffsets>
 	</VSE.Expertise.ExpertiseDef>
 	<VSE.Expertise.ExpertiseDef>
