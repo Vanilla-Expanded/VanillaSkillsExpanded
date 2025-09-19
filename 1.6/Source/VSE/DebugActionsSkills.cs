@@ -24,7 +24,7 @@ public static class DebugActionsSkills
     {
         List<DebugActionNode> list = new List<DebugActionNode>();
 
-        foreach (ExpertiseDef allDef in DefDatabase<ExpertiseDef>.AllDefs)
+        foreach (ExpertiseDef allDef in DefDatabase<ExpertiseDef>.AllDefs.Where(x => !x.hide))
         {
 
             list.Add(new DebugActionNode(allDef.LabelCap, DebugActionType.ToolMapForPawns, null, delegate (Pawn p)
@@ -46,7 +46,7 @@ public static class DebugActionsSkills
     {
         List<DebugActionNode> list = new List<DebugActionNode>();
 
-        foreach (ExpertiseDef allDef in DefDatabase<ExpertiseDef>.AllDefs)
+        foreach (ExpertiseDef allDef in DefDatabase<ExpertiseDef>.AllDefs.Where(x => !x.hide))
         {
             DebugActionNode debugActionNode = new DebugActionNode(allDef.LabelCap);
             for (int i = 0; i <= 20; i++)

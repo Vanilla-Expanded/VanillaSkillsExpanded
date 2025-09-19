@@ -23,7 +23,7 @@
     <StatDef>
         <defName>VSE_AttackOnFailChanceFactor</defName>
         <label>attack on tame fail chance factor</label>
-        <description>A multiplier applied to the chance for failed taming attempts to result in animals attacking this pawn.</description>
+        <description>A modifier applied to the chance for failed taming attempts to result in animals attacking this pawn.</description>
         <category>PawnWork</category>
         <defaultBaseValue>1</defaultBaseValue>
         <minValue>0</minValue>

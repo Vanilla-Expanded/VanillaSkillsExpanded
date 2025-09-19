@@ -55,12 +55,14 @@ public static class StatPatches
 
     public static IEnumerable<CodeInstruction> AttackOnTameFailTranspiler(IEnumerable<CodeInstruction> instructions)
     {
-        var info = AccessTools.Field(typeof(RaceProperties), nameof(RaceProperties.manhunterOnTameFailChance));
+      
+        var method = AccessTools.Method(typeof(PawnUtility), nameof(PawnUtility.GetManhunterOnTameFailChance), [typeof(Pawn)]);
         foreach (var instruction in instructions)
         {
             yield return instruction;
-            if (instruction.LoadsField(info))
+            if (instruction.Calls(method))
             {
+               
                 yield return new(OpCodes.Ldarg_1);
                 yield return CodeInstruction.LoadField(typeof(MoreStatDefOf), nameof(MoreStatDefOf.VSE_AttackOnFailChanceFactor));
                 yield return new(OpCodes.Ldc_I4_1);

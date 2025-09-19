@@ -60,7 +60,7 @@
 		<skill>Melee</skill>
 		<description>An expertise in hitting accurately with melee attacks.</description>
 		<statOffsets>
-			<MeleeHitChance>0.05</MeleeHitChance>
+			<MeleeHitChance>1</MeleeHitChance>
 		</statOffsets>
 	</VSE.Expertise.ExpertiseDef>
 	<VSE.Expertise.ExpertiseDef>
@@ -189,6 +189,7 @@
 		<defName>TopChef</defName>
 		<label>Food Hygiene</label>
 		<skill>Cooking</skill>
+		<hide>true</hide>
 		<description>An expertise in creating safe to consume meals in any environment.</description>
 		<statOffsets>
 			<FoodPoisonChance>-0.05</FoodPoisonChance>

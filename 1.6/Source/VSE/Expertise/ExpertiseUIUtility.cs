@@ -83,8 +83,8 @@ public static class ExpertiseUIUtility
         inRect.xMax -= 5f;
         var textRect = inRect.TakeBottomPart(54f).ContractedBy(7f);
         var expertiseTracker = pawn.Expertise();
-        var allExpertise = (from ex in DefDatabase<ExpertiseDef>.AllDefs.Except(expertiseTracker.AllExpertise.Select(ex => ex.def))
-            let skill = pawn.skills.GetSkill(ex.skill)
+        var allExpertise = (from ex in DefDatabase<ExpertiseDef>.AllDefs.Where(x => !x.hide).Except(expertiseTracker.AllExpertise.Select(ex => ex.def))
+                            let skill = pawn.skills.GetSkill(ex.skill)
             orderby ex.CanApplyOn(pawn, out _) descending,
                 skill.passion descending,
                 skill.Level descending,

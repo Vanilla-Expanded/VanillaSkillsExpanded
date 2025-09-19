@@ -10,6 +10,7 @@ public class ExpertiseDef : Def
 {
     public RulePackDef flavorMaker;
     public SkillDef skill;
+    public bool hide = false;
     public List<StatModifier> statFactors = new();
     public List<StatModifier> statOffsets = new();
 
