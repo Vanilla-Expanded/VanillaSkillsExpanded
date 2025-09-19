@@ -24,7 +24,7 @@
 		<skill>Shooting</skill>
 		<description>An expertise in reloading both high-tech and low-tech ranged weapons.</description>
 		<statOffsets>
-			<VEF_VerbCooldownFactor>-0.025</VEF_VerbCooldownFactor>
+			<RangedCooldownFactor>-0.025</RangedCooldownFactor>
 		</statOffsets>
 	</VSE.Expertise.ExpertiseDef>
 	<VSE.Expertise.ExpertiseDef>
