@@ -43,7 +43,12 @@ public class ExpertiseRecord : IExposable
 
     public Pawn Pawn { get; }
 
-    public int Level => level;
+    public int Level
+    {
+        get { return level; }
+        set { level = value; }
+
+    } 
 
     public string LevelDescriptor => level is < 0 or > 20 ? "Unknown".Translate() : $"VSE.Expertise{level}".Translate();
 
